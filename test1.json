@@ -1,0 +1,481 @@
+[
+    {
+        "id": "925fdb01.3e434",
+        "type": "http in",
+        "z": "3fa68dbf.c4ede2",
+        "name": "Room request",
+        "url": "/room",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 90,
+        "y": 40,
+        "wires": [
+            [
+                "e102f5d8.c612f"
+            ]
+        ]
+    },
+    {
+        "id": "e102f5d8.c612f",
+        "type": "http request",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "url": "https://roomcheck.webapps.port.ac.uk/roomcheck/room/events?buildingCode=RB&from=15+November+2017&roomId=1.05&to=16+November+2017",
+        "tls": "",
+        "x": 330,
+        "y": 40,
+        "wires": [
+            [
+                "5806c333.8f7034"
+            ]
+        ]
+    },
+    {
+        "id": "320c10d9.0e2d5",
+        "type": "debug",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 650,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "6e999357.b0abfc",
+        "type": "http response",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET"
+        },
+        "x": 650,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "5806c333.8f7034",
+        "type": "function",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "func": "msg.res.set(\"Access-Control-Allow-Origin\", \"*\");\nnode.warn('Node red has no clue');\nnode.warn(msg.res);\nnode.warn('Still baffled by the basics');\nnode.error('A major blunder');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 490,
+        "y": 40,
+        "wires": [
+            [
+                "320c10d9.0e2d5",
+                "6e999357.b0abfc"
+            ]
+        ]
+    },
+    {
+        "id": "f5d33ff2.257dd",
+        "type": "watson-text-to-speech",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "lang": "en-US",
+        "langhidden": "en-US",
+        "langcustom": "NoCustomisationSetting",
+        "langcustomhidden": "",
+        "voice": "en-US_MichaelVoice",
+        "voicehidden": "",
+        "format": "audio/wav",
+        "password": "DetPtzgT6Gz4",
+        "payload-response": true,
+        "default-endpoint": true,
+        "service-endpoint": "https://stream.watsonplatform.net/text-to-speech/api",
+        "x": 437.0000305175781,
+        "y": 169,
+        "wires": [
+            [
+                "cbe7561d.75dc8",
+                "509cc28c.39de2c",
+                "ae698d29.2512a8"
+            ]
+        ]
+    },
+    {
+        "id": "cbe7561d.75dc8",
+        "type": "play audio",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "voice": "1",
+        "x": 671.5,
+        "y": 169.5999755859375,
+        "wires": []
+    },
+    {
+        "id": "29e3553a.bb913a",
+        "type": "inject",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "topic": "",
+        "payload": "Talk to me",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 223.50003051757812,
+        "y": 168.99998474121094,
+        "wires": [
+            [
+                "f5d33ff2.257dd"
+            ]
+        ]
+    },
+    {
+        "id": "c813d2bf.f3cdf",
+        "type": "http in",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "url": "/text",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 93.50003051757812,
+        "y": 208,
+        "wires": [
+            [
+                "3ea9398e.a6426e"
+            ]
+        ]
+    },
+    {
+        "id": "3ea9398e.a6426e",
+        "type": "function",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "func": "msg.payload = 'Here is some text'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 235.5,
+        "y": 207.19998168945312,
+        "wires": [
+            [
+                "f5d33ff2.257dd"
+            ]
+        ]
+    },
+    {
+        "id": "509cc28c.39de2c",
+        "type": "http response",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 654.5000305175781,
+        "y": 208,
+        "wires": []
+    },
+    {
+        "id": "ae698d29.2512a8",
+        "type": "debug",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 674.5,
+        "y": 250.20001220703125,
+        "wires": []
+    },
+    {
+        "id": "756a8d1.fc9e374",
+        "type": "http in",
+        "z": "3fa68dbf.c4ede2",
+        "name": "count",
+        "url": "/count",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 114,
+        "y": 809,
+        "wires": [
+            [
+                "23aab24f.81aace"
+            ]
+        ]
+    },
+    {
+        "id": "23aab24f.81aace",
+        "type": "function",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "func": "// initialise the counter to 0 if it doesn't exist already\nvar count = context.get('count')||0;\ncount += 1;\n// store the value back\ncontext.set('count',count);\n// make it part of the outgoing msg object\nmsg.payload = count;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 259,
+        "y": 808,
+        "wires": [
+            [
+                "92661787.9bea78"
+            ]
+        ]
+    },
+    {
+        "id": "92661787.9bea78",
+        "type": "http response",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 391,
+        "y": 808,
+        "wires": []
+    },
+    {
+        "id": "3da763bf.41eaac",
+        "type": "watson-speech-to-text",
+        "z": "3fa68dbf.c4ede2",
+        "name": "American Speech->Text",
+        "alternatives": 1,
+        "speakerlabels": true,
+        "smartformatting": true,
+        "lang": "en-US",
+        "langhidden": "en-US",
+        "langcustom": "NoCustomisationSetting",
+        "langcustomhidden": "",
+        "band": "NarrowbandModel",
+        "bandhidden": "NarrowbandModel",
+        "password": "qz0oBR5sBdsG",
+        "payload-response": true,
+        "default-endpoint": true,
+        "service-endpoint": "https://stream.watsonplatform.net/speech-to-text/api",
+        "x": 468,
+        "y": 353,
+        "wires": [
+            [
+                "dddd30df.5be9d"
+            ]
+        ]
+    },
+    {
+        "id": "95831689.f7bd38",
+        "type": "inject",
+        "z": "3fa68dbf.c4ede2",
+        "name": "punk",
+        "topic": "",
+        "payload": "http://www.wavsource.com/snds_2017-09-17_1751672946049674/movie_stars/eastwood/punk.wav",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 164,
+        "y": 436,
+        "wires": [
+            [
+                "3da763bf.41eaac",
+                "f66e5a8a.1af768"
+            ]
+        ]
+    },
+    {
+        "id": "dddd30df.5be9d",
+        "type": "debug",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 649,
+        "y": 352,
+        "wires": []
+    },
+    {
+        "id": "f66e5a8a.1af768",
+        "type": "watson-speech-to-text",
+        "z": "3fa68dbf.c4ede2",
+        "name": "English Speech->Text",
+        "alternatives": 1,
+        "speakerlabels": false,
+        "smartformatting": true,
+        "lang": "en-GB",
+        "langhidden": "en-GB",
+        "langcustom": "NoCustomisationSetting",
+        "langcustomhidden": "",
+        "band": "NarrowbandModel",
+        "bandhidden": "NarrowbandModel",
+        "password": "qz0oBR5sBdsG",
+        "payload-response": true,
+        "default-endpoint": true,
+        "service-endpoint": "https://stream.watsonplatform.net/speech-to-text/api",
+        "x": 458,
+        "y": 485,
+        "wires": [
+            [
+                "872497ef.252c38"
+            ]
+        ]
+    },
+    {
+        "id": "872497ef.252c38",
+        "type": "debug",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 649,
+        "y": 484,
+        "wires": []
+    },
+    {
+        "id": "cccfd59.52aa228",
+        "type": "inject",
+        "z": "3fa68dbf.c4ede2",
+        "name": "Lack of faith",
+        "topic": "",
+        "payload": "http://www.wavsource.com/snds_2017-09-17_1751672946049674/movies/star_wars/lack_of_faith.wav",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 166,
+        "y": 532,
+        "wires": [
+            [
+                "f66e5a8a.1af768"
+            ]
+        ]
+    },
+    {
+        "id": "4281c22d.ce4c6c",
+        "type": "inject",
+        "z": "3fa68dbf.c4ede2",
+        "name": "Nervous",
+        "topic": "",
+        "payload": "http://www.wavsource.com/snds_2017-09-17_1751672946049674/movies/airplane/nervous.wav",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 158,
+        "y": 316,
+        "wires": [
+            [
+                "3da763bf.41eaac"
+            ]
+        ]
+    },
+    {
+        "id": "63acb857.915d58",
+        "type": "inject",
+        "z": "3fa68dbf.c4ede2",
+        "name": "Surely",
+        "topic": "",
+        "payload": "http://www.wavsource.com/snds_2017-09-17_1751672946049674/movies/airplane/surely_a.wav",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 162,
+        "y": 276,
+        "wires": [
+            [
+                "3da763bf.41eaac"
+            ]
+        ]
+    },
+    {
+        "id": "83ef8c36.b1f25",
+        "type": "visual-recognition-v3",
+        "z": "3fa68dbf.c4ede2",
+        "name": "Img",
+        "apikey": "7fd3981e872c9b4d5021dda61179b8d92a7623af",
+        "image-feature": "classifyImage",
+        "lang": "en",
+        "x": 362.49998474121094,
+        "y": 636.6000213623047,
+        "wires": [
+            [
+                "ae471826.b7b32"
+            ]
+        ]
+    },
+    {
+        "id": "ae471826.b7b32",
+        "type": "debug",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "result",
+        "x": 551.4999847412109,
+        "y": 638.7999725341797,
+        "wires": []
+    },
+    {
+        "id": "17b22019.5e72f8",
+        "type": "inject",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "topic": "",
+        "payload": "http://static3.businessinsider.com/image/52695bc869beddc97fe18b3a-1200-706/airplane%20movie.jpg",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 134.49998474121094,
+        "y": 633.9999847412109,
+        "wires": [
+            [
+                "83ef8c36.b1f25"
+            ]
+        ]
+    },
+    {
+        "id": "1c58049e.d1979b",
+        "type": "template",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "plain",
+        "template": "<!doctype html>\n\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n\n  <title>The HTML5 Herald</title>\n  <meta name=\"description\" content=\"The HTML5 Herald\">\n  <meta name=\"author\" content=\"SitePoint\">\n</head>\n\n<body>\n  <h1>Will this work?</h1>\n  <p>I hope so</p>\n</body>\n</html>",
+        "output": "str",
+        "x": 248.49998474121094,
+        "y": 954.6000213623047,
+        "wires": [
+            [
+                "6c262847.464a6"
+            ]
+        ]
+    },
+    {
+        "id": "4547d0b0.482d4",
+        "type": "http in",
+        "z": "3fa68dbf.c4ede2",
+        "name": "/page",
+        "url": "/page",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 90.5,
+        "y": 954.9999847412109,
+        "wires": [
+            [
+                "1c58049e.d1979b"
+            ]
+        ]
+    },
+    {
+        "id": "6c262847.464a6",
+        "type": "http response",
+        "z": "3fa68dbf.c4ede2",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 422.49998474121094,
+        "y": 951.9999847412109,
+        "wires": []
+    }
+]
