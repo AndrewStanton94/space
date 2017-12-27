@@ -1,2 +1,2 @@
 node-red-node-watson
-??node-red-bluemix-nodes??
+node-red-contrib-freeboard
