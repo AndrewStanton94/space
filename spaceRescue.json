@@ -1,0 +1,19 @@
+{
+	"name": "Space Rescue",
+	"description": "Description",
+	"game": [
+		{
+			"actIntro": "This is the first act",
+			"scenes": [
+				{
+					"description": "This is the first scene",
+					"resourcePrompt": "A ball",
+					"watsonUsed": "image",
+					"acceptanceCriteria": "ball"
+				}
+			],
+			"success": "Yes",
+			"fail": "No"
+		}
+	]
+}
