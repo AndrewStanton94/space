@@ -1,0 +1,735 @@
+[
+    {
+        "id": "c9e1a67.b8a8958",
+        "type": "tab",
+        "label": "Main",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3d05af68.02efd",
+        "type": "tab",
+        "label": "Rescuer",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "be06837a.8970f8",
+        "type": "tab",
+        "label": "Rescuees",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "54b931b0.d6a55",
+        "type": "tab",
+        "label": "Utils",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "8d27ecb8.437898",
+        "type": "tab",
+        "label": "Tests",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "71428fa9.e7a8d",
+        "type": "subflow",
+        "name": "GetFromRepo",
+        "info": "A flow to retreive a named file from the repo\n\n* @param msg.**fileName**\n* @param msg.**fileType**\n* @param msg.**branch**\n\n@returns {Object} msg - **url** attribute added\n`",
+        "in": [
+            {
+                "x": 50,
+                "y": 98,
+                "wires": [
+                    {
+                        "id": "df67fad2.ee242"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 845.0000610351562,
+                "y": 102,
+                "wires": [
+                    {
+                        "id": "d027f958.2e41b8",
+                        "port": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "86f2f496.d5352",
+        "type": "websocket-client",
+        "z": "",
+        "path": "/rescuerSocket",
+        "wholemsg": "false"
+    },
+    {
+        "id": "139ba1d5.63a836",
+        "type": "websocket-client",
+        "z": "",
+        "path": "/rescueeSocket",
+        "wholemsg": "false"
+    },
+    {
+        "id": "df67fad2.ee242",
+        "type": "function",
+        "z": "71428fa9.e7a8d",
+        "name": "Generate URL",
+        "func": "const filePath = msg.payload.filePath || \"/\"\nconst fileName = msg.payload.fileName;\nconst fileType = msg.payload.fileType;\nconst branch = msg.payload.branch;\nconst url = `https://raw.githubusercontent.com/AndrewStanton94/space/${branch}/${filePath}${fileName}.${fileType}`;\n\nmsg.url = url;\n// Copy the payload so that the GET doesn't delete it\nmsg.params = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 170.5,
+        "y": 97.39999389648438,
+        "wires": [
+            [
+                "d1abc04a.0a4f58"
+            ]
+        ]
+    },
+    {
+        "id": "d1abc04a.0a4f58",
+        "type": "http request",
+        "z": "71428fa9.e7a8d",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 356.5,
+        "y": 97.39999389648438,
+        "wires": [
+            [
+                "1500a940.500a27"
+            ]
+        ]
+    },
+    {
+        "id": "1500a940.500a27",
+        "type": "switch",
+        "z": "71428fa9.e7a8d",
+        "name": "",
+        "property": "params.fileType",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "json",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 2,
+        "x": 513.5,
+        "y": 96.59999084472656,
+        "wires": [
+            [
+                "295e5425.265af4"
+            ],
+            [
+                "d027f958.2e41b8"
+            ]
+        ],
+        "outputLabels": [
+            "JSON",
+            "otherwise"
+        ]
+    },
+    {
+        "id": "295e5425.265af4",
+        "type": "json",
+        "z": "71428fa9.e7a8d",
+        "name": "",
+        "pretty": false,
+        "x": 705.5,
+        "y": 22.800003051757812,
+        "wires": [
+            [
+                "d027f958.2e41b8"
+            ]
+        ]
+    },
+    {
+        "id": "4eb35fd9.d4fb08",
+        "type": "inject",
+        "z": "c9e1a67.b8a8958",
+        "name": "Get Game Description",
+        "topic": "",
+        "payload": "{\"filePath\":\"config/\",\"fileName\":\"spaceRescue\",\"fileType\":\"json\",\"branch\":\"master\",\"contextName\":\"game\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "x": 171.49998474121094,
+        "y": 184.40000915527344,
+        "wires": [
+            [
+                "c8f55741.96f95"
+            ]
+        ]
+    },
+    {
+        "id": "c8f55741.96f95",
+        "type": "subflow:71428fa9.e7a8d",
+        "z": "c9e1a67.b8a8958",
+        "x": 370.5,
+        "y": 183.99998474121094,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "85d344e7.297ae8",
+        "type": "debug",
+        "z": "71428fa9.e7a8d",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 547.4999847412109,
+        "y": 196.1999969482422,
+        "wires": []
+    },
+    {
+        "id": "d027f958.2e41b8",
+        "type": "function",
+        "z": "71428fa9.e7a8d",
+        "name": "",
+        "func": "if (msg.params.contextName){\n    context.global[msg.params.contextName] = msg.payload;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 745.5,
+        "y": 103.80000305175781,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "760d385a.fddac8",
+        "type": "function",
+        "z": "8d27ecb8.437898",
+        "name": "",
+        "func": "\nreturn context.global.game;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 310,
+        "y": 71.19999694824219,
+        "wires": [
+            [
+                "dc5dc6d7.3ed55"
+            ]
+        ]
+    },
+    {
+        "id": "834ea31c.d33598",
+        "type": "inject",
+        "z": "8d27ecb8.437898",
+        "name": "Show game config",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 152,
+        "y": 70.80000305175781,
+        "wires": [
+            [
+                "760d385a.fddac8"
+            ]
+        ]
+    },
+    {
+        "id": "dc5dc6d7.3ed55",
+        "type": "debug",
+        "z": "8d27ecb8.437898",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 440,
+        "y": 70.59999084472656,
+        "wires": []
+    },
+    {
+        "id": "87006582.dd20b8",
+        "type": "http in",
+        "z": "3d05af68.02efd",
+        "name": "Register Rescuer",
+        "url": "/registerRescuer",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 151.5,
+        "y": 118.39999389648438,
+        "wires": [
+            [
+                "ba20c35b.0db658"
+            ]
+        ]
+    },
+    {
+        "id": "1b03271a.d7b999",
+        "type": "function",
+        "z": "8d27ecb8.437898",
+        "name": "",
+        "func": "\nreturn context.global.rescuer;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 308.20001220703125,
+        "y": 134.1999969482422,
+        "wires": [
+            [
+                "d1f2f253.1e07b"
+            ]
+        ]
+    },
+    {
+        "id": "7da1eb65.35f734",
+        "type": "inject",
+        "z": "8d27ecb8.437898",
+        "name": "Show rescuer",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 130.20001220703125,
+        "y": 133.8000030517578,
+        "wires": [
+            [
+                "1b03271a.d7b999"
+            ]
+        ]
+    },
+    {
+        "id": "d1f2f253.1e07b",
+        "type": "debug",
+        "z": "8d27ecb8.437898",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 438.20001220703125,
+        "y": 133.59999084472656,
+        "wires": []
+    },
+    {
+        "id": "499ef0b4.7ed668",
+        "type": "change",
+        "z": "3d05af68.02efd",
+        "name": "Save Rescuer",
+        "rules": [
+            {
+                "t": "set",
+                "p": "rescuer",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"rescuer\":{\"registered\":true}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 555.5,
+        "y": 93.5999755859375,
+        "wires": [
+            [
+                "1e2100a.43d647f"
+            ]
+        ]
+    },
+    {
+        "id": "ba20c35b.0db658",
+        "type": "switch",
+        "z": "3d05af68.02efd",
+        "name": "Rescuer Exisits?",
+        "property": "rescuer",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "null"
+            },
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 357.49998474121094,
+        "y": 118.99998474121094,
+        "wires": [
+            [
+                "499ef0b4.7ed668"
+            ],
+            [
+                "a4ec81fd.21098"
+            ]
+        ],
+        "outputLabels": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": "a4ec81fd.21098",
+        "type": "change",
+        "z": "3d05af68.02efd",
+        "name": "Will not register",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"registered\": false}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 557.5,
+        "y": 145.5999755859375,
+        "wires": [
+            [
+                "1e2100a.43d647f"
+            ]
+        ]
+    },
+    {
+        "id": "1e2100a.43d647f",
+        "type": "http response",
+        "z": "3d05af68.02efd",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 726.5,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "dfe71b10.f9cfe",
+        "type": "function",
+        "z": "8d27ecb8.437898",
+        "name": "",
+        "func": "\nreturn context.global;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 306.00001525878906,
+        "y": 222.1999969482422,
+        "wires": [
+            [
+                "3bdbb536.215812"
+            ]
+        ]
+    },
+    {
+        "id": "528cd3fc.a500cc",
+        "type": "inject",
+        "z": "8d27ecb8.437898",
+        "name": "Show global",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 123.00001525878906,
+        "y": 221.8000030517578,
+        "wires": [
+            [
+                "dfe71b10.f9cfe"
+            ]
+        ]
+    },
+    {
+        "id": "3bdbb536.215812",
+        "type": "debug",
+        "z": "8d27ecb8.437898",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 436.00001525878906,
+        "y": 221.59999084472656,
+        "wires": []
+    },
+    {
+        "id": "275c7413.8c175c",
+        "type": "inject",
+        "z": "c9e1a67.b8a8958",
+        "name": "Fresh start",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "x": 133.5,
+        "y": 133.39999389648438,
+        "wires": [
+            [
+                "985c9d63.1552b"
+            ]
+        ]
+    },
+    {
+        "id": "985c9d63.1552b",
+        "type": "change",
+        "z": "c9e1a67.b8a8958",
+        "name": "Delete from global",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "game",
+                "pt": "global"
+            },
+            {
+                "t": "delete",
+                "p": "rescuer",
+                "pt": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 385.5,
+        "y": 133.5999755859375,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "63d6c708.cc3ab8",
+        "type": "websocket in",
+        "z": "3d05af68.02efd",
+        "name": "Rescuer Socket",
+        "server": "",
+        "client": "86f2f496.d5352",
+        "x": 146.5,
+        "y": 256.99998474121094,
+        "wires": [
+            [
+                "801239f6.51efc"
+            ]
+        ]
+    },
+    {
+        "id": "e9698f1.6e5607",
+        "type": "debug",
+        "z": "3d05af68.02efd",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 525.5,
+        "y": 296.79998779296875,
+        "wires": []
+    },
+    {
+        "id": "db1171ba.6ee92",
+        "type": "http in",
+        "z": "c9e1a67.b8a8958",
+        "name": "Game Info",
+        "url": "gameInfo",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 113.5,
+        "y": 295.40000915527344,
+        "wires": [
+            [
+                "c7c04a5a.99a98"
+            ]
+        ]
+    },
+    {
+        "id": "dad52fa5.dc1b3",
+        "type": "http response",
+        "z": "c9e1a67.b8a8958",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 496.49998474121094,
+        "y": 295.8000030517578,
+        "wires": []
+    },
+    {
+        "id": "c7c04a5a.99a98",
+        "type": "change",
+        "z": "c9e1a67.b8a8958",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "game",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 304.5,
+        "y": 295,
+        "wires": [
+            [
+                "dad52fa5.dc1b3",
+                "2d3fa2e0.e4fce6"
+            ]
+        ]
+    },
+    {
+        "id": "2d3fa2e0.e4fce6",
+        "type": "debug",
+        "z": "c9e1a67.b8a8958",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 517.5,
+        "y": 354.4000244140625,
+        "wires": []
+    },
+    {
+        "id": "e96d0cec.4517b8",
+        "type": "websocket out",
+        "z": "be06837a.8970f8",
+        "name": "",
+        "server": "",
+        "client": "139ba1d5.63a836",
+        "x": 384.49998474121094,
+        "y": 70.80000305175781,
+        "wires": []
+    },
+    {
+        "id": "a4eece79.689588",
+        "type": "link in",
+        "z": "be06837a.8970f8",
+        "name": "ToRescueeSocket",
+        "links": [
+            "fd2e7fbd.60c2a8"
+        ],
+        "x": 145.49998474121094,
+        "y": 69.59999084472656,
+        "wires": [
+            [
+                "e96d0cec.4517b8",
+                "c062c96b.612978"
+            ]
+        ]
+    },
+    {
+        "id": "fd2e7fbd.60c2a8",
+        "type": "link out",
+        "z": "3d05af68.02efd",
+        "name": "",
+        "links": [
+            "a4eece79.689588"
+        ],
+        "x": 710.5,
+        "y": 257.20001220703125,
+        "wires": []
+    },
+    {
+        "id": "f3f69cf3.083ee",
+        "type": "watson-text-to-speech",
+        "z": "3d05af68.02efd",
+        "name": "",
+        "lang": "en-GB",
+        "langhidden": "en-GB",
+        "langcustom": "NoCustomisationSetting",
+        "langcustomhidden": "",
+        "voice": "en-GB_KateVoice",
+        "voicehidden": "",
+        "format": "audio/wav",
+        "password": "DetPtzgT6Gz4",
+        "payload-response": true,
+        "default-endpoint": true,
+        "service-endpoint": "https://stream.watsonplatform.net/text-to-speech/api",
+        "x": 558.5,
+        "y": 256,
+        "wires": [
+            [
+                "d9c40fe1.145bd8",
+                "fd2e7fbd.60c2a8"
+            ]
+        ]
+    },
+    {
+        "id": "d9c40fe1.145bd8",
+        "type": "debug",
+        "z": "3d05af68.02efd",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 743.5,
+        "y": 295,
+        "wires": []
+    },
+    {
+        "id": "c062c96b.612978",
+        "type": "debug",
+        "z": "be06837a.8970f8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 352.5,
+        "y": 133.99998474121094,
+        "wires": []
+    },
+    {
+        "id": "801239f6.51efc",
+        "type": "change",
+        "z": "3d05af68.02efd",
+        "name": "Remove _session",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "_session",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 341.50001525878906,
+        "y": 256.5999755859375,
+        "wires": [
+            [
+                "f3f69cf3.083ee",
+                "e9698f1.6e5607"
+            ]
+        ]
+    }
+]
