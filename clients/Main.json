@@ -1,32 +1,61 @@
 [
     {
-        "id": "d058ccc9.cc13e",
+        "id": "e39743b1.c0c38",
         "type": "tab",
         "label": "Flow 1"
     },
     {
-        "id": "6d39b357.a69904",
+        "id": "7cbf9c34.bad724",
         "type": "tab",
         "label": "Rescuer",
         "disabled": false,
         "info": "This is the code for the rescuer\nIt is designed for the pi. Not sure if we need a web page to give output"
     },
     {
-        "id": "811af44d.ab8ef",
+        "id": "b3f3759d.3c61e8",
         "type": "tab",
         "label": "Rescuer/Test",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "b58ad037.09f0b",
+        "id": "c25a96c5.98e458",
         "type": "tab",
         "label": "Rescuee",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "64a7c78b.3baf18",
+        "id": "8a11292b.1b7738",
+        "type": "subflow",
+        "name": "RetrieveJSON",
+        "info": "RetrieveJSON {fileName} => JSON\n\nThe given fileName will be interpolated into a URL in the repo.\nThis will be retrieved and converted to JSON",
+        "in": [
+            {
+                "x": 62,
+                "y": 131,
+                "wires": [
+                    {
+                        "id": "1168893c.65c66f"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 696,
+                "y": 130,
+                "wires": [
+                    {
+                        "id": "c1445568.f68bd",
+                        "port": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "305eacc3.508f84",
         "type": "subflow",
         "name": "keyboardParser",
         "info": "Converts RaspberryPi keyboard node output to something useful",
@@ -36,7 +65,7 @@
                 "y": 30,
                 "wires": [
                     {
-                        "id": "415afcd.5692b04"
+                        "id": "37ca5fe7.5be39"
                     }
                 ]
             }
@@ -47,7 +76,7 @@
                 "y": 88,
                 "wires": [
                     {
-                        "id": "9cc7229d.b361f",
+                        "id": "426f6cde.5c26d4",
                         "port": 0
                     }
                 ]
@@ -57,7 +86,7 @@
                 "y": 149,
                 "wires": [
                     {
-                        "id": "1eda54b7.f3b8fb",
+                        "id": "9a8d0261.b97ee",
                         "port": 0
                     }
                 ]
@@ -69,23 +98,68 @@
         ]
     },
     {
-        "id": "a24b9891.3ecf18",
+        "id": "60f91915.9f56b",
+        "type": "websocket-client",
+        "z": "",
+        "path": "wss://spacerescue.eu-gb.mybluemix.net/rescueeSocket",
+        "wholemsg": "true"
+    },
+    {
+        "id": "1a4abcdd.20f0b3",
         "type": "websocket-client",
         "z": "",
         "path": "wss://spacerescue.eu-gb.mybluemix.net/rescuerSocket",
         "wholemsg": "false"
     },
     {
-        "id": "200a468b.cc9f82",
-        "type": "websocket-client",
-        "z": "",
-        "path": "wss://spacerescue.eu-gb.mybluemix.net/rescueeSocket",
-        "wholemsg": "false"
+        "id": "4b3e9ff7.3925e8",
+        "type": "http request",
+        "z": "8a11292b.1b7738",
+        "name": "Get config",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 409.0000457763672,
+        "y": 130.1999969482422,
+        "wires": [
+            [
+                "c1445568.f68bd"
+            ]
+        ]
     },
     {
-        "id": "843f2344.4138e",
+        "id": "1168893c.65c66f",
+        "type": "function",
+        "z": "8a11292b.1b7738",
+        "name": "Compose URL",
+        "func": "msg.url = `https://raw.githubusercontent.com/AndrewStanton94/space/master/config/${msg.payload.fileName}.json`\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 209.00001525878906,
+        "y": 129.9999237060547,
+        "wires": [
+            [
+                "4b3e9ff7.3925e8"
+            ]
+        ]
+    },
+    {
+        "id": "c1445568.f68bd",
+        "type": "json",
+        "z": "8a11292b.1b7738",
+        "name": "",
+        "pretty": false,
+        "x": 557.0000457763672,
+        "y": 130.0000457763672,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6a10a82b.8e84c8",
         "type": "watson-text-to-speech",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "lang": "en-US",
         "langhidden": "en-US",
@@ -102,16 +176,16 @@
         "y": 52,
         "wires": [
             [
-                "a889b984.b992e8",
-                "8a823489.97ee58",
-                "b9832118.a1e4a"
+                "209b8c42.18f0b4",
+                "cbc64c40.db6f6",
+                "5527af57.0831d"
             ]
         ]
     },
     {
-        "id": "a889b984.b992e8",
+        "id": "209b8c42.18f0b4",
         "type": "play audio",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "voice": "1",
         "x": 900.5,
@@ -119,9 +193,9 @@
         "wires": []
     },
     {
-        "id": "d398ef50.7eb9",
+        "id": "e307b3a2.9ace1",
         "type": "inject",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "topic": "",
         "payload": "Talk to me",
@@ -133,14 +207,14 @@
         "y": 51.99998474121094,
         "wires": [
             [
-                "843f2344.4138e"
+                "6a10a82b.8e84c8"
             ]
         ]
     },
     {
-        "id": "1faf7861.d53a28",
+        "id": "9ba03bb3.8ea668",
         "type": "http in",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "url": "/text",
         "method": "get",
@@ -150,14 +224,14 @@
         "y": 91,
         "wires": [
             [
-                "5ee3661b.553cf8"
+                "a376fa99.8bd8e8"
             ]
         ]
     },
     {
-        "id": "5ee3661b.553cf8",
+        "id": "a376fa99.8bd8e8",
         "type": "function",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "func": "msg.payload = 'Here is some text'\nreturn msg;",
         "outputs": 1,
@@ -166,14 +240,14 @@
         "y": 90.19998168945312,
         "wires": [
             [
-                "843f2344.4138e"
+                "6a10a82b.8e84c8"
             ]
         ]
     },
     {
-        "id": "8a823489.97ee58",
+        "id": "cbc64c40.db6f6",
         "type": "http response",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "statusCode": "",
         "headers": {},
@@ -182,9 +256,9 @@
         "wires": []
     },
     {
-        "id": "b9832118.a1e4a",
+        "id": "5527af57.0831d",
         "type": "debug",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "active": true,
         "console": "false",
@@ -194,9 +268,9 @@
         "wires": []
     },
     {
-        "id": "e4fe233b.721a3",
+        "id": "fcf0414.90ca7c",
         "type": "http in",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "count",
         "url": "/count",
         "method": "get",
@@ -206,14 +280,14 @@
         "y": 583,
         "wires": [
             [
-                "5cb58cbc.8a20a4"
+                "e54a2237.07dc9"
             ]
         ]
     },
     {
-        "id": "5cb58cbc.8a20a4",
+        "id": "e54a2237.07dc9",
         "type": "function",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "func": "// initialise the counter to 0 if it doesn't exist already\nvar count = context.get('count')||0;\ncount += 1;\n// store the value back\ncontext.set('count',count);\n// make it part of the outgoing msg object\nmsg.payload = count;\nreturn msg;",
         "outputs": 1,
@@ -222,14 +296,14 @@
         "y": 582,
         "wires": [
             [
-                "65324c28.764334"
+                "edc16151.73f9d"
             ]
         ]
     },
     {
-        "id": "65324c28.764334",
+        "id": "edc16151.73f9d",
         "type": "http response",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "statusCode": "",
         "headers": {},
@@ -238,9 +312,9 @@
         "wires": []
     },
     {
-        "id": "8ceff24d.5bc6",
+        "id": "b342e894.42a098",
         "type": "watson-speech-to-text",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "American Speech->Text",
         "alternatives": 1,
         "speakerlabels": true,
@@ -259,14 +333,14 @@
         "y": 236,
         "wires": [
             [
-                "5bb19b0c.437bb4"
+                "7b0b056e.bf67bc"
             ]
         ]
     },
     {
-        "id": "63ff187f.252d78",
+        "id": "646abb17.891144",
         "type": "inject",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "punk",
         "topic": "",
         "payload": "http://www.wavsource.com/snds_2017-09-17_1751672946049674/movie_stars/eastwood/punk.wav",
@@ -278,15 +352,15 @@
         "y": 319,
         "wires": [
             [
-                "8ceff24d.5bc6",
-                "44a7c8df.dc47c8"
+                "b342e894.42a098",
+                "6472709a.d6d1f"
             ]
         ]
     },
     {
-        "id": "5bb19b0c.437bb4",
+        "id": "7b0b056e.bf67bc",
         "type": "debug",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "active": true,
         "console": "false",
@@ -296,9 +370,9 @@
         "wires": []
     },
     {
-        "id": "44a7c8df.dc47c8",
+        "id": "6472709a.d6d1f",
         "type": "watson-speech-to-text",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "English Speech->Text",
         "alternatives": 1,
         "speakerlabels": false,
@@ -317,14 +391,14 @@
         "y": 368,
         "wires": [
             [
-                "21799683.8ca9da"
+                "34ebdf4.684ea2"
             ]
         ]
     },
     {
-        "id": "21799683.8ca9da",
+        "id": "34ebdf4.684ea2",
         "type": "debug",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "active": true,
         "console": "false",
@@ -334,9 +408,9 @@
         "wires": []
     },
     {
-        "id": "13ad4a12.852426",
+        "id": "73cd9e74.e9cef",
         "type": "inject",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "Lack of faith",
         "topic": "",
         "payload": "http://www.wavsource.com/snds_2017-09-17_1751672946049674/movies/star_wars/lack_of_faith.wav",
@@ -348,14 +422,14 @@
         "y": 415,
         "wires": [
             [
-                "44a7c8df.dc47c8"
+                "6472709a.d6d1f"
             ]
         ]
     },
     {
-        "id": "ede0f3cd.10d7a",
+        "id": "59865ccf.aa37e4",
         "type": "inject",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "Nervous",
         "topic": "",
         "payload": "http://www.wavsource.com/snds_2017-09-17_1751672946049674/movies/airplane/nervous.wav",
@@ -367,14 +441,14 @@
         "y": 199,
         "wires": [
             [
-                "8ceff24d.5bc6"
+                "b342e894.42a098"
             ]
         ]
     },
     {
-        "id": "7cd30b44.718b74",
+        "id": "b76bbfa3.073ac",
         "type": "inject",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "Surely",
         "topic": "",
         "payload": "http://www.wavsource.com/snds_2017-12-04_8268401740269038/movies/airplane/surely_a.wav",
@@ -386,14 +460,14 @@
         "y": 159,
         "wires": [
             [
-                "8ceff24d.5bc6"
+                "b342e894.42a098"
             ]
         ]
     },
     {
-        "id": "1851210a.a23b1f",
+        "id": "25159676.abf1aa",
         "type": "visual-recognition-v3",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "Img",
         "apikey": "7fd3981e872c9b4d5021dda61179b8d92a7623af",
         "image-feature": "classifyImage",
@@ -402,14 +476,14 @@
         "y": 519.6000213623047,
         "wires": [
             [
-                "6b173b93.f63974"
+                "e0b9299d.73b298"
             ]
         ]
     },
     {
-        "id": "6b173b93.f63974",
+        "id": "e0b9299d.73b298",
         "type": "debug",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "active": true,
         "console": "false",
@@ -419,9 +493,9 @@
         "wires": []
     },
     {
-        "id": "d756eef5.98ccb",
+        "id": "aab60db0.8cc15",
         "type": "inject",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "topic": "",
         "payload": "http://static3.businessinsider.com/image/52695bc869beddc97fe18b3a-1200-706/airplane%20movie.jpg",
@@ -433,14 +507,14 @@
         "y": 516.9999847412109,
         "wires": [
             [
-                "1851210a.a23b1f"
+                "25159676.abf1aa"
             ]
         ]
     },
     {
-        "id": "6f4c2410.24febc",
+        "id": "5d10112b.4dc43",
         "type": "template",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "field": "payload",
         "fieldType": "msg",
@@ -452,14 +526,14 @@
         "y": 638.6000366210938,
         "wires": [
             [
-                "f712654a.79b378"
+                "1875ac21.14be14"
             ]
         ]
     },
     {
-        "id": "da98b13.6eeeb5",
+        "id": "8003d162.8d6f2",
         "type": "http in",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "/page",
         "url": "/page",
         "method": "get",
@@ -469,14 +543,14 @@
         "y": 639,
         "wires": [
             [
-                "6f4c2410.24febc"
+                "5d10112b.4dc43"
             ]
         ]
     },
     {
-        "id": "f712654a.79b378",
+        "id": "1875ac21.14be14",
         "type": "http response",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "statusCode": "",
         "headers": {},
@@ -485,37 +559,9 @@
         "wires": []
     },
     {
-        "id": "e69273e4.0a37e",
-        "type": "freeboard",
-        "z": "d058ccc9.cc13e",
-        "name": "testBoard",
-        "x": 551.4999847412109,
-        "y": 999.8000030517578,
-        "wires": []
-    },
-    {
-        "id": "16f4106b.223b28",
+        "id": "9153be3b.086be",
         "type": "inject",
-        "z": "d058ccc9.cc13e",
-        "name": "",
-        "topic": "",
-        "payload": "{\"session\":{\"id\":5,\"mission\":{}},\"rescuer\":{},\"rescuees\":[]}",
-        "payloadType": "json",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "x": 257.49998474121094,
-        "y": 1014.9999847412109,
-        "wires": [
-            [
-                "e69273e4.0a37e"
-            ]
-        ]
-    },
-    {
-        "id": "3f43077b.6af1a",
-        "type": "inject",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "topic": "",
         "payload": "",
@@ -523,47 +569,47 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 254.49998474121094,
-        "y": 1327.999984741211,
+        "x": 364.49998474121094,
+        "y": 709.9999847412109,
         "wires": [
             [
-                "c0a3805.bd1358"
+                "aeff3ea2.fffd4"
             ]
         ]
     },
     {
-        "id": "c0a3805.bd1358",
+        "id": "aeff3ea2.fffd4",
         "type": "http request",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "method": "GET",
         "ret": "txt",
         "url": "https://roomcheckproxy.eu-gb.mybluemix.net/page",
         "tls": "",
-        "x": 438.49998474121094,
-        "y": 1327.6000213623047,
+        "x": 548.4999847412109,
+        "y": 709.6000213623047,
         "wires": [
             [
-                "8da4b74f.373ae"
+                "61d2d67c.4afeb8"
             ]
         ]
     },
     {
-        "id": "8da4b74f.373ae",
+        "id": "61d2d67c.4afeb8",
         "type": "debug",
-        "z": "d058ccc9.cc13e",
+        "z": "e39743b1.c0c38",
         "name": "",
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 645.5,
-        "y": 1328,
+        "x": 755.5,
+        "y": 710,
         "wires": []
     },
     {
-        "id": "44a626cd.6aa4d8",
+        "id": "dee63d99.e6849",
         "type": "inject",
-        "z": "6d39b357.a69904",
+        "z": "7cbf9c34.bad724",
         "name": "Register Rescuer",
         "topic": "",
         "payload": "{\"device\":\"pi\"}",
@@ -575,14 +621,14 @@
         "y": 119,
         "wires": [
             [
-                "ce4a27d4.02c928"
+                "96edef43.404dd"
             ]
         ]
     },
     {
-        "id": "ce4a27d4.02c928",
+        "id": "96edef43.404dd",
         "type": "http request",
-        "z": "6d39b357.a69904",
+        "z": "7cbf9c34.bad724",
         "name": "",
         "method": "POST",
         "ret": "obj",
@@ -592,14 +638,14 @@
         "y": 118.39999389648438,
         "wires": [
             [
-                "d0741cd0.fc1348"
+                "5f7cfb54.2f8464"
             ]
         ]
     },
     {
-        "id": "d0741cd0.fc1348",
+        "id": "5f7cfb54.2f8464",
         "type": "switch",
-        "z": "6d39b357.a69904",
+        "z": "7cbf9c34.bad724",
         "name": "Is regestered with server?",
         "property": "payload.rescuer and payload.rescuer.registered\t    ? payload.rescuer.registered\t    : false",
         "propertyType": "jsonata",
@@ -617,10 +663,10 @@
         "y": 117.80000305175781,
         "wires": [
             [
-                "d6f2c006.9f477"
+                "bd30b2b.a85985"
             ],
             [
-                "80814920.34e59"
+                "2b8b6e48.791ee2"
             ]
         ],
         "outputLabels": [
@@ -629,9 +675,9 @@
         ]
     },
     {
-        "id": "fdba2ef4.473e1",
+        "id": "48a634fe.1fe5cc",
         "type": "debug",
-        "z": "6d39b357.a69904",
+        "z": "7cbf9c34.bad724",
         "name": "",
         "active": true,
         "console": "false",
@@ -641,9 +687,9 @@
         "wires": []
     },
     {
-        "id": "80814920.34e59",
+        "id": "2b8b6e48.791ee2",
         "type": "debug",
-        "z": "6d39b357.a69904",
+        "z": "7cbf9c34.bad724",
         "name": "",
         "active": true,
         "console": "false",
@@ -653,9 +699,9 @@
         "wires": []
     },
     {
-        "id": "d6f2c006.9f477",
+        "id": "bd30b2b.a85985",
         "type": "change",
-        "z": "6d39b357.a69904",
+        "z": "7cbf9c34.bad724",
         "name": "",
         "rules": [
             {
@@ -675,14 +721,14 @@
         "y": 95.59996032714844,
         "wires": [
             [
-                "fdba2ef4.473e1"
+                "48a634fe.1fe5cc"
             ]
         ]
     },
     {
-        "id": "a8b6b839.3da63",
+        "id": "56f97f45.adf4a",
         "type": "inject",
-        "z": "811af44d.ab8ef",
+        "z": "b3f3759d.3c61e8",
         "name": "Show rescuer",
         "topic": "",
         "payload": "",
@@ -694,14 +740,14 @@
         "y": 93,
         "wires": [
             [
-                "e7ca52d7.9ad0f8"
+                "83461a5f.cba888"
             ]
         ]
     },
     {
-        "id": "caacc11b.ea58b",
+        "id": "2df99950.fe4686",
         "type": "debug",
-        "z": "811af44d.ab8ef",
+        "z": "b3f3759d.3c61e8",
         "name": "",
         "active": true,
         "console": "false",
@@ -711,9 +757,9 @@
         "wires": []
     },
     {
-        "id": "e7ca52d7.9ad0f8",
+        "id": "83461a5f.cba888",
         "type": "function",
-        "z": "811af44d.ab8ef",
+        "z": "b3f3759d.3c61e8",
         "name": "",
         "func": "\nreturn context.global.rescuer;",
         "outputs": 1,
@@ -722,14 +768,14 @@
         "y": 93,
         "wires": [
             [
-                "caacc11b.ea58b"
+                "2df99950.fe4686"
             ]
         ]
     },
     {
-        "id": "4a5a2a60.0be8cc",
+        "id": "e801ab14.bab9d8",
         "type": "inject",
-        "z": "811af44d.ab8ef",
+        "z": "b3f3759d.3c61e8",
         "name": "Show global",
         "topic": "",
         "payload": "",
@@ -741,14 +787,14 @@
         "y": 150.1999969482422,
         "wires": [
             [
-                "d8e78bd.482c478"
+                "c17f2966.a13ce8"
             ]
         ]
     },
     {
-        "id": "8898efdb.940f7",
+        "id": "643193f4.ac0a0c",
         "type": "debug",
-        "z": "811af44d.ab8ef",
+        "z": "b3f3759d.3c61e8",
         "name": "",
         "active": true,
         "console": "false",
@@ -758,9 +804,9 @@
         "wires": []
     },
     {
-        "id": "d8e78bd.482c478",
+        "id": "c17f2966.a13ce8",
         "type": "function",
-        "z": "811af44d.ab8ef",
+        "z": "b3f3759d.3c61e8",
         "name": "",
         "func": "\nreturn context.global;",
         "outputs": 1,
@@ -769,14 +815,14 @@
         "y": 150.1999969482422,
         "wires": [
             [
-                "8898efdb.940f7"
+                "643193f4.ac0a0c"
             ]
         ]
     },
     {
-        "id": "2797a00b.4f6098",
+        "id": "e0767f00.4c4fe",
         "type": "inject",
-        "z": "6d39b357.a69904",
+        "z": "7cbf9c34.bad724",
         "name": "Fresh start",
         "topic": "",
         "payload": "",
@@ -788,14 +834,14 @@
         "y": 37,
         "wires": [
             [
-                "6ed5607c.65727"
+                "23b499ff.69cfb6"
             ]
         ]
     },
     {
-        "id": "6ed5607c.65727",
+        "id": "23b499ff.69cfb6",
         "type": "change",
-        "z": "6d39b357.a69904",
+        "z": "7cbf9c34.bad724",
         "name": "Delete gloabal attributes",
         "rules": [
             {
@@ -826,9 +872,9 @@
         ]
     },
     {
-        "id": "d54eb9fb.88614",
+        "id": "6b90102b.9a87",
         "type": "inject",
-        "z": "6d39b357.a69904",
+        "z": "7cbf9c34.bad724",
         "name": "Get Game Info",
         "topic": "",
         "payload": "",
@@ -840,14 +886,14 @@
         "y": 245.99998474121094,
         "wires": [
             [
-                "2a02adf2.235442"
+                "231009b5.689686"
             ]
         ]
     },
     {
-        "id": "2a02adf2.235442",
+        "id": "231009b5.689686",
         "type": "http request",
-        "z": "6d39b357.a69904",
+        "z": "7cbf9c34.bad724",
         "name": "",
         "method": "GET",
         "ret": "obj",
@@ -857,15 +903,14 @@
         "y": 246.40000915527344,
         "wires": [
             [
-                "52cf743f.6b2974",
-                "96f6c654.ed661"
+                "f8d93389.fdc1"
             ]
         ]
     },
     {
-        "id": "52cf743f.6b2974",
+        "id": "f8d93389.fdc1",
         "type": "change",
-        "z": "6d39b357.a69904",
+        "z": "7cbf9c34.bad724",
         "name": "",
         "rules": [
             {
@@ -888,20 +933,20 @@
         ]
     },
     {
-        "id": "9d520410.555218",
+        "id": "f6242fbe.7a7ef",
         "type": "websocket out",
-        "z": "811af44d.ab8ef",
+        "z": "b3f3759d.3c61e8",
         "name": "Rescuer Socket",
         "server": "",
-        "client": "a24b9891.3ecf18",
+        "client": "1a4abcdd.20f0b3",
         "x": 313.20001220703125,
         "y": 372.20001220703125,
         "wires": []
     },
     {
-        "id": "e4066e72.a9c438",
+        "id": "7c9964f8.2a3fac",
         "type": "inject",
-        "z": "811af44d.ab8ef",
+        "z": "b3f3759d.3c61e8",
         "name": "Test data",
         "topic": "",
         "payload": "{\"data\":\"test\"}",
@@ -913,29 +958,29 @@
         "y": 371.79998779296875,
         "wires": [
             [
-                "9d520410.555218"
+                "f6242fbe.7a7ef"
             ]
         ]
     },
     {
-        "id": "800d4bad.d7841",
+        "id": "aecebbaa.f2a428",
         "type": "websocket in",
-        "z": "811af44d.ab8ef",
+        "z": "b3f3759d.3c61e8",
         "name": "Rescuer Socket",
         "server": "",
-        "client": "a24b9891.3ecf18",
+        "client": "1a4abcdd.20f0b3",
         "x": 126.20002746582031,
         "y": 447.3999938964844,
         "wires": [
             [
-                "641e8fe8.83cb5"
+                "31bfa5fb.5dd58a"
             ]
         ]
     },
     {
-        "id": "641e8fe8.83cb5",
+        "id": "31bfa5fb.5dd58a",
         "type": "debug",
-        "z": "811af44d.ab8ef",
+        "z": "b3f3759d.3c61e8",
         "name": "",
         "active": true,
         "console": "false",
@@ -945,44 +990,9 @@
         "wires": []
     },
     {
-        "id": "96f6c654.ed661",
-        "type": "freeboard",
-        "z": "6d39b357.a69904",
-        "name": "Game data",
-        "x": 490.9000244140625,
-        "y": 291.79998779296875,
-        "wires": []
-    },
-    {
-        "id": "a06a71de.cbeed",
-        "type": "rpi-keyboard",
-        "z": "6d39b357.a69904",
-        "name": "",
-        "x": 91.49998474121094,
-        "y": 363.20001220703125,
-        "wires": [
-            [
-                "63f5d550.7ca61c",
-                "83e96130.feabe"
-            ]
-        ]
-    },
-    {
-        "id": "63f5d550.7ca61c",
+        "id": "6fc0a1f0.a4909",
         "type": "debug",
-        "z": "6d39b357.a69904",
-        "name": "",
-        "active": false,
-        "console": "false",
-        "complete": "false",
-        "x": 246.5,
-        "y": 470.0000305175781,
-        "wires": []
-    },
-    {
-        "id": "5e21fb41.bd8e74",
-        "type": "debug",
-        "z": "6d39b357.a69904",
+        "z": "7cbf9c34.bad724",
         "name": "",
         "active": true,
         "console": "false",
@@ -992,58 +1002,58 @@
         "wires": []
     },
     {
-        "id": "d4c75999.c7f6b",
+        "id": "11274800.27b628",
         "type": "websocket out",
-        "z": "6d39b357.a69904",
+        "z": "7cbf9c34.bad724",
         "name": "RescuerSocket",
         "server": "",
-        "client": "a24b9891.3ecf18",
+        "client": "1a4abcdd.20f0b3",
         "x": 498.5,
         "y": 357.6000061035156,
         "wires": []
     },
     {
-        "id": "d5c3458.a88ebb8",
+        "id": "60eb5e7d.54ffd",
         "type": "websocket in",
-        "z": "b58ad037.09f0b",
+        "z": "c25a96c5.98e458",
         "name": "Rescuee Socket",
         "server": "",
-        "client": "200a468b.cc9f82",
+        "client": "60f91915.9f56b",
         "x": 173.1999969482422,
-        "y": 156.1999969482422,
+        "y": 50.19999694824219,
         "wires": [
             [
-                "fe5e1a0b.0ba2c8",
-                "1d3a06ca.ee72e9"
+                "d7b20d6a.392db",
+                "1b348735.f7b719"
             ]
         ]
     },
     {
-        "id": "fe5e1a0b.0ba2c8",
+        "id": "d7b20d6a.392db",
         "type": "play audio",
-        "z": "b58ad037.09f0b",
+        "z": "c25a96c5.98e458",
         "name": "",
         "voice": "0",
         "x": 441.49998474121094,
-        "y": 156.59999084472656,
+        "y": 50.59999084472656,
         "wires": []
     },
     {
-        "id": "1d3a06ca.ee72e9",
+        "id": "1b348735.f7b719",
         "type": "debug",
-        "z": "b58ad037.09f0b",
+        "z": "c25a96c5.98e458",
         "name": "",
         "active": true,
         "console": "false",
         "complete": "true",
         "x": 423.4999694824219,
-        "y": 196.99998474121094,
+        "y": 90.99998474121094,
         "wires": []
     },
     {
-        "id": "415afcd.5692b04",
+        "id": "37ca5fe7.5be39",
         "type": "switch",
-        "z": "64a7c78b.3baf18",
+        "z": "305eacc3.508f84",
         "name": "action",
         "property": "action",
         "propertyType": "msg",
@@ -1070,7 +1080,7 @@
         "y": 139,
         "wires": [
             [
-                "f98790b6.deafe"
+                "c1f8378d.389bf8"
             ],
             [],
             []
@@ -1082,9 +1092,9 @@
         ]
     },
     {
-        "id": "f98790b6.deafe",
+        "id": "c1f8378d.389bf8",
         "type": "function",
-        "z": "64a7c78b.3baf18",
+        "z": "305eacc3.508f84",
         "name": "Input to char",
         "func": "const keyboardLookUp = {\n    14: \"backspace\",\n    28: \"enter\",\n    //\n    30: \"a\",\n    31: \"s\",\n    32: \"d\",\n    33: \"f\",\n    34: \"g\",\n    35: \"h\",\n    36: \"j\",\n    37: \"k\",\n    38: \"l\",\n    39: \";\",\n    40: \"'\",\n    43: \"#\",\n    //\n    48: \"b\"\n};\nmsg.payload = keyboardLookUp[msg.payload] || msg.payload;\nreturn msg;",
         "outputs": 1,
@@ -1093,14 +1103,14 @@
         "y": 114,
         "wires": [
             [
-                "d8a64049.1d15d"
+                "788306ce.cff6e8"
             ]
         ]
     },
     {
-        "id": "d8a64049.1d15d",
+        "id": "788306ce.cff6e8",
         "type": "switch",
-        "z": "64a7c78b.3baf18",
+        "z": "305eacc3.508f84",
         "name": "",
         "property": "payload",
         "propertyType": "msg",
@@ -1120,10 +1130,10 @@
         "y": 114,
         "wires": [
             [
-                "9cc7229d.b361f"
+                "426f6cde.5c26d4"
             ],
             [
-                "1eda54b7.f3b8fb"
+                "9a8d0261.b97ee"
             ]
         ],
         "outputLabels": [
@@ -1132,9 +1142,9 @@
         ]
     },
     {
-        "id": "9cc7229d.b361f",
+        "id": "426f6cde.5c26d4",
         "type": "change",
-        "z": "64a7c78b.3baf18",
+        "z": "305eacc3.508f84",
         "name": "Return & empty keystring",
         "rules": [
             {
@@ -1164,9 +1174,9 @@
         ]
     },
     {
-        "id": "1eda54b7.f3b8fb",
+        "id": "9a8d0261.b97ee",
         "type": "change",
-        "z": "64a7c78b.3baf18",
+        "z": "305eacc3.508f84",
         "name": "Append or backspace",
         "rules": [
             {
@@ -1200,30 +1210,30 @@
         "y": 148.4000244140625,
         "wires": [
             [
-                "2b2c297.483bdd6"
+                "2ed6a064.218d5"
             ]
         ]
     },
     {
-        "id": "83e96130.feabe",
-        "type": "subflow:64a7c78b.3baf18",
-        "z": "6d39b357.a69904",
+        "id": "eeb63927.407fe8",
+        "type": "subflow:305eacc3.508f84",
+        "z": "7cbf9c34.bad724",
         "name": "",
         "x": 304,
         "y": 364,
         "wires": [
             [
-                "d4c75999.c7f6b"
+                "11274800.27b628"
             ],
             [
-                "5e21fb41.bd8e74"
+                "6fc0a1f0.a4909"
             ]
         ]
     },
     {
-        "id": "807e6b2.f03ec98",
+        "id": "5a73ca0.b9caa38",
         "type": "inject",
-        "z": "64a7c78b.3baf18",
+        "z": "305eacc3.508f84",
         "name": "",
         "topic": "",
         "payload": "backspace",
@@ -1235,14 +1245,14 @@
         "y": 212,
         "wires": [
             [
-                "d8a64049.1d15d"
+                "788306ce.cff6e8"
             ]
         ]
     },
     {
-        "id": "37240b77.e49de4",
+        "id": "1d0529fc.82afa6",
         "type": "inject",
-        "z": "64a7c78b.3baf18",
+        "z": "305eacc3.508f84",
         "name": "",
         "topic": "",
         "payload": "enter",
@@ -1254,14 +1264,14 @@
         "y": 268.40003967285156,
         "wires": [
             [
-                "d8a64049.1d15d"
+                "788306ce.cff6e8"
             ]
         ]
     },
     {
-        "id": "6eb13a8c.2382b4",
+        "id": "e306973e.bd21f8",
         "type": "inject",
-        "z": "64a7c78b.3baf18",
+        "z": "305eacc3.508f84",
         "name": "",
         "topic": "",
         "payload": "a",
@@ -1273,14 +1283,14 @@
         "y": 332.40003967285156,
         "wires": [
             [
-                "d8a64049.1d15d"
+                "788306ce.cff6e8"
             ]
         ]
     },
     {
-        "id": "2b2c297.483bdd6",
+        "id": "2ed6a064.218d5",
         "type": "debug",
-        "z": "64a7c78b.3baf18",
+        "z": "305eacc3.508f84",
         "name": "",
         "active": true,
         "console": "false",
@@ -1288,5 +1298,136 @@
         "x": 838.75,
         "y": 295,
         "wires": []
+    },
+    {
+        "id": "7342103b.e7c05",
+        "type": "microphone",
+        "z": "c25a96c5.98e458",
+        "name": "Rescuee PTT",
+        "x": 148,
+        "y": 188,
+        "wires": [
+            [
+                "86f7179.4f4abe8"
+            ]
+        ]
+    },
+    {
+        "id": "b0941c12.c51dc",
+        "type": "websocket out",
+        "z": "c25a96c5.98e458",
+        "name": "Rescuee Socket",
+        "server": "",
+        "client": "60f91915.9f56b",
+        "x": 634,
+        "y": 185,
+        "wires": []
+    },
+    {
+        "id": "34961336.06b33c",
+        "type": "websocket in",
+        "z": "7cbf9c34.bad724",
+        "name": "RescuerSocket",
+        "server": "",
+        "client": "1a4abcdd.20f0b3",
+        "x": 182,
+        "y": 545,
+        "wires": [
+            [
+                "3a639c88.2869f4"
+            ]
+        ]
+    },
+    {
+        "id": "3a639c88.2869f4",
+        "type": "debug",
+        "z": "7cbf9c34.bad724",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 387,
+        "y": 544,
+        "wires": []
+    },
+    {
+        "id": "86f7179.4f4abe8",
+        "type": "change",
+        "z": "c25a96c5.98e458",
+        "name": "type = audio",
+        "rules": [
+            {
+                "t": "set",
+                "p": "type",
+                "pt": "msg",
+                "to": "audio",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 327,
+        "y": 188,
+        "wires": [
+            [
+                "b0941c12.c51dc"
+            ]
+        ]
+    },
+    {
+        "id": "70112490.17fcec",
+        "type": "change",
+        "z": "c25a96c5.98e458",
+        "name": "type = image",
+        "rules": [
+            {
+                "t": "set",
+                "p": "type",
+                "pt": "msg",
+                "to": "image",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 414,
+        "y": 253,
+        "wires": [
+            [
+                "b0941c12.c51dc"
+            ]
+        ]
+    },
+    {
+        "id": "6e65de62.455fd",
+        "type": "base64",
+        "z": "c25a96c5.98e458",
+        "name": "",
+        "x": 264,
+        "y": 253,
+        "wires": [
+            [
+                "70112490.17fcec"
+            ]
+        ]
+    },
+    {
+        "id": "139e91a.7a7696e",
+        "type": "fileinject",
+        "z": "c25a96c5.98e458",
+        "name": "",
+        "x": 124,
+        "y": 253,
+        "wires": [
+            [
+                "6e65de62.455fd"
+            ]
+        ]
     }
 ]
