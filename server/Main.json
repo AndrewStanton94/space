@@ -75,7 +75,7 @@
         "type": "websocket-client",
         "z": "",
         "path": "/rescueeSocket",
-        "wholemsg": "false"
+        "wholemsg": "true"
     },
     {
         "id": "df67fad2.ee242",
@@ -181,6 +181,7 @@
         "id": "c8f55741.96f95",
         "type": "subflow:71428fa9.e7a8d",
         "z": "c9e1a67.b8a8958",
+        "name": "",
         "x": 370.5,
         "y": 183.99998474121094,
         "wires": [
@@ -421,10 +422,10 @@
         "id": "1e2100a.43d647f",
         "type": "http response",
         "z": "3d05af68.02efd",
-        "name": "",
+        "name": "Registration Response",
         "statusCode": "",
         "headers": {},
-        "x": 726.5,
+        "x": 776.5,
         "y": 120,
         "wires": []
     },
@@ -649,7 +650,7 @@
         "id": "fd2e7fbd.60c2a8",
         "type": "link out",
         "z": "3d05af68.02efd",
-        "name": "",
+        "name": "ToRescueeSocket",
         "links": [
             "a4eece79.689588"
         ],
@@ -702,7 +703,7 @@
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 352.5,
+        "x": 353.5,
         "y": 133.99998474121094,
         "wires": []
     },
@@ -731,5 +732,383 @@
                 "e9698f1.6e5607"
             ]
         ]
+    },
+    {
+        "id": "29bd5fb1.cc5a",
+        "type": "websocket in",
+        "z": "be06837a.8970f8",
+        "name": "",
+        "server": "",
+        "client": "139ba1d5.63a836",
+        "x": 208,
+        "y": 245,
+        "wires": [
+            [
+                "9d7230e6.52bc3",
+                "2bae048b.9aa99c"
+            ]
+        ]
+    },
+    {
+        "id": "dacf234.05e65e",
+        "type": "websocket out",
+        "z": "be06837a.8970f8",
+        "name": "",
+        "server": "",
+        "client": "139ba1d5.63a836",
+        "x": 1221,
+        "y": 319,
+        "wires": []
+    },
+    {
+        "id": "ebbc9158.f6d3b",
+        "type": "watson-speech-to-text",
+        "z": "be06837a.8970f8",
+        "name": "",
+        "alternatives": 1,
+        "speakerlabels": true,
+        "smartformatting": false,
+        "lang": "en-GB",
+        "langhidden": "en-GB",
+        "langcustom": "NoCustomisationSetting",
+        "langcustomhidden": "",
+        "band": "NarrowbandModel",
+        "bandhidden": "NarrowbandModel",
+        "password": "qz0oBR5sBdsG",
+        "payload-response": true,
+        "default-endpoint": true,
+        "service-endpoint": "https://stream.watsonplatform.net/speech-to-text/api",
+        "x": 778,
+        "y": 197,
+        "wires": [
+            [
+                "5312c5b7.c9053c"
+            ]
+        ]
+    },
+    {
+        "id": "5312c5b7.c9053c",
+        "type": "link out",
+        "z": "be06837a.8970f8",
+        "name": "ToRescuerSocket",
+        "links": [
+            "41253079.0b24c"
+        ],
+        "x": 913,
+        "y": 197,
+        "wires": []
+    },
+    {
+        "id": "41253079.0b24c",
+        "type": "link in",
+        "z": "3d05af68.02efd",
+        "name": "ToRescuerSocket",
+        "links": [
+            "3fcfbc47.1a0ff4",
+            "5312c5b7.c9053c"
+        ],
+        "x": 124,
+        "y": 411,
+        "wires": [
+            [
+                "c607d5ef.0051f8",
+                "565328ba.8baf78"
+            ]
+        ]
+    },
+    {
+        "id": "565328ba.8baf78",
+        "type": "debug",
+        "z": "3d05af68.02efd",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 250,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "c607d5ef.0051f8",
+        "type": "websocket out",
+        "z": "3d05af68.02efd",
+        "name": "Rescuer Socket",
+        "server": "",
+        "client": "86f2f496.d5352",
+        "x": 253,
+        "y": 413,
+        "wires": []
+    },
+    {
+        "id": "7551c64f.0b8988",
+        "type": "inject",
+        "z": "8d27ecb8.437898",
+        "name": "",
+        "topic": "",
+        "payload": "Hello rescuer",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 201,
+        "y": 378,
+        "wires": [
+            [
+                "3fcfbc47.1a0ff4"
+            ]
+        ]
+    },
+    {
+        "id": "3fcfbc47.1a0ff4",
+        "type": "link out",
+        "z": "8d27ecb8.437898",
+        "name": "TEST_ToRescuerSocket",
+        "links": [
+            "41253079.0b24c"
+        ],
+        "x": 328,
+        "y": 378,
+        "wires": []
+    },
+    {
+        "id": "91c53313.d6a29",
+        "type": "switch",
+        "z": "be06837a.8970f8",
+        "name": "DataType",
+        "property": "type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "audio",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "image",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 600,
+        "y": 245,
+        "wires": [
+            [
+                "ebbc9158.f6d3b"
+            ],
+            [
+                "375924bb.24c96c"
+            ]
+        ],
+        "outputLabels": [
+            "Audio",
+            ""
+        ]
+    },
+    {
+        "id": "9d7230e6.52bc3",
+        "type": "debug",
+        "z": "be06837a.8970f8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 370,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "b55ba62e.104338",
+        "type": "visual-recognition-v3",
+        "z": "be06837a.8970f8",
+        "name": "",
+        "apikey": "__PWRD__",
+        "image-feature": "classifyImage",
+        "lang": "en",
+        "x": 988,
+        "y": 347,
+        "wires": [
+            [
+                "f79b7dc9.13965",
+                "dacf234.05e65e",
+                "498ad1db.1f724"
+            ]
+        ]
+    },
+    {
+        "id": "f79b7dc9.13965",
+        "type": "debug",
+        "z": "be06837a.8970f8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 1173,
+        "y": 368,
+        "wires": []
+    },
+    {
+        "id": "347bc5cf.23dd1a",
+        "type": "fileinject",
+        "z": "be06837a.8970f8",
+        "name": "",
+        "x": 766,
+        "y": 359,
+        "wires": [
+            [
+                "b55ba62e.104338"
+            ]
+        ]
+    },
+    {
+        "id": "375924bb.24c96c",
+        "type": "base64",
+        "z": "be06837a.8970f8",
+        "name": "",
+        "x": 764,
+        "y": 303,
+        "wires": [
+            [
+                "b55ba62e.104338"
+            ]
+        ]
+    },
+    {
+        "id": "2bae048b.9aa99c",
+        "type": "change",
+        "z": "be06837a.8970f8",
+        "name": "Remove _session",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "_session",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 411,
+        "y": 245,
+        "wires": [
+            [
+                "91c53313.d6a29"
+            ]
+        ]
+    },
+    {
+        "id": "498ad1db.1f724",
+        "type": "change",
+        "z": "be06837a.8970f8",
+        "name": "Extract categories",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "result.images.classifiers.classes.class\t",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1218,
+        "y": 436,
+        "wires": [
+            [
+                "f64c8c6e.bf707",
+                "3d9e1436.4bd7dc"
+            ]
+        ]
+    },
+    {
+        "id": "f64c8c6e.bf707",
+        "type": "debug",
+        "z": "be06837a.8970f8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1398,
+        "y": 436,
+        "wires": []
+    },
+    {
+        "id": "3d9e1436.4bd7dc",
+        "type": "function",
+        "z": "be06837a.8970f8",
+        "name": "Is required object?",
+        "func": "let expectedItem = context.global.game.game[0].scenes[0].acceptanceCriteria;\n\nreturn {\n    payload: msg.payload.includes(expectedItem)\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1449,
+        "y": 541,
+        "wires": [
+            [
+                "8a287353.1b7a5"
+            ]
+        ]
+    },
+    {
+        "id": "8a287353.1b7a5",
+        "type": "switch",
+        "z": "be06837a.8970f8",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 1484,
+        "y": 671,
+        "wires": [
+            [
+                "9b754d54.6993f"
+            ],
+            [
+                "78872056.3ffa"
+            ]
+        ],
+        "outputLabels": [
+            "Matches",
+            ""
+        ]
+    },
+    {
+        "id": "9b754d54.6993f",
+        "type": "debug",
+        "z": "be06837a.8970f8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1655,
+        "y": 583,
+        "wires": []
+    },
+    {
+        "id": "78872056.3ffa",
+        "type": "debug",
+        "z": "be06837a.8970f8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1639,
+        "y": 686,
+        "wires": []
     }
 ]
