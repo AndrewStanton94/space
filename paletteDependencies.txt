@@ -1,4 +1,5 @@
 node-red-node-watson
+node-red-node-base64
 
 ## Under consideration
 node-red-contrib-freeboard
