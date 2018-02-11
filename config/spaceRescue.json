@@ -1,6 +1,10 @@
 {
 	"name": "Space Rescue",
-	"description": "Description",
+	"description": "Description To be used when choosing a game to play",
+	"rescuerIntro": "This is the introduction text for the rescuer",
+	"rescueeIntro": "This is the spoken introduction for the rescuees",
+	"successMessage": "Yes",
+	"failureMessage": "No",
 	"game": [
 		{
 			"actIntro": "This is the first act",
@@ -12,8 +16,7 @@
 					"acceptanceCriteria": "ball"
 				}
 			],
-			"success": "Yes",
-			"fail": "No"
+
 		}
 	]
 }
