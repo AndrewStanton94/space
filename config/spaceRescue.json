@@ -3,8 +3,8 @@
 	"description": "Description To be used when choosing a game to play",
 	"rescuerIntro": "This is the introduction text for the rescuer",
 	"rescueeIntro": "This is the spoken introduction for the rescuees",
-	"successMessage": "Yes",
-	"failureMessage": "No",
+	"successMessage": "You have chosen correctly",
+	"failureMessage": "I'm sorry Dave, I can't let you do that.",
 	"game": [
 		{
 			"actIntro": "This is the first act",
