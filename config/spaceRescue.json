@@ -14,6 +14,25 @@
 					"resourcePrompt": "A ball",
 					"watsonUsed": "image",
 					"acceptanceCriteria": "ball"
+				},
+				
+				{
+					"description": "This is the second scene",
+					"resourcePrompt": "A cat",
+					"watsonUsed": "image",
+					"acceptanceCriteria": "cat"
+				}
+			]
+		},
+		
+		{
+			"actIntro": "This is the second act",
+			"scenes": [
+				{
+					"description": "This is the first scene, second act",
+					"resourcePrompt": "A dog",
+					"watsonUsed": "image",
+					"acceptanceCriteria": "dog"
 				}
 			]
 		}
