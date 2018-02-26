@@ -2,7 +2,7 @@
 	"name": "Space Rescue",
 	"description": "Description To be used when choosing a game to play",
 	"rescuerIntro": "This is the introduction text for the rescuer",
-	"rescueeIntro": "This is a rescue mission. To recue the team, you must work together to identify the pattern. The clues will be given in the form of a haiku. Please choose a team member to be the rescuer",
+	"rescueeIntro": "This is a rescue mission. To rescue the team, you must work together to identify the pattern. The clues will be given in the form of a haiku. Please choose a team member to be the rescuer",
 	"successMessage": "You have chosen correctly",
 	"failureMessage": "I'm sorry Dave, I can't let you do that.",
 	"game": [
