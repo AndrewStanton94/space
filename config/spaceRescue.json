@@ -10,14 +10,26 @@
 			"actIntro": "This is the first act",
 			"scenes": [
 				{
-					"description": "This is the first scene",
+					"description": "Moths fly late at night\
+						Shining darker than the sky\
+						Imperfect couple",
 					"resourcePrompt": "A ball",
 					"watsonUsed": "image",
 					"acceptanceCriteria": "ball"
 				},
 				
 				{
-					"description": "This is the second scene",
+					"description": "Waves of the ocean\
+						Parallel to a trio\
+						The pebbles below",
+					"resourcePrompt": "A cat",
+					"watsonUsed": "image",
+					"acceptanceCriteria": "cat"
+				},
+				{
+					"description": "Red koi of a stream\
+						Pushing against the current\
+						Never going blunt",
 					"resourcePrompt": "A cat",
 					"watsonUsed": "image",
 					"acceptanceCriteria": "cat"
