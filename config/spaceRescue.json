@@ -10,26 +10,20 @@
 			"actIntro": "This is the first act",
 			"scenes": [
 				{
-					"description": "Moths fly late at night\
-						Shining darker than the sky\
-						Imperfect couple",
+					"description": "Moths fly late at night\\nShining darker than the sky\\nImperfect couple",
 					"resourcePrompt": "A ball",
 					"watsonUsed": "image",
 					"acceptanceCriteria": "ball"
 				},
 				
 				{
-					"description": "Waves of the ocean\
-						Parallel to a trio\
-						The pebbles below",
+					"description": "Waves of the ocean\\nParallel to a trio\\nThe pebbles below",
 					"resourcePrompt": "A cat",
 					"watsonUsed": "image",
 					"acceptanceCriteria": "cat"
 				},
 				{
-					"description": "Red koi of a stream\
-						Pushing against the current\
-						Never going blunt",
+					"description": "Red koi of a stream\\nPushing against the current\\nNever going blunt",
 					"resourcePrompt": "A cat",
 					"watsonUsed": "image",
 					"acceptanceCriteria": "cat"
