@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, initial-scale=1">
+    <title>GRIP_TEST</title>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https:///code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="js"></script>
+</head>
+
+<body>
+    <div id="wrapper" style="width: 100%;">
+
+        <div id="messages" style="float:left; width: 60%">
+
+        </div>
+        <div id="objectUI" align="center" style="float:right; width: 40%">
+            <br>Object Properties:
+
+            <div id="objectUIbodyLeft" style="float:left; width: 20%">
+                <br><br><br>
+                <label for="property1">Property 1</label><br><br>
+                <label for="property2">Property 2</label><br><br>
+                <label for="property3">Property 3</label><br><br>
+                <label for="property4">Property 4</label><br><br>
+                <label for="property5">Property 5</label><br><br>
+                <label for="property6">Property 6</label><br><br>
+            </div>
+
+            <div id="objectUIbodyRight" style="float:right; width: 20%">
+                <br><br><br>
+                <input type="radio" name="propertyGroup" id="property1" value="property1"><br><br>
+                <input type="radio" name="propertyGroup" id="property2" value="property2"><br><br>
+                <input type="radio" name="propertyGroup" id="property3" value="property3"><br><br>
+                <input type="radio" name="propertyGroup" id="property4" value="property4"><br><br>
+                <input type="radio" name="propertyGroup" id="property5" value="property5"><br><br>
+                <input type="radio" name="propertyGroup" id="property6" value="property6"><br><br>
+            </div>
+
+            <div id="haikuButtons" align="center" style="width: 40%">
+                <input type="button" id="send_btn1" value="Haiku 1" onclick="activateHaiku1()">
+                <input type="button" id="send_btn2" value="Haiku 2" onclick="activateHaiku2()">
+                <input type="button" id="send_btn3" value="Haiku 3" onclick="activateHaiku3()">
+            </div>
+        </div>
+    </div>
+    <div style="clear:both">
+        <form id="form" onsubmit="return false;">
+            <div id="footer">
+                <input id="textbox" type="text" placeholder="Message" onkeypress="return sendText(event)" />
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        // Open a websocket
+         var publishSocket = new WebSocket("wss://{{req.headers.host}}/public/messagereceive");
+         var listenSocket = new WebSocket("wss://{{req.headers.host}}/public/messagepublish");
+         
+         listenSocket.onmessage = function (event) {
+            // When receiving a message append a div child to #messages
+            data = JSON.parse(event.data);
+            console.log(event);
+            if (data.messageType == 0) {
+            $("#messages").append("<div class='msg sentiment"+data.sentiment+"' >"+data.user+" - "+data.msg+"</div>")
+            if ($("#messages").children().length > 10 ) {
+                $("#messages :first-child").remove()}
+            }
+            if (data.messageType == 1) {
+                 $("#messages").append("<div class='msg server'>"+data.user+" - "+"Reading Haiku #1 to team"+"</div>")
+            }
+            if (data.messageType == 2) {
+              $("#messages").append("<div class='msg server'>"+data.user+" - "+"Reading Haiku #2 to team"+"</div>")
+            }
+         if (data.messageType == 3) {
+           $("#messages").append("<div class='msg server'>"+data.user+" - "+"Reading Haiku #3 to team"+"</div>")
+         }
+         if (data.messageType == 4) {
+               $("#messages").append("<div class='msg server'>"+data.user+" - "+"Camera data received"+"</div>")
+         }
+         }
+         
+         listenSocket.onclose = function(event){
+            $("#messages").append("<div class='msg server'>Disconnected from server.</div>");
+         }
+         
+         listenSocket.onopen = function(event){
+            $("#messages").append("<div class='msg server'>Connected to server.</div>")
+         }
+         
+         function sendText(event) {
+         // Only if return key pressed
+         if (event.keyCode == 13) {
+            // Construct object containing the data the server needs.
+            d = new Date();
+            var data = {
+                msg: $("#textbox").val(),
+                user: "Rescuer",
+                messageType: 0,
+                timestamp: d.getHours() +":"+ d.getMinutes() + ":" + d.getSeconds()
+            };
+         // Send the msg object as a JSON-formatted string.
+         publishSocket.send(JSON.stringify(data));
+         // Blank the text input element
+         $("#textbox").val("");
+         }
+         }
+         
+         function activateHaiku1() {
+         d = new Date();
+         var data = {
+         msg: "Moths fly late at night. Shining darker than the sky. Imperfect couple.",
+         user: "System",
+         messageType: 1,
+         timestamp: d.getHours() +":"+ d.getMinutes() + ":" + d.getSeconds()
+         };
+         publishSocket.send(JSON.stringify(data));
+         $("#textbox").val("");
+         }
+         
+         function activateHaiku2() {
+         d = new Date();
+         var data = {
+         msg: "Waves of the ocean. Parallel to a trio. The pebbles below.",
+         user: "System",
+         messageType: 2,
+         timestamp: d.getHours() +":"+ d.getMinutes() + ":" + d.getSeconds()
+         };
+         publishSocket.send(JSON.stringify(data));
+         $("#textbox").val("");
+         }
+         
+         function activateHaiku3() {
+         d = new Date();
+         var data = {
+         msg: "Red koi of a stream. Pushing against the current. Never going blunt.",
+         user: "System",
+         messageType: 3,
+         timestamp: d.getHours() +":"+ d.getMinutes() + ":" + d.getSeconds()
+         };
+         publishSocket.send(JSON.stringify(data));
+         $("#textbox").val("");
+         }
+    </script>
+</body>
+
+</html>
+
+<style type="text/css">
+    html, body, #wrapper {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+    
+    * {
+        font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+        font-style: italic;
+        font-size: 24px;
+        color: #00FF66;
+      }
+      
+      #messages {
+        background-color: #000;
+        height: 100%;
+        overflow: auto;
+        padding-bottom: 50px;
+      }
+       .msg {color:#00FF66; padding:2px; margin:2px;}
+     .server {color:#A0A0A0; font-size:small;}
+     .sentiment-3 {color:#006400;}
+     .sentiment0 {color:#00FF66;}
+     .sentiment3 {color:#d9ffb3;}
+      
+        #objectUIheader {
+        height: 100%;
+        width: 40%;
+        background-color: #A0A0A0;
+        padding-bottom: 50px;
+        color: #E0E0E0;
+      }
+      
+      #objectUI {
+        height: 100%;
+        width: 40%;
+        background-color: #A0A0A0;
+        padding-bottom: 50px;
+        color: #E0E0E0;
+      }
+      
+      #objectUIbodyLeft {
+        background-color: #A0A0A0;
+        color: #E0E0E0;
+        padding-left: 12px;
+        position: relative;
+      }
+      
+      #objectUIbodyRight {
+        background-color: #A0A0A0;
+        color: #E0E0E0;
+        padding-right: 12px;
+        position: relative;
+      }
+    
+    #textbox {
+        background-color: #E0E0E0;
+        width: 100%;
+        overflow: fixed;
+        color: #000000;
+    
+      }
+      
+      #wrapper {
+        background-color: #000;
+      }
+    
+    
+    #haikuButtons {
+    
+        
+        position: fixed;
+        bottom: 50px;
+        height: 80px;
+        width: 100%;
+        background-color: #A0A0A0;
+        color: #E0E0E0;
+      }
+      
+      #footer {
+        box-sizing: border-box;
+        position: fixed;
+        bottom: 0;
+        height: 50px;
+        width: 100%;
+        background-color: #A0A0A0;
+        
+      }
+    
+      #footer .content {
+        padding-top: 4px;
+        position: relative;
+      }
+    
+      #user { width: 20%; }
+      #message { width: 68%; }
+      #send_btn {
+        width: 10%;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+      }
+    
+      .content {
+        width: 70%;
+        margin: 0 auto;
+      }
+    
+      input[type="text"],
+      input[type="button"] {
+        border: 0;
+        color: #00FF66;
+      }
+    
+      input[type="text"] {
+        background-color: #E0E0E0;
+        padding: 3px 10px;
+      }
+    
+      input[type="button"] {
+        background-color: #808080;
+        color: #E0E0E0;
+        border-top: 2px solid #A0A0A0;
+        border-left: 2px solid #A0A0A0;
+        border-right: 2px solid #A0A0A0;
+        border-bottom: 2px solid #A0A0A0;
+        min-width: 70px;
+        display: inline-block;
+        padding: 10px;
+      }
+      
+      label {
+        color: #E0E0E0;
+      }
+    
+      input[type="button"]:hover {
+        background-color: #A0A0A0;
+        cursor: pointer;
+      }
+    
+      .system,
+      .username {
+        color: #00FF66;
+        font-style: italic;
+        font-family: monospace;
+        font-size: 16px;
+      }
+    
+      @media(max-width: 1000px) {
+        .content { width: 90%; }
+      }
+    
+      @media(max-width: 780px) {
+        #footer { height: 91px; }
+        #chat_box { padding-bottom: 91px;}
+    
+        #user { width: 100%; }
+        #message { width: 80%; }
+      }
+    
+      @media(max-width: 400px) {
+        #footer { height: 135px; }
+        #messages { padding-bottom: 135px;}
+    
+    
+        #message { width: 100%; }
+        #send_btn {
+          position: relative;
+          margin-top: 3px;
+          width: 100%;
+        }
+      }
+</style>
