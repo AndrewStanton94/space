@@ -1,3 +1,4 @@
+alert('Will this run ¯\_(ツ)_/¯')
 // Open a websocket
 var publishSocket = new WebSocket("wss://{{req.headers.host}}/public/messagereceive");
 var listenSocket = new WebSocket("wss://{{req.headers.host}}/public/messagepublish");
