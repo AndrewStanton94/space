@@ -68,17 +68,17 @@ body,
     padding-left: 12px;
     position: relative;
     float:left;
-    width: 20%;
+    width: 100%;
 }
 
-#objectUIbodyRight {
+/*#objectUIbodyRight {
     background-color: #A0A0A0;
     color: #E0E0E0;
     padding-right: 12px;
     position: relative;
     float:right;
     width: 20%;
-}
+}*/
 
 #textbox {
     background-color: #E0E0E0;
