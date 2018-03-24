@@ -1,0 +1,882 @@
+[
+    {
+        "id": "8dd28d23.a55c5",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "324af771.2d3878",
+        "type": "tab",
+        "label": "Set Up",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9ded42b9.7eea6",
+        "type": "subflow",
+        "name": "RetrieveJSON",
+        "info": "RetrieveJSON {fileName} => JSON\n\nThe given fileName will be interpolated into a URL in the repo.\nThis will be retrieved and converted to JSON",
+        "in": [
+            {
+                "x": 62,
+                "y": 131,
+                "wires": [
+                    {
+                        "id": "cd4a4b17.fa8da8"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 696,
+                "y": 130,
+                "wires": [
+                    {
+                        "id": "1cd63b3c.10e7b5",
+                        "port": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "a5ed64b4.e28088",
+        "type": "subflow",
+        "name": "keyboardParser",
+        "info": "Converts RaspberryPi keyboard node output to something useful",
+        "in": [
+            {
+                "x": 50,
+                "y": 30,
+                "wires": [
+                    {
+                        "id": "cce6ba68.2ea268"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 828,
+                "y": 88,
+                "wires": [
+                    {
+                        "id": "8bcb4f29.a6f69",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 825,
+                "y": 149,
+                "wires": [
+                    {
+                        "id": "8f9b0544.528578",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "outputLabels": [
+            "Submit",
+            "Edit"
+        ]
+    },
+    {
+        "id": "958345de.29fe88",
+        "type": "websocket-listener",
+        "z": "",
+        "path": "/rescueeSocket",
+        "wholemsg": "false"
+    },
+    {
+        "id": "c6b08bc.5ea5978",
+        "type": "websocket-client",
+        "z": "",
+        "path": "ws://epastry.eu-gb.mybluemix.net/rescuee",
+        "tls": "",
+        "wholemsg": "false"
+    },
+    {
+        "id": "357c7925.7220a6",
+        "type": "websocket in",
+        "z": "8dd28d23.a55c5",
+        "name": "/rescueeSocket",
+        "server": "958345de.29fe88",
+        "client": "",
+        "x": 120,
+        "y": 120,
+        "wires": [
+            [
+                "40f01ede.f4451"
+            ]
+        ]
+    },
+    {
+        "id": "b6145273.dfd92",
+        "type": "play audio",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "voice": "",
+        "x": 810,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "f6c1b18d.e797c",
+        "type": "microphone",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "x": 130,
+        "y": 440,
+        "wires": [
+            [
+                "8b5d6d7b.e8949"
+            ]
+        ]
+    },
+    {
+        "id": "8180f7d7.f24508",
+        "type": "fileinject",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "x": 140,
+        "y": 520,
+        "wires": [
+            [
+                "8b5d6d7b.e8949",
+                "9fe838c0.356878"
+            ]
+        ]
+    },
+    {
+        "id": "cedd32f5.81f26",
+        "type": "http request",
+        "z": "9ded42b9.7eea6",
+        "name": "Get config",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 409.0000457763672,
+        "y": 130.1999969482422,
+        "wires": [
+            [
+                "1cd63b3c.10e7b5"
+            ]
+        ]
+    },
+    {
+        "id": "cd4a4b17.fa8da8",
+        "type": "function",
+        "z": "9ded42b9.7eea6",
+        "name": "Compose URL",
+        "func": "msg.url = `https://raw.githubusercontent.com/AndrewStanton94/space/master/config/${msg.payload.fileName}.json`\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 209.00001525878906,
+        "y": 129.9999237060547,
+        "wires": [
+            [
+                "cedd32f5.81f26"
+            ]
+        ]
+    },
+    {
+        "id": "1cd63b3c.10e7b5",
+        "type": "json",
+        "z": "9ded42b9.7eea6",
+        "name": "",
+        "pretty": false,
+        "x": 557.0000457763672,
+        "y": 130.0000457763672,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cce6ba68.2ea268",
+        "type": "switch",
+        "z": "a5ed64b4.e28088",
+        "name": "action",
+        "property": "action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "up",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "down",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "repeat",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 3,
+        "x": 152,
+        "y": 139,
+        "wires": [
+            [
+                "9e35e47f.3a28d8"
+            ],
+            [],
+            []
+        ],
+        "outputLabels": [
+            "Up",
+            "Down",
+            "Repeat"
+        ]
+    },
+    {
+        "id": "9e35e47f.3a28d8",
+        "type": "function",
+        "z": "a5ed64b4.e28088",
+        "name": "Input to char",
+        "func": "const keyboardLookUp = {\n    14: \"backspace\",\n    28: \"enter\",\n    //\n    30: \"a\",\n    31: \"s\",\n    32: \"d\",\n    33: \"f\",\n    34: \"g\",\n    35: \"h\",\n    36: \"j\",\n    37: \"k\",\n    38: \"l\",\n    39: \";\",\n    40: \"'\",\n    43: \"#\",\n    //\n    48: \"b\"\n};\nmsg.payload = keyboardLookUp[msg.payload] || msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 339,
+        "y": 114,
+        "wires": [
+            [
+                "419ec2a0.f91e3c"
+            ]
+        ]
+    },
+    {
+        "id": "419ec2a0.f91e3c",
+        "type": "switch",
+        "z": "a5ed64b4.e28088",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "enter",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 487,
+        "y": 114,
+        "wires": [
+            [
+                "8bcb4f29.a6f69"
+            ],
+            [
+                "8f9b0544.528578"
+            ]
+        ],
+        "outputLabels": [
+            "Submit",
+            "Edit"
+        ]
+    },
+    {
+        "id": "8bcb4f29.a6f69",
+        "type": "change",
+        "z": "a5ed64b4.e28088",
+        "name": "Return & empty keystring",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "keyString",
+                "tot": "global"
+            },
+            {
+                "t": "set",
+                "p": "keyString",
+                "pt": "global",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 674.0000305175781,
+        "y": 87.80006408691406,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8f9b0544.528578",
+        "type": "change",
+        "z": "a5ed64b4.e28088",
+        "name": "Append or backspace",
+        "rules": [
+            {
+                "t": "set",
+                "p": "keyString",
+                "pt": "msg",
+                "to": "keyString",
+                "tot": "global"
+            },
+            {
+                "t": "set",
+                "p": "keyString",
+                "pt": "global",
+                "to": "payload = \"backspace\"\t? $substring(keyString, 0, $length(keyString) - 1 )\t: keyString & payload",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "keyString",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 670,
+        "y": 148.4000244140625,
+        "wires": [
+            [
+                "a00c59c0.e05db8"
+            ]
+        ]
+    },
+    {
+        "id": "83d7dece.42073",
+        "type": "inject",
+        "z": "a5ed64b4.e28088",
+        "name": "",
+        "topic": "",
+        "payload": "backspace",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 341,
+        "y": 212,
+        "wires": [
+            [
+                "419ec2a0.f91e3c"
+            ]
+        ]
+    },
+    {
+        "id": "2fc0631.d1edd9c",
+        "type": "inject",
+        "z": "a5ed64b4.e28088",
+        "name": "",
+        "topic": "",
+        "payload": "enter",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 323.1000213623047,
+        "y": 268.40003967285156,
+        "wires": [
+            [
+                "419ec2a0.f91e3c"
+            ]
+        ]
+    },
+    {
+        "id": "85c97402.f2b0b8",
+        "type": "inject",
+        "z": "a5ed64b4.e28088",
+        "name": "",
+        "topic": "",
+        "payload": "a",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 328.1000213623047,
+        "y": 332.40003967285156,
+        "wires": [
+            [
+                "419ec2a0.f91e3c"
+            ]
+        ]
+    },
+    {
+        "id": "a00c59c0.e05db8",
+        "type": "debug",
+        "z": "a5ed64b4.e28088",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 838.75,
+        "y": 295,
+        "wires": []
+    },
+    {
+        "id": "8b5d6d7b.e8949",
+        "type": "change",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"voice\": payload\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 440,
+        "wires": [
+            [
+                "18be5c82.cdd2b3"
+            ]
+        ]
+    },
+    {
+        "id": "18be5c82.cdd2b3",
+        "type": "websocket out",
+        "z": "8dd28d23.a55c5",
+        "name": "ePastry",
+        "server": "",
+        "client": "c6b08bc.5ea5978",
+        "x": 500,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "a0696c17.d9817",
+        "type": "play audio",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "voice": "",
+        "x": 330,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "9fe838c0.356878",
+        "type": "debug",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 310,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "40f01ede.f4451",
+        "type": "json",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 290,
+        "y": 120,
+        "wires": [
+            [
+                "79800dbf.9e3c74"
+            ]
+        ]
+    },
+    {
+        "id": "d2485838.dab6e8",
+        "type": "comment",
+        "z": "8dd28d23.a55c5",
+        "name": "Communication from the server",
+        "info": "",
+        "x": 170,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "c9bced7a.d637c",
+        "type": "comment",
+        "z": "8dd28d23.a55c5",
+        "name": "Audio to server",
+        "info": "",
+        "x": 120,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "a5bf4ad6.8f618",
+        "type": "function",
+        "z": "8dd28d23.a55c5",
+        "name": "Array to buffer",
+        "func": "return {\n    payload: Buffer.from(msg.payload.voice)\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 620,
+        "y": 40,
+        "wires": [
+            [
+                "b6145273.dfd92"
+            ]
+        ]
+    },
+    {
+        "id": "79800dbf.9e3c74",
+        "type": "switch",
+        "z": "8dd28d23.a55c5",
+        "name": "Router",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "jsonata_exp",
+                "v": "$exists(payload.voice)\t",
+                "vt": "jsonata"
+            },
+            {
+                "t": "jsonata_exp",
+                "v": "$exists(payload.heartbeat)\t",
+                "vt": "jsonata"
+            },
+            {
+                "t": "jsonata_exp",
+                "v": "$exists(payload.imgClasses)\t",
+                "vt": "jsonata"
+            },
+            {
+                "t": "jsonata_exp",
+                "v": "$exists(payload.state)\t",
+                "vt": "jsonata"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 5,
+        "x": 430,
+        "y": 120,
+        "wires": [
+            [
+                "a5bf4ad6.8f618"
+            ],
+            [
+                "8c6d5d8c.ba0d48"
+            ],
+            [
+                "bf2c7163.63a0c"
+            ],
+            [
+                "5b99b5d4.1ccf8c"
+            ],
+            []
+        ],
+        "outputLabels": [
+            "Voice",
+            "Heartbeat",
+            "ImgClasses",
+            "",
+            null
+        ]
+    },
+    {
+        "id": "8c6d5d8c.ba0d48",
+        "type": "debug",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.heartbeat",
+        "x": 640,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "789ddf62.b4b96",
+        "type": "inject",
+        "z": "324af771.2d3878",
+        "name": "Sinus rhythm",
+        "topic": "",
+        "payload": "{\"heartbeat\":\"rescuee\"}",
+        "payloadType": "json",
+        "repeat": "3600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "x": 160,
+        "y": 40,
+        "wires": [
+            [
+                "9cb50576.937d28"
+            ]
+        ]
+    },
+    {
+        "id": "9cb50576.937d28",
+        "type": "websocket out",
+        "z": "324af771.2d3878",
+        "name": "",
+        "server": "",
+        "client": "c6b08bc.5ea5978",
+        "x": 460,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "359258eb.da2f48",
+        "type": "websocket out",
+        "z": "8dd28d23.a55c5",
+        "name": "ePastry",
+        "server": "",
+        "client": "c6b08bc.5ea5978",
+        "x": 300,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "8f320f16.eb92a8",
+        "type": "inject",
+        "z": "8dd28d23.a55c5",
+        "name": "Intro",
+        "topic": "",
+        "payload": "{\"exposition\":true}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 110,
+        "y": 340,
+        "wires": [
+            [
+                "359258eb.da2f48"
+            ]
+        ]
+    },
+    {
+        "id": "1e053b72.dbf96d",
+        "type": "comment",
+        "z": "8dd28d23.a55c5",
+        "name": "Request introduction",
+        "info": "",
+        "x": 130,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "728784b1.6dfe6c",
+        "type": "fileinject",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "x": 140,
+        "y": 660,
+        "wires": [
+            [
+                "29df2ebf.442a62"
+            ]
+        ]
+    },
+    {
+        "id": "29df2ebf.442a62",
+        "type": "change",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"img\": payload,\t    \"state\": $globalContext(\"state\")\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 660,
+        "wires": [
+            [
+                "7fce6095.341e7",
+                "78853dab.f1c014"
+            ]
+        ]
+    },
+    {
+        "id": "7fce6095.341e7",
+        "type": "debug",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 730,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "78853dab.f1c014",
+        "type": "websocket out",
+        "z": "8dd28d23.a55c5",
+        "name": "ePastry",
+        "server": "",
+        "client": "c6b08bc.5ea5978",
+        "x": 720,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "1614e12.b86d21f",
+        "type": "comment",
+        "z": "8dd28d23.a55c5",
+        "name": "Images to server",
+        "info": "",
+        "x": 140,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "4e04d488.7f058c",
+        "type": "camera",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "x": 140,
+        "y": 740,
+        "wires": [
+            [
+                "29df2ebf.442a62"
+            ]
+        ]
+    },
+    {
+        "id": "bf2c7163.63a0c",
+        "type": "debug",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 610,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "104dc395.294a9c",
+        "type": "inject",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "topic": "",
+        "payload": "{\"act\":0,\"scene\":0}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 820,
+        "wires": [
+            [
+                "64ab6274.4d9434"
+            ]
+        ]
+    },
+    {
+        "id": "64ab6274.4d9434",
+        "type": "change",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "state",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5b99b5d4.1ccf8c",
+        "type": "change",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "state",
+                "pt": "global",
+                "to": "state",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 240,
+        "wires": [
+            [
+                "65a9a214.a6480c"
+            ]
+        ]
+    },
+    {
+        "id": "65a9a214.a6480c",
+        "type": "debug",
+        "z": "8dd28d23.a55c5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 780,
+        "y": 240,
+        "wires": []
+    }
+]
