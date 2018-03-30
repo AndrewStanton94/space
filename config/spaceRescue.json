@@ -1,42 +1,37 @@
 {
 	"name": "Space Rescue",
 	"description": "Description To be used when choosing a game to play",
-	"rescuerIntro": "This is the introduction text for the rescuer",
-	"rescueeIntro": "This is a rescue mission. To rescue the team, you must work together to identify the pattern. The clues will be given in the form of a haiku. Please choose a team member to be the rescuer",
+	"gameIntro": "This is a rescue mission. To rescue the team, you must work together to identify the pattern. The clues will be given in the form of a haiku. Please choose a team member to be the rescuer",
 	"successMessage": "You have chosen correctly",
 	"failureMessage": "I'm sorry Dave, I can't let you do that.",
-	"game": [
+	"gameDescription": [
 		{
 			"actIntro": "This is the first act",
 			"scenes": [
 				{
-					"description": "Moths fly late at night\\nShining darker than the sky\\nImperfect couple",
-					"resourcePrompt": "A ball",
+					"sceneIntro": "Moths fly late at night\\nShining darker than the sky\\nImperfect couple",
 					"watsonUsed": "image",
 					"acceptanceCriteria": "ball"
 				},
-				
+
 				{
-					"description": "Waves of the ocean\\nParallel to a trio\\nThe pebbles below",
-					"resourcePrompt": "A cat",
+					"sceneIntro": "Waves of the ocean\\nParallel to a trio\\nThe pebbles below",
 					"watsonUsed": "image",
 					"acceptanceCriteria": "cat"
 				},
 				{
-					"description": "Red koi of a stream\\nPushing against the current\\nNever going blunt",
-					"resourcePrompt": "A cat",
+					"sceneIntro": "Red koi of a stream\\nPushing against the current\\nNever going blunt",
 					"watsonUsed": "image",
 					"acceptanceCriteria": "cat"
 				}
 			]
 		},
-		
+
 		{
 			"actIntro": "This is the second act",
 			"scenes": [
 				{
-					"description": "This is the first scene, second act",
-					"resourcePrompt": "A dog",
+					"sceneIntro": "This is the first scene, second act",
 					"watsonUsed": "image",
 					"acceptanceCriteria": "dog"
 				}
