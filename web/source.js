@@ -1,6 +1,6 @@
 // Open a websocket
-const publishSocket = new WebSocket("wss://{{req.headers.host}}/public/messagereceive");
-const listenSocket = new WebSocket("wss://{{req.headers.host}}/public/messagepublish");
+const publishSocket = new WebSocket(`wss://{window.location.host}/ws/messagereceive`);
+const listenSocket = new WebSocket(`wss://{window.location.host}/ws/messagepublish`);
 const haikuButtons = document.getElementById('haikuButtons');
 const choiceSelectors = document.getElementById('objectUIbodyLeft');
 
@@ -20,8 +20,7 @@ haikuButtons.addEventListener('click', (e) => {
     console.log(selectedButton);
     let newScene = parseInt(selectedButton.getAttribute('data-selectedScene'));
     state.scene = newScene;
-    publishSocket.send(JSON.stringify({state}));
-
+    publishSocket.send(JSON.stringify({'state': state}));
 });
 
 listenSocket.onclose = function() {
@@ -64,6 +63,7 @@ listenSocket.onmessage = function(event) {
 
     // Save the act and scene update
     if(data.state){
+        console.info('New state', data.state);
         sessionStorage.setItem('state', JSON.stringify(data.state));
     }
 
@@ -81,6 +81,14 @@ listenSocket.onmessage = function(event) {
                 'data-selectedScene': i
             }));
         });
+    }
+
+    // Rescuee message received
+    if (data.textOut) {
+        $("#messages").append("<div class='msg sentiment" + data.sentiment.score + "' >" + data.user + " - " + data.textOut + "</div>");
+        if ($("#messages").children().length > 10) {
+            $("#messages :first-child").remove();
+        }
     }
 
     switch(data.messageType){
