@@ -1,6 +1,6 @@
 // Open a websocket
-const publishSocket = new WebSocket(`wss://{window.location.host}/ws/messagereceive`);
-const listenSocket = new WebSocket(`wss://{window.location.host}/ws/messagepublish`);
+const publishSocket = new WebSocket(`wss://${window.location.host}/ws/messagereceive`);
+const listenSocket = new WebSocket(`wss://${window.location.host}/ws/messagepublish`);
 const haikuButtons = document.getElementById('haikuButtons');
 const choiceSelectors = document.getElementById('objectUIbodyLeft');
 
