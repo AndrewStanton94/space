@@ -5,7 +5,7 @@ const haikuButtons = document.getElementById('haikuButtons');
 const choiceSelectors = document.getElementById('objectUIbodyLeft');
 let data;
 
-choiceSelectors.addEventListener('input', (e) => {
+choiceSelectors.addEventListener('change', (e) => {
 	console.log(e);
 	let selectedClass = e.target.getAttribute('data-selectedText');
 	let {act, scene} = data.progress;
