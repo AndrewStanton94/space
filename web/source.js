@@ -35,7 +35,7 @@ listenSocket.onopen = function() {
 listenSocket.onmessage = function(event) {
 	let generateHaikuButtons = ({progress:{act, scene: currentScene}, gameDescription:{acts}}) => {
 		let actInfo = acts[act];
-		console.log(act, scene, actInfo);
+		console.log(act, currentScene, actInfo);
 		// Display scene selectors for the current act
 		haikuButtons.innerHTML = "";
 		actInfo.scenes.forEach((scene, i) => {
@@ -50,6 +50,7 @@ listenSocket.onmessage = function(event) {
 	
 	let generateClassSelectors = ({progress:{act, scene: currentScene, imgClasses}}) => {
 		// Get the 6 most likely Image classes
+		imgClasses = imgClasses[act, currentScene];
 		imgClasses.sort((a, b) => b.score - a.score);
 		imgClasses = imgClasses.slice(0,6);
 
