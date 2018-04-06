@@ -49,8 +49,13 @@ listenSocket.onmessage = function(event) {
 	};
 	
 	let generateClassSelectors = ({progress:{act, scene: currentScene, imgClasses}}) => {
+		console.log(act, currentScene, imgClasses);
+		imgClasses = imgClasses[act][currentScene];
+		if (!imgClasses){
+		    return;
+		}
+		console.log(imgClasses);
 		// Get the 6 most likely Image classes
-		imgClasses = imgClasses[act, currentScene];
 		imgClasses.sort((a, b) => b.score - a.score);
 		imgClasses = imgClasses.slice(0,6);
 
