@@ -3,24 +3,25 @@ const publishSocket = new WebSocket(`wss://${window.location.host}/ws/messagerec
 const listenSocket = new WebSocket(`wss://${window.location.host}/ws/messagepublish`);
 const haikuButtons = document.getElementById('haikuButtons');
 const choiceSelectors = document.getElementById('objectUIbodyLeft');
+let data;
 
 choiceSelectors.addEventListener('input', (e) => {
 	console.log(e);
-	let msg = {
-		'state': JSON.parse(sessionStorage.getItem('state')),
-		'choice': e.target.getAttribute('data-selectedText'),
-	};
-	console.log(msg);
-	publishSocket.send(JSON.stringify(msg));
+	let selectedClass = e.target.getAttribute('data-selectedText');
+	let {act, scene} = data.progress;
+
+	data.progress.selectedClasses[act][scene] = selectedClass;
+	console.log(data);
+	publishSocket.send(JSON.stringify(data));
 });
 
 haikuButtons.addEventListener('click', (e) => {
 	let selectedButton = e.target;
-	let state = JSON.parse(sessionStorage.getItem('state'));
 	console.log(selectedButton);
 	let newScene = parseInt(selectedButton.getAttribute('data-selectedScene'));
-	state.scene = newScene;
-	publishSocket.send(JSON.stringify({'state': state}));
+	data.progress.scene = newScene;
+	console.log(data);
+	publishSocket.send(JSON.stringify(data));
 });
 
 listenSocket.onclose = function() {
@@ -75,7 +76,7 @@ listenSocket.onmessage = function(event) {
 		imgClasses.forEach(generateImageClassSelector);
 	};
 
-	let data = JSON.parse(event.data);
+	data = JSON.parse(event.data);
 	console.log(data);
 	
 	generateHaikuButtons(data);
