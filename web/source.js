@@ -33,14 +33,22 @@ listenSocket.onopen = function() {
 };
 
 listenSocket.onmessage = function(event) {
-	// When receiving a message append a div child to #messages
-	let data = JSON.parse(event.data);
-	console.log(data);
-
-	// Server has sent the classes extracted from an image
-	if(data.imgClasses){
-		let imgClasses = data.imgClasses;
-
+	let generateHaikuButtons = ({progress:{act, scene: currentScene}, gameDescription:{acts}}) => {
+		let actInfo = acts[act];
+		console.log(act, scene, actInfo);
+		// Display scene selectors for the current act
+		haikuButtons.innerHTML = "";
+		actInfo.scenes.forEach((scene, i) => {
+			console.log(scene);
+			haikuButtons.appendChild(crel('input', {
+				'type': 'button',
+				'value': `Haiku ${i + 1}`,
+				'data-selectedScene': i
+			}));
+		});
+	};
+	
+	let generateClassSelectors = ({progress:{act, scene: currentScene, imgClasses}}) => {
 		// Get the 6 most likely Image classes
 		imgClasses.sort((a, b) => b.score - a.score);
 		imgClasses = imgClasses.slice(0,6);
@@ -59,29 +67,13 @@ listenSocket.onmessage = function(event) {
 			choiceSelectors.appendChild(choice);
 		};
 		imgClasses.forEach(generateImageClassSelector);
-	}
+	};
 
-	// Save the act and scene update
-	if(data.state){
-		console.info('New state', data.state);
-		sessionStorage.setItem('state', JSON.stringify(data.state));
-	}
-
-	// Display scene selctors for the current act
-	if (data.actInfo) {
-		let {actInfo} = data;
-		haikuButtons.innerHTML = "";
-		console.log(actInfo);
-		sessionStorage.setItem('actInfo', JSON.stringify(actInfo));
-		actInfo.scenes.forEach((item, i) => {
-			console.log(item);
-			haikuButtons.appendChild(crel('input', {
-				'type': 'button',
-				'value': `Haiku ${i + 1}`,
-				'data-selectedScene': i
-			}));
-		});
-	}
+	let data = JSON.parse(event.data);
+	console.log(data);
+	
+	generateHaikuButtons(data);
+	generateClassSelectors(data);
 
 	// Rescuee message received
 	if (data.textOut) {
@@ -115,11 +107,6 @@ listenSocket.onmessage = function(event) {
 			$("#messages").append("<div class='msg server'>" + data.user + " - " + "Camera data received" + "</div>");
 		break;
 	}
-};
-
-let timeStamp = () => {
-	const d = new Date();
-	return `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
 };
 
 // Sending text, listener set in HTML
