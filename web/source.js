@@ -68,6 +68,7 @@ listenSocket.onmessage = function(event) {
 				crel('label', className),
 				crel('input', {
 					'type': 'radio',
+					'name': 'imgClassOption',
 					'data-selectedText': className,
 				})
 			);
