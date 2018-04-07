@@ -33,15 +33,15 @@ body,
     font-size: small;
 }
 
-.sentiment-3 {
+.sentimentNegative {
     color: #006400;
 }
 
-.sentiment0 {
+.sentimentNetutral {
     color: #00FF66;
 }
 
-.sentiment3 {
+.sentimentPositive {
     color: #d9ffb3;
 }
 
