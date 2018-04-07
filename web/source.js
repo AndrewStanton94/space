@@ -103,9 +103,9 @@ listenSocket.onmessage = function(event) {
 			sentiment = 'sentimentPositive';
 		}
 		let newMessage = crel('div', {
-			'innerText': data.transcription.message,
 			'class': `msg ${sentiment}`
 		});
+		newMessage.innerText = data.transcription.message;
 		console.log(newMessage);
 		messages.appendChild(newMessage);
 		//$("#messages").append("<div class='msg sentiment" + data.sentiment.score + "' >" + data.user + " - " + data.textOut + "</div>");
