@@ -34,7 +34,15 @@ listenSocket.onopen = function() {
 };
 
 listenSocket.onmessage = function(event) {
-	let generateHaikuButtons = ({progress:{act, scene: currentScene}, gameDescription:{acts}}) => {
+	let generateHaikuButtons = ({
+            // Extract act and scene (renamed to currentScene).
+            // Default to null if no values
+            progress:{act = null, scene: currentScene = null} = {},
+            gameDescription:{acts}
+        }) => {
+        if (!act) {
+            return;
+        }
 		let actInfo = acts[act];
 		console.log(act, currentScene, actInfo);
 		// Display scene selectors for the current act
@@ -48,7 +56,7 @@ listenSocket.onmessage = function(event) {
 			}));
 		});
 	};
-	
+
 	let generateClassSelectors = ({progress:{act, scene: currentScene, imgClasses}}) => {
 		console.log(act, currentScene, imgClasses);
 		imgClasses = imgClasses[act][currentScene];
@@ -79,7 +87,7 @@ listenSocket.onmessage = function(event) {
 
 	data = JSON.parse(event.data);
 	console.log(data);
-	
+
 	generateHaikuButtons(data);
 	generateClassSelectors(data);
 
