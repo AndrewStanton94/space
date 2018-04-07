@@ -1,6 +1,7 @@
 // Open a websocket
 const publishSocket = new WebSocket(`wss://${window.location.host}/ws/messagereceive`);
 const listenSocket = new WebSocket(`wss://${window.location.host}/ws/messagepublish`);
+const messages = document.getElementById('messages');
 const haikuButtons = document.getElementById('haikuButtons');
 const choiceSelectors = document.getElementById('objectUIbodyLeft');
 let data;
@@ -93,8 +94,21 @@ listenSocket.onmessage = function(event) {
 	generateClassSelectors(data);
 
 	// Rescuee message received
-	if (data.textOut) {
-		$("#messages").append("<div class='msg sentiment" + data.sentiment.score + "' >" + data.user + " - " + data.textOut + "</div>");
+	if (data.transcription) {
+		let sentiment = 'sentimentNetutral';
+		if (data.transcription.sentiment.score < 0){
+			sentiment = 'sentimentNegative';
+		}
+		if (data.transcription.sentiment.score > 0){
+			sentiment = 'sentimentPositive';
+		}
+		let newMessage = crel('div', {
+			'value': data.transcription.message,
+			'class': `msg ${sentiment}`
+		});
+		console.log(newMessage);
+		messages.appendChild(newMessage);
+		//$("#messages").append("<div class='msg sentiment" + data.sentiment.score + "' >" + data.user + " - " + data.textOut + "</div>");
 		if ($("#messages").children().length > 10) {
 			$("#messages :first-child").remove();
 		}
