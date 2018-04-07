@@ -34,55 +34,56 @@ listenSocket.onopen = function() {
 };
 
 listenSocket.onmessage = function(event) {
-	let generateHaikuButtons = ({
-            // Extract act and scene (renamed to currentScene).
-            // Default to null if no values
-            progress:{act = null, scene: currentScene = null} = {},
-            gameDescription:{acts}
-        }) => {
-        if (!act) {
-            return;
+	let generateHaikuButtons = ({progress, gameDescription}) => {
+        if (progress && gameDescription) {
+			// Extract act and scene (renamed to currentScene)
+            let {act, scene: currentScene} = progress;
+            let {acts} = gameDescription;
+			
+			let actInfo = acts[act];
+			console.log(act, currentScene, actInfo);
+			// Display scene selectors for the current act
+			haikuButtons.innerHTML = "";
+			actInfo.scenes.forEach((scene, i) => {
+				console.log(scene);
+				haikuButtons.appendChild(crel('input', {
+					'type': 'button',
+					'value': `Haiku ${i + 1}`,
+					'data-selectedScene': i
+				}));
+			});
         }
-		let actInfo = acts[act];
-		console.log(act, currentScene, actInfo);
-		// Display scene selectors for the current act
-		haikuButtons.innerHTML = "";
-		actInfo.scenes.forEach((scene, i) => {
-			console.log(scene);
-			haikuButtons.appendChild(crel('input', {
-				'type': 'button',
-				'value': `Haiku ${i + 1}`,
-				'data-selectedScene': i
-			}));
-		});
 	};
 
-	let generateClassSelectors = ({progress:{act, scene: currentScene, imgClasses}}) => {
-		console.log(act, currentScene, imgClasses);
-		imgClasses = imgClasses[act][currentScene];
-		if (!imgClasses){
-		    return;
+	let generateClassSelectors = ({progress}) => {
+		if (progress){
+			let {act, scene: currentScene, imgClasses} = progress;
+			console.log(act, currentScene, imgClasses);
+			imgClasses = imgClasses[act][currentScene];
+			if (!imgClasses){
+				return;
+			}
+			console.log(imgClasses);
+			// Get the 6 most likely Image classes
+			imgClasses.sort((a, b) => b.score - a.score);
+			imgClasses = imgClasses.slice(0,6);
+
+			choiceSelectors.innerHTML = "";
+
+			// Each Image class gets a labeled radio box
+			let generateImageClassSelector = ({'class': className}) => {
+				let choice = crel('div', {'class':'imgClass'},
+					crel('label', className),
+					crel('input', {
+						'type': 'radio',
+						'name': 'imgClassOption',
+						'data-selectedText': className,
+					})
+				);
+				choiceSelectors.appendChild(choice);
+			};
+			imgClasses.forEach(generateImageClassSelector);
 		}
-		console.log(imgClasses);
-		// Get the 6 most likely Image classes
-		imgClasses.sort((a, b) => b.score - a.score);
-		imgClasses = imgClasses.slice(0,6);
-
-		choiceSelectors.innerHTML = "";
-
-		// Each Image class gets a labeled radio box
-		let generateImageClassSelector = ({'class': className}) => {
-			let choice = crel('div', {'class':'imgClass'},
-				crel('label', className),
-				crel('input', {
-					'type': 'radio',
-					'name': 'imgClassOption',
-					'data-selectedText': className,
-				})
-			);
-			choiceSelectors.appendChild(choice);
-		};
-		imgClasses.forEach(generateImageClassSelector);
 	};
 
 	data = JSON.parse(event.data);
