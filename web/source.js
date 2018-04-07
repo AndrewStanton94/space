@@ -103,7 +103,7 @@ listenSocket.onmessage = function(event) {
 			sentiment = 'sentimentPositive';
 		}
 		let newMessage = crel('div', {
-			'value': data.transcription.message,
+			'innerText': data.transcription.message,
 			'class': `msg ${sentiment}`
 		});
 		console.log(newMessage);
