@@ -1,0 +1,30 @@
+{
+	"name": "Space Rescue",
+	"description": "Description To be used when choosing a game to play",
+	"gameIntro": "This is a rescue mission.",
+	"successMessage": "You have chosen correctly",
+	"failureMessage": "I'm sorry Dave, I can't let you do that.",
+	"acts": [
+		{
+			"actIntro": "This is the first act",
+			"scenes": [
+				{
+					"sceneIntro": "Moths fly late at night\\nShining darker than the sky\\nImperfect couple",
+					"watsonUsed": "image",
+					"acceptanceCriteria": "ball"
+				}
+			]
+		},
+
+		{
+			"actIntro": "This is the second act",
+			"scenes": [
+				{
+					"sceneIntro": "This is the first scene, second act",
+					"watsonUsed": "image",
+					"acceptanceCriteria": "dog"
+				}
+			]
+		}
+	]
+}
