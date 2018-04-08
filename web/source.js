@@ -24,7 +24,6 @@ choiceSelectors.addEventListener('change', (e) => {
 	let {act, scene} = data.progress;
 
 	data.progress.selectedClasses[act][scene] = selectedClass;
-    data.stateChanged = true;
 	console.log('Choice made', data);
     updateCache(data);
 	publishSocket.send(JSON.stringify(data));
@@ -35,6 +34,7 @@ haikuButtons.addEventListener('click', (e) => {
 	console.log(selectedButton);
 	let newScene = parseInt(selectedButton.getAttribute('data-selectedScene'));
 	data.progress.scene = newScene;
+    data.stateChanged = true;
 	console.log('Haiku selected', data);
     updateCache(data);
 	publishSocket.send(JSON.stringify(data));
