@@ -87,10 +87,12 @@ listenSocket.onmessage = function(event) {
 		}
 	};
 
+    let previousData = data;
 	data = JSON.parse(event.data);
 	console.log(data);
 
     if (data.imgClasses) {
+        data.progress = data.progress || previousData.progress;
         let {act, scene: currentScene, imgClasses} = data.progress;
         imgClasses[act][scene] = data.imgClasses;
         data.progress.imgClasses = imgClasses;
