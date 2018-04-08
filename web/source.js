@@ -40,7 +40,7 @@ listenSocket.onmessage = function(event) {
 			// Extract act and scene (renamed to currentScene)
             let {act, scene: currentScene} = progress;
             let {acts} = gameDescription;
-			
+
 			let actInfo = acts[act];
 			console.log(act, currentScene, actInfo);
 			// Display scene selectors for the current act
@@ -90,8 +90,14 @@ listenSocket.onmessage = function(event) {
 	data = JSON.parse(event.data);
 	console.log(data);
 
+    if (data.imgClasses) {
+        let {act, scene: currentScene, imgClasses} = data.progress;
+        imgClasses[act][scene] = data.imgClasses;
+        data.progress.imgClasses = imgClasses;
+        generateClassSelectors(data);
+    }
+
 	generateHaikuButtons(data);
-	generateClassSelectors(data);
 
 	// Rescuee message received
 	if (data.transcription) {
