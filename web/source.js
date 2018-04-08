@@ -24,6 +24,7 @@ choiceSelectors.addEventListener('change', (e) => {
 	let {act, scene} = data.progress;
 
 	data.progress.selectedClasses[act][scene] = selectedClass;
+    data.stateChanged = true;
 	console.log('Choice made', data);
     updateCache(data);
 	publishSocket.send(JSON.stringify(data));
