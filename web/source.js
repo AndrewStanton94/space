@@ -5,6 +5,18 @@ const messages = document.getElementById('messages');
 const haikuButtons = document.getElementById('haikuButtons');
 const choiceSelectors = document.getElementById('objectUIbodyLeft');
 let data;
+const cachedData = {};
+
+const updateCache = ({gameDescription, progress}) => {
+    console.log('Going to cache', gameDescription, progress);
+    if (gameDescription) {
+        cachedData.gameDescription = gameDescription;
+    }
+    if (progress) {
+        cachedData.progress = progress;
+    }
+    console.log(cachedData);
+};
 
 choiceSelectors.addEventListener('change', (e) => {
 	console.log(e);
@@ -12,7 +24,8 @@ choiceSelectors.addEventListener('change', (e) => {
 	let {act, scene} = data.progress;
 
 	data.progress.selectedClasses[act][scene] = selectedClass;
-	console.log(data);
+	console.log('Choice made', data);
+    updateCache(data);
 	publishSocket.send(JSON.stringify(data));
 });
 
@@ -21,8 +34,10 @@ haikuButtons.addEventListener('click', (e) => {
 	console.log(selectedButton);
 	let newScene = parseInt(selectedButton.getAttribute('data-selectedScene'));
 	data.progress.scene = newScene;
-	console.log(data);
+	console.log('Haiku selected', data);
+    updateCache(data);
 	publishSocket.send(JSON.stringify(data));
+    choiceSelectors.innerHTML = "";
 });
 
 listenSocket.onclose = function() {
@@ -87,12 +102,13 @@ listenSocket.onmessage = function(event) {
 		}
 	};
 
-    let previousData = data;
 	data = JSON.parse(event.data);
+    updateCache(data);
 	console.log(data);
 
     if (data.imgClasses) {
-        data.progress = data.progress || previousData.progress;
+        data.progress = data.progress || cachedData.progress || console.error('No progress object');
+        data.gameDescription = data.gameDescription || cachedData.gameDescription || console.error('No gameDescription object');
         let {act, scene: currentScene, imgClasses} = data.progress;
         imgClasses[act][currentScene] = data.imgClasses;
         data.progress.imgClasses = imgClasses;
