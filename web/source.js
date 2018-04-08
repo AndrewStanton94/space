@@ -94,7 +94,7 @@ listenSocket.onmessage = function(event) {
     if (data.imgClasses) {
         data.progress = data.progress || previousData.progress;
         let {act, scene: currentScene, imgClasses} = data.progress;
-        imgClasses[act][scene] = data.imgClasses;
+        imgClasses[act][currentScene] = data.imgClasses;
         data.progress.imgClasses = imgClasses;
         generateClassSelectors(data);
     }
