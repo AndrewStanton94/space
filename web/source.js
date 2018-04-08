@@ -5,8 +5,9 @@ const messages = document.getElementById('messages');
 const haikuButtons = document.getElementById('haikuButtons');
 const choiceSelectors = document.getElementById('objectUIbodyLeft');
 let data;
-const cachedData = {};
 
+// Save the most recent version of the progress and gameDescription
+const cachedData = {};
 const updateCache = ({gameDescription, progress}) => {
     console.log('Going to cache', gameDescription, progress);
     if (gameDescription) {
@@ -18,6 +19,61 @@ const updateCache = ({gameDescription, progress}) => {
     console.log(cachedData);
 };
 
+// Produce buttons to select the haikus
+const generateHaikuButtons = ({progress, gameDescription}) => {
+    if (progress && gameDescription) {
+        // Extract act and scene (renamed to currentScene)
+        let {act, scene: currentScene} = progress;
+        let {acts} = gameDescription;
+        let actInfo = acts[act];
+        console.log(act, currentScene, actInfo);
+        // Display scene selectors for the current act
+        haikuButtons.innerHTML = "";
+        choiceSelectors.innerHTML = "";     // Erasing for start of acts
+        actInfo.scenes.forEach((scene, i) => {
+            console.log(scene);
+            haikuButtons.appendChild(crel('input', {
+                'type': 'button',
+                'value': `Haiku ${i + 1}`,
+                'data-selectedScene': i
+            }));
+        });
+    }
+};
+
+// Produce selectors for the image classes from Watson
+const generateClassSelectors = ({progress}) => {
+    if (progress){
+        let {act, scene: currentScene, imgClasses} = progress;
+        imgClasses = imgClasses[act][currentScene];
+        console.log(act, currentScene, imgClasses);
+        if (!imgClasses){
+            return;
+        }
+        console.log(imgClasses);
+        // Get the 6 most likely Image classes
+        imgClasses.sort((a, b) => b.score - a.score);
+        imgClasses = imgClasses.slice(0,6);
+
+        choiceSelectors.innerHTML = "";
+
+        // Each Image class gets a labeled radio box
+        let generateImageClassSelector = ({'class': className}) => {
+            let choice = crel('div', {'class':'imgClass'},
+                crel('label', className),
+                crel('input', {
+                    'type': 'radio',
+                    'name': 'imgClassOption',
+                    'data-selectedText': className,
+                })
+            );
+            choiceSelectors.appendChild(choice);
+        };
+        imgClasses.forEach(generateImageClassSelector);
+    }
+};
+
+// Image class selected
 choiceSelectors.addEventListener('change', (e) => {
 	console.log(e);
 	let selectedClass = e.target.getAttribute('data-selectedText');
@@ -29,6 +85,7 @@ choiceSelectors.addEventListener('change', (e) => {
 	publishSocket.send(JSON.stringify(data));
 });
 
+// Haiku selected
 haikuButtons.addEventListener('click', (e) => {
 	let selectedButton = e.target;
 	console.log(selectedButton);
@@ -39,6 +96,7 @@ haikuButtons.addEventListener('click', (e) => {
     updateCache(data);
 	publishSocket.send(JSON.stringify(data));
     choiceSelectors.innerHTML = "";
+    generateClassSelectors(data);
 });
 
 listenSocket.onclose = function() {
@@ -51,61 +109,11 @@ listenSocket.onopen = function() {
 };
 
 listenSocket.onmessage = function(event) {
-	let generateHaikuButtons = ({progress, gameDescription}) => {
-        if (progress && gameDescription) {
-			// Extract act and scene (renamed to currentScene)
-            let {act, scene: currentScene} = progress;
-            let {acts} = gameDescription;
-
-			let actInfo = acts[act];
-			console.log(act, currentScene, actInfo);
-			// Display scene selectors for the current act
-			haikuButtons.innerHTML = "";
-			actInfo.scenes.forEach((scene, i) => {
-				console.log(scene);
-				haikuButtons.appendChild(crel('input', {
-					'type': 'button',
-					'value': `Haiku ${i + 1}`,
-					'data-selectedScene': i
-				}));
-			});
-        }
-	};
-
-	let generateClassSelectors = ({progress}) => {
-		if (progress){
-			let {act, scene: currentScene, imgClasses} = progress;
-			console.log(act, currentScene, imgClasses);
-			imgClasses = imgClasses[act][currentScene];
-			if (!imgClasses){
-				return;
-			}
-			console.log(imgClasses);
-			// Get the 6 most likely Image classes
-			imgClasses.sort((a, b) => b.score - a.score);
-			imgClasses = imgClasses.slice(0,6);
-
-			choiceSelectors.innerHTML = "";
-
-			// Each Image class gets a labeled radio box
-			let generateImageClassSelector = ({'class': className}) => {
-				let choice = crel('div', {'class':'imgClass'},
-					crel('label', className),
-					crel('input', {
-						'type': 'radio',
-						'name': 'imgClassOption',
-						'data-selectedText': className,
-					})
-				);
-				choiceSelectors.appendChild(choice);
-			};
-			imgClasses.forEach(generateImageClassSelector);
-		}
-	};
-
 	data = JSON.parse(event.data);
     updateCache(data);
 	console.log(data);
+
+    generateHaikuButtons(data);
 
     if (data.imgClasses) {
         data.progress = data.progress || cachedData.progress || console.error('No progress object');
@@ -115,8 +123,6 @@ listenSocket.onmessage = function(event) {
         data.progress.imgClasses = imgClasses;
         generateClassSelectors(data);
     }
-
-	generateHaikuButtons(data);
 
 	// Rescuee message received
 	if (data.transcription) {
