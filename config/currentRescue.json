@@ -1,0 +1,35 @@
+{
+	"name": "Rescue Demo",
+	"description": "Description To be used when choosing a game to play",
+	"gameIntro": "This is a rescue mission. To rescue the team, you must work together to identify the pattern. The clues will be given in the form of a haiku. Please choose a team member to be the rescuer. Rescuer, can you move to the computer and select the first Haiku",
+	"successMessage": "You have chosen correctly",
+	"failureMessage": "I'm sorry Dave, I can't let you do that.",
+	"acts": [
+		{
+			"actIntro": "This is the first act",
+			"scenes": [
+				{
+					"sceneIntro": "Purring affection\\nBoth loved and feared through time\\nNocturnal Hunter",
+					"watsonUsed": "image",
+					"acceptanceCriteria": "cat"
+				},
+				{
+					"sceneIntro": "Steaming cylinder,\\nWakefullness resides within,\\nWarmth and Energy",
+					"watsonUsed": "image",
+					"acceptanceCriteria": "cup"
+				}
+			]
+		},
+
+		{
+			"actIntro": "This is the second act",
+			"scenes": [
+				{
+					"sceneIntro": "Always by your side,\\nEvolved, Precise, Versatile,\\nOriginal tool",
+					"watsonUsed": "image",
+					"acceptanceCriteria": "hand"
+				}
+			]
+		}
+	]
+}
