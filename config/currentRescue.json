@@ -9,12 +9,12 @@
 			"actIntro": "This is the first act",
 			"scenes": [
 				{
-					"sceneIntro": "Purring affection\\nBoth loved and feared through time\\nNocturnal Hunter",
+					"sceneIntro": "Purring affection. Both loved and feared through time. Nocturnal Hunter.",
 					"watsonUsed": "image",
 					"acceptanceCriteria": "cat"
 				},
 				{
-					"sceneIntro": "Steaming cylinder,\\nWakefullness resides within,\\nWarmth and Energy",
+					"sceneIntro": "Steaming cylinder. Wakefullness resides within. Warmth and Energy",
 					"watsonUsed": "image",
 					"acceptanceCriteria": "cup"
 				}
@@ -25,7 +25,7 @@
 			"actIntro": "This is the second act",
 			"scenes": [
 				{
-					"sceneIntro": "Always by your side,\\nEvolved, Precise, Versatile,\\nOriginal tool",
+					"sceneIntro": "Always by your side. Evolved, Precise, Versatile. Original tool",
 					"watsonUsed": "image",
 					"acceptanceCriteria": "hand"
 				}
