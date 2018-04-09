@@ -62,7 +62,7 @@ body,
     float:right;
 }
 
-#objectUIbodyLeft {
+#objectProperties {
     background-color: #A0A0A0;
     color: #E0E0E0;
     padding-left: 12px;
@@ -70,15 +70,6 @@ body,
     float:left;
     width: 100%;
 }
-
-/*#objectUIbodyRight {
-    background-color: #A0A0A0;
-    color: #E0E0E0;
-    padding-right: 12px;
-    position: relative;
-    float:right;
-    width: 20%;
-}*/
 
 #textbox {
     background-color: #E0E0E0;

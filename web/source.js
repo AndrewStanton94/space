@@ -3,7 +3,8 @@ const publishSocket = new WebSocket(`wss://${window.location.host}/ws/messagerec
 const listenSocket = new WebSocket(`wss://${window.location.host}/ws/messagepublish`);
 const messages = document.getElementById('messages');
 const haikuButtons = document.getElementById('haikuButtons');
-const choiceSelectors = document.getElementById('objectUIbodyLeft');
+const choiceSelectors = document.getElementById('objectProperties');
+const state = document.getElementById('state');
 let data;
 
 // Save the most recent version of the progress and gameDescription
@@ -30,6 +31,7 @@ const generateHaikuButtons = ({progress, gameDescription}) => {
         // Display scene selectors for the current act
         haikuButtons.innerHTML = "";
         choiceSelectors.innerHTML = "";     // Erasing for start of acts
+        state.innerText = `Act: ${act} Scene: ${currentScene}`;
         actInfo.scenes.forEach((scene, i) => {
             console.log(scene);
             haikuButtons.appendChild(crel('input', {
@@ -73,6 +75,28 @@ const generateClassSelectors = ({progress}) => {
     }
 };
 
+const drawMessage = ({message, from = '', sentiment = null}, additionalClass = ''){
+    let sentiment = 'sentimentNetutral';
+    if (sentiment) {
+        if (sentiment.score < 0){
+            sentiment = 'sentimentNegative';
+        }
+        if (sentiment.score > 0){
+            sentiment = 'sentimentPositive';
+        }
+    }
+
+    let newMessage = crel('div', {
+        'class': `msg ${sentiment} ${additionalClass}`
+    });
+    newMessage.innerText = `${from}: ${message}`;
+    messages.appendChild(newMessage);
+    //$("#messages").append("<div class='msg sentiment" + data.sentiment.score + "' >" + data.user + " - " + data.textOut + "</div>");
+    if ($("#messages").children().length > 10) {
+        $("#messages :first-child").remove();
+    }
+}
+
 // Image class selected
 choiceSelectors.addEventListener('change', (e) => {
 	console.log(e);
@@ -80,7 +104,7 @@ choiceSelectors.addEventListener('change', (e) => {
 	let {act, scene} = data.progress;
 
 	data.progress.selectedClasses[act][scene] = selectedClass;
-	console.log('Choice made', data);
+    drawMessage({message: `Selected Property: ${selectedClass}`, from: 'Properties'}, 'server');
     updateCache(data);
 	publishSocket.send(JSON.stringify(data));
 });
@@ -92,7 +116,7 @@ haikuButtons.addEventListener('click', (e) => {
 	let newScene = parseInt(selectedButton.getAttribute('data-selectedScene'));
 	data.progress.scene = newScene;
     data.stateChanged = true;
-	console.log('Haiku selected', data);
+    drawMessage({message: `Selected scene: ${newScene + 1}`, from: 'Haiku'}, 'server');
     updateCache(data);
 	publishSocket.send(JSON.stringify(data));
     choiceSelectors.innerHTML = "";
@@ -100,11 +124,11 @@ haikuButtons.addEventListener('click', (e) => {
 });
 
 listenSocket.onclose = function() {
-	$("#messages").append("<div class='msg server'>Disconnected from server.</div>");
+    drawMessage({message: 'Disconnected from server.', from: 'Server'}, 'server');
 };
 
 listenSocket.onopen = function() {
-	$("#messages").append("<div class='msg server'>Connected to server.</div>");
+    drawMessage({message: 'Connected to server.', from: 'Server'}, 'server');
 	publishSocket.send(JSON.stringify({'start': true}));
 };
 
@@ -126,23 +150,7 @@ listenSocket.onmessage = function(event) {
 
 	// Rescuee message received
 	if (data.transcription) {
-		let sentiment = 'sentimentNetutral';
-		if (data.transcription.sentiment.score < 0){
-			sentiment = 'sentimentNegative';
-		}
-		if (data.transcription.sentiment.score > 0){
-			sentiment = 'sentimentPositive';
-		}
-		let newMessage = crel('div', {
-			'class': `msg ${sentiment}`
-		});
-		newMessage.innerText = data.transcription.message;
-		console.log(newMessage);
-		messages.appendChild(newMessage);
-		//$("#messages").append("<div class='msg sentiment" + data.sentiment.score + "' >" + data.user + " - " + data.textOut + "</div>");
-		if ($("#messages").children().length > 10) {
-			$("#messages :first-child").remove();
-		}
+        drawMessage(data.transcription);
 	}
 
 	switch(data.messageType){
