@@ -75,8 +75,11 @@ const generateClassSelectors = ({progress}) => {
     }
 };
 
-const drawMessage = ({message, from = '', sentiment = 'sentimentNetutral'}, additionalClass = '') => {
-    if (sentiment) {
+const drawMessage = ({message, from = '', sentiment = ''}, additionalClass = '') => {
+    if (sentiment && sentiment.score) {
+        if (sentiment.score === 0){
+            sentiment = 'sentimentNetutral';
+        }
         if (sentiment.score < 0){
             sentiment = 'sentimentNegative';
         }
