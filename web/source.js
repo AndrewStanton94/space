@@ -196,6 +196,7 @@ function sendText(event) {
 		// Send the msg object as a JSON-formatted string.
 		console.log(data);
 		publishSocket.send(JSON.stringify({message: data}));
+        drawMessage({message: data.msg, from: data.user});
 		// Blank the text input element
 		textbox.value = '';
 	}
