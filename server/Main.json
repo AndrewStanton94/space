@@ -1,62 +1,48 @@
 [
     {
-        "id": "6c036195.e9552",
-        "type": "tab",
-        "label": "Set Up",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "65859b0f.82d1c4",
-        "type": "tab",
-        "label": "Rescuee",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "83d5fc1b.eba75",
+        "id": "e8e37342.d04c2",
         "type": "tab",
         "label": "Rescuer",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "5f3b4b7b.655ba4",
+        "id": "4a5f8456.b9645c",
         "type": "tab",
-        "label": "Rescuer UI",
+        "label": "Rescuee",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "27b28616.5fe52a",
+        "id": "1982db49.863535",
         "type": "tab",
-        "label": "Testing",
+        "label": "Test",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "cccc2cc9.03f89",
+        "id": "e6e294e0.c5c278",
         "type": "subflow",
-        "name": "Extract classes from image (array)",
-        "info": "Take an array and convert it to a buffer.\nSend the buffer to Watson Visual Recognition\nExtract the (class, score) pairs from the result",
+        "name": "Get From Repo",
+        "info": "Repo Parameters -> String response\nmsg.repoArgs -> msg.payload\n\nRepo Parameters = {\n    user\n    repo\n    branch\n    path\n}",
         "in": [
             {
-                "x": 100,
-                "y": 120,
+                "x": 40,
+                "y": 60,
                 "wires": [
                     {
-                        "id": "c9feed86.a1a01"
+                        "id": "dc14978e.af0c68"
                     }
                 ]
             }
         ],
         "out": [
             {
-                "x": 1060,
-                "y": 120,
+                "x": 500,
+                "y": 60,
                 "wires": [
                     {
-                        "id": "2f25d6cd.177362",
+                        "id": "2d2aee52.603722",
                         "port": 0
                     }
                 ]
@@ -64,221 +50,314 @@
         ]
     },
     {
-        "id": "8d7d6a55.ace158",
+        "id": "5b36cca4.929894",
         "type": "subflow",
-        "name": "Validate State",
+        "name": "Send To Rescuer",
         "info": "",
         "in": [
             {
                 "x": 60,
-                "y": 140,
+                "y": 100,
                 "wires": [
                     {
-                        "id": "227f53a4.2039ac"
+                        "id": "5a1a99f3.7c5818"
                     }
                 ]
             }
         ],
-        "out": [
+        "out": []
+    },
+    {
+        "id": "5e52503c.a1247",
+        "type": "subflow",
+        "name": "Rescuer Message Processing",
+        "info": "",
+        "in": [
             {
-                "x": 820,
-                "y": 80,
+                "x": 40,
+                "y": 200,
                 "wires": [
                     {
-                        "id": "d569ce9a.aaa1c",
-                        "port": 0
-                    }
-                ]
-            },
-            {
-                "x": 820,
-                "y": 160,
-                "wires": [
-                    {
-                        "id": "d569ce9a.aaa1c",
-                        "port": 1
-                    },
-                    {
-                        "id": "c639bfb0.b1d8",
-                        "port": 1
+                        "id": "771f583b.1f4a38"
                     }
                 ]
             }
-        ]
+        ],
+        "out": []
     },
     {
-        "id": "2c0bc2aa.065b5e",
+        "id": "f6f6c865.5c6f48",
         "type": "subflow",
-        "name": "Next",
+        "name": "Generate Progress Object",
         "info": "",
         "in": [
             {
                 "x": 80,
-                "y": 360,
+                "y": 40,
                 "wires": [
                     {
-                        "id": "3744db6a.3d8eb4"
+                        "id": "12aec7ac.f1f308"
                     }
                 ]
             }
         ],
         "out": [
             {
-                "x": 560,
-                "y": 300,
+                "x": 420,
+                "y": 40,
                 "wires": [
                     {
-                        "id": "e01e7757.480708",
-                        "port": 0
-                    }
-                ]
-            },
-            {
-                "x": 1540,
-                "y": 300,
-                "wires": [
-                    {
-                        "id": "79a1647.494fe9c",
-                        "port": 0
-                    }
-                ]
-            },
-            {
-                "x": 1540,
-                "y": 360,
-                "wires": [
-                    {
-                        "id": "9339b688.ef8c28",
-                        "port": 0
-                    }
-                ]
-            },
-            {
-                "x": 1320,
-                "y": 440,
-                "wires": [
-                    {
-                        "id": "7e329810.fbf138",
+                        "id": "12aec7ac.f1f308",
                         "port": 0
                     }
                 ]
             }
+        ]
+    },
+    {
+        "id": "dfcd7998.88d4b8",
+        "type": "subflow",
+        "name": "Send to Rescuee",
+        "info": "Take payload, combine it with the payloadBackUp\n\nRemove session data\n\nConvert to json and send over websocket to Rescuee",
+        "in": [
+            {
+                "x": 80,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "64a6e0bd.61077"
+                    }
+                ]
+            }
         ],
-        "outputLabels": [
-            "Next Scene",
-            "Next Act",
-            "Invalid",
-            "Finished"
+        "out": []
+    },
+    {
+        "id": "a8156bb2.565448",
+        "type": "subflow",
+        "name": "Rescuee Message Processing",
+        "info": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "373dccaa.9f9dd4"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1500,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "ae2600bd.413f3",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1160,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "e8393dd.ce1f0c",
+                        "port": 0
+                    }
+                ]
+            }
         ]
     },
     {
-        "id": "1485f8f3.7f31a7",
+        "id": "c317b25.fe6aa5",
+        "type": "subflow",
+        "name": "Prepare Data for Sending",
+        "info": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "4916a862.255488"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 780,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "2d5fed7e.04abd2",
+                        "port": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "148c3991.b9c716",
+        "type": "subflow",
+        "name": "Retrieve Config & Generate Progress Object",
+        "info": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "552b103b.56051"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1300,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "7375e38c.2f59fc",
+                        "port": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "6f3a8a65.85c414",
+        "type": "subflow",
+        "name": "(Text -> Speech) to Rescuee",
+        "info": "",
+        "in": [
+            {
+                "x": 140,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "e91f9532.bd3578"
+                    },
+                    {
+                        "id": "4c788300.90976c"
+                    }
+                ]
+            }
+        ],
+        "out": []
+    },
+    {
+        "id": "24110b62.cac5b4",
         "type": "websocket-listener",
         "z": "",
-        "path": "/rescuee",
+        "path": "/ws/messagereceive",
         "wholemsg": "false"
     },
     {
-        "id": "88e114fd.576a58",
+        "id": "1137bdd2.fb05a2",
         "type": "websocket-client",
         "z": "",
-        "path": "ws://rescuee.eu-gb.mybluemix.net/rescueeSocket",
+        "path": "/ws/messagepublish",
         "tls": "",
         "wholemsg": "false"
     },
     {
-        "id": "27cb6f67.0a5458",
+        "id": "dfde61ff.4b109",
         "type": "websocket-client",
-        "z": "",
-        "path": "ws://rescuer.eu-gb.mybluemix.net/rescuerSocket",
+        "z": "dfcd7998.88d4b8",
+        "path": "ws://rescueeclient.eu-gb.mybluemix.net/ws/fromServer",
         "tls": "",
         "wholemsg": "false"
     },
     {
-        "id": "ae6e5e5b.ece13",
+        "id": "d9b33300.6e82b",
         "type": "websocket-listener",
         "z": "",
-        "path": "/rescuer",
+        "path": "/ws/ToServer",
         "wholemsg": "false"
     },
     {
-        "id": "f28f4847.9713f8",
-        "type": "websocket-client",
-        "z": "",
-        "path": "/public/messagepublish",
-        "tls": "",
-        "wholemsg": "false"
-    },
-    {
-        "id": "1be72eba.911d11",
-        "type": "websocket-listener",
-        "z": "5f3b4b7b.655ba4",
-        "path": "/public/messagereceive",
-        "wholemsg": "false"
-    },
-    {
-        "id": "13c89260.04ceae",
-        "type": "websocket in",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "server": "1485f8f3.7f31a7",
-        "client": "",
+        "id": "47a761e2.5bc45",
+        "type": "http in",
+        "z": "e8e37342.d04c2",
+        "name": "Serve Web pages from Git",
+        "url": "/web/:file",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
         "x": 130,
-        "y": 560,
+        "y": 140,
         "wires": [
             [
-                "6038489e.21bd18"
+                "aedc7c6a.6e628",
+                "3c9231e6.14fe7e"
             ]
         ]
     },
     {
-        "id": "6038489e.21bd18",
-        "type": "json",
-        "z": "65859b0f.82d1c4",
+        "id": "aedc7c6a.6e628",
+        "type": "debug",
+        "z": "e8e37342.d04c2",
+        "name": "File request",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "req.params",
+        "x": 350,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "2d2aee52.603722",
+        "type": "http request",
+        "z": "e6e294e0.c5c278",
         "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 290,
-        "y": 560,
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 370,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6e0e671f.6ec3f8",
+        "type": "subflow:e6e294e0.c5c278",
+        "z": "e8e37342.d04c2",
+        "name": "",
+        "x": 560,
+        "y": 140,
         "wires": [
             [
-                "f6c3a5dd.d6e9b8",
-                "cdec2610.31b818"
+                "7ebca494.4f69ec"
             ]
         ]
     },
     {
-        "id": "3aa67760.5bd718",
-        "type": "inject",
-        "z": "6c036195.e9552",
-        "name": "Fetch config",
-        "topic": "",
-        "payload": "{\"user\":\"AndrewStanton94\",\"repo\":\"space\",\"branch\":\"master\",\"path\":\"config\",\"file\":\"spaceRescue\",\"extension\":\"json\"}",
-        "payloadType": "json",
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "x": 190,
-        "y": 40,
-        "wires": [
-            [
-                "978cba07.036198"
-            ]
-        ]
-    },
-    {
-        "id": "890b24ce.614008",
+        "id": "3c9231e6.14fe7e",
         "type": "change",
-        "z": "6c036195.e9552",
-        "name": "Save game info",
+        "z": "e8e37342.d04c2",
+        "name": "Repo Params",
         "rules": [
             {
                 "t": "set",
-                "p": "config",
-                "pt": "global",
-                "to": "payload",
+                "p": "repoArgs",
+                "pt": "msg",
+                "to": "{\"user\":\"andrewstanton94\",\"repo\":\"space\",\"branch\":\"master\",\"path\":\"web\"}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "repoArgs.file",
+                "pt": "msg",
+                "to": "req.params.file",
                 "tot": "msg"
             }
         ],
@@ -287,84 +366,102 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 780,
-        "y": 40,
+        "x": 360,
+        "y": 140,
         "wires": [
             [
-                "cdc4d53f.f87048",
-                "25a33acf.c395c6"
+                "6e0e671f.6ec3f8"
             ]
         ]
     },
     {
-        "id": "ba66a6ce.488b38",
-        "type": "http request",
-        "z": "6c036195.e9552",
-        "name": "",
-        "method": "GET",
-        "ret": "obj",
-        "url": "",
-        "tls": "",
-        "x": 590,
-        "y": 40,
+        "id": "dc14978e.af0c68",
+        "type": "function",
+        "z": "e6e294e0.c5c278",
+        "name": "Generate URL",
+        "func": "const {\n    user,\n    repo,\n    branch,\n    path,\n    file\n} = msg.repoArgs;\n\nmsg.url = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${path}/${file}`;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 180,
+        "y": 60,
         "wires": [
             [
-                "890b24ce.614008"
+                "2d2aee52.603722"
             ]
+        ],
+        "inputLabels": [
+            "Repo Info"
+        ],
+        "outputLabels": [
+            "URL"
         ]
     },
     {
-        "id": "25a33acf.c395c6",
-        "type": "debug",
-        "z": "6c036195.e9552",
+        "id": "dc95e929.fae528",
+        "type": "http response",
+        "z": "e8e37342.d04c2",
         "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 970,
-        "y": 80,
+        "statusCode": "",
+        "headers": {},
+        "x": 1090,
+        "y": 180,
         "wires": []
     },
     {
-        "id": "978cba07.036198",
-        "type": "change",
-        "z": "6c036195.e9552",
-        "name": "Generate repo URL",
+        "id": "7ebca494.4f69ec",
+        "type": "switch",
+        "z": "e8e37342.d04c2",
+        "name": "Type router",
+        "property": "req.params.file",
+        "propertyType": "msg",
         "rules": [
             {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://raw.githubusercontent.com/\"\t& payload.user\t& \"/\"\t& payload.repo\t& \"/\"\t& payload.branch\t& \"/\"\t& payload.path\t& \"/\"\t& payload.file\t& \".\"\t& payload.extension",
-                "tot": "jsonata"
+                "t": "cont",
+                "v": "css",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "js",
+                "vt": "str"
+            },
+            {
+                "t": "else"
             }
         ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 390,
-        "y": 40,
+        "checkall": "false",
+        "repair": false,
+        "outputs": 3,
+        "x": 750,
+        "y": 140,
         "wires": [
             [
-                "ba66a6ce.488b38"
+                "489b9894.d12b68"
+            ],
+            [
+                "988fa62b.1f2928"
+            ],
+            [
+                "dc95e929.fae528"
             ]
+        ],
+        "outputLabels": [
+            "css",
+            "js",
+            "other"
         ]
     },
     {
-        "id": "14e1a15a.44482f",
+        "id": "489b9894.d12b68",
         "type": "change",
-        "z": "6c036195.e9552",
-        "name": "",
+        "z": "e8e37342.d04c2",
+        "name": "Type:css",
         "rules": [
             {
                 "t": "set",
-                "p": "state",
-                "pt": "global",
-                "to": "{\"act\":0,\"scene\":0}",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\"Content-Type\":\"text/css\"}",
                 "tot": "json"
             }
         ],
@@ -373,534 +470,186 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 380,
-        "y": 80,
+        "x": 920,
+        "y": 100,
         "wires": [
-            []
+            [
+                "dc95e929.fae528"
+            ]
         ]
     },
     {
-        "id": "f6c3a5dd.d6e9b8",
+        "id": "988fa62b.1f2928",
+        "type": "change",
+        "z": "e8e37342.d04c2",
+        "name": "Type:js",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\"Content-Type\":\"text/javascript\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 140,
+        "wires": [
+            [
+                "dc95e929.fae528"
+            ]
+        ]
+    },
+    {
+        "id": "5b2ae056.62d37",
+        "type": "websocket in",
+        "z": "e8e37342.d04c2",
+        "name": "WS From Rescuer",
+        "server": "24110b62.cac5b4",
+        "client": "",
+        "x": 150,
+        "y": 280,
+        "wires": [
+            [
+                "f021b3d.640a95"
+            ]
+        ]
+    },
+    {
+        "id": "567b53eb.ee0b1c",
+        "type": "debug",
+        "z": "e8e37342.d04c2",
+        "name": "Message from Rescuer",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 530,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "d65c21ca.e21a",
+        "type": "websocket out",
+        "z": "5b36cca4.929894",
+        "name": "To Rescuer",
+        "server": "",
+        "client": "1137bdd2.fb05a2",
+        "x": 450,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "4e5320a1.079c7",
+        "type": "inject",
+        "z": "e8e37342.d04c2",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 400,
+        "wires": [
+            [
+                "dadc7d48.4a037"
+            ]
+        ]
+    },
+    {
+        "id": "dadc7d48.4a037",
+        "type": "subflow:5b36cca4.929894",
+        "z": "e8e37342.d04c2",
+        "name": "",
+        "x": 370,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "eac1e558.cb4e18",
         "type": "switch",
-        "z": "65859b0f.82d1c4",
-        "name": "Type Router",
+        "z": "5e52503c.a1247",
+        "name": "Rescuer Router",
         "property": "payload",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "jsonata_exp",
-                "v": "$exists(payload.exposition)\t",
+                "v": "$exists(payload.start)",
                 "vt": "jsonata"
             },
             {
                 "t": "jsonata_exp",
-                "v": "$exists(payload.img)",
+                "v": "$exists(payload.message)",
                 "vt": "jsonata"
             },
             {
                 "t": "jsonata_exp",
-                "v": "$exists(payload.voice)",
+                "v": "$exists(payload.progress)",
                 "vt": "jsonata"
             },
             {
                 "t": "jsonata_exp",
-                "v": "$exists(payload.heartbeat)\t",
+                "v": "$exists(payload.stateChanged)",
                 "vt": "jsonata"
             }
         ],
         "checkall": "true",
         "repair": false,
         "outputs": 4,
-        "x": 450,
-        "y": 560,
-        "wires": [
-            [
-                "4763dd23.45641c"
-            ],
-            [
-                "e8dba705.8999d8"
-            ],
-            [
-                "e024eb10.631c58"
-            ],
-            [
-                "48bd06fc.75f208"
-            ]
-        ],
-        "outputLabels": [
-            "Exposition",
-            "img",
-            "voice",
-            "Heartbeat"
-        ]
-    },
-    {
-        "id": "df7bad0f.3b1d",
-        "type": "inject",
-        "z": "6c036195.e9552",
-        "name": "Reset State",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "x": 190,
-        "y": 80,
-        "wires": [
-            [
-                "14e1a15a.44482f"
-            ]
-        ]
-    },
-    {
-        "id": "4e973fff.e5332",
-        "type": "debug",
-        "z": "27b28616.5fe52a",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": true,
-        "complete": "payload",
-        "x": 390,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "174698c5.039fc7",
-        "type": "debug",
-        "z": "27b28616.5fe52a",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": true,
-        "complete": "payload",
-        "x": 590,
-        "y": 500,
-        "wires": []
-    },
-    {
-        "id": "d7e78b1a.3ec748",
-        "type": "inject",
-        "z": "27b28616.5fe52a",
-        "name": "this act",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 230,
-        "y": 500,
-        "wires": [
-            [
-                "d5cc862a.f93428"
-            ]
-        ]
-    },
-    {
-        "id": "d5cc862a.f93428",
-        "type": "change",
-        "z": "27b28616.5fe52a",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "$globalContext(\"config\")\t        .game[$globalContext(\"state\").act]",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 400,
-        "y": 500,
-        "wires": [
-            [
-                "174698c5.039fc7"
-            ]
-        ]
-    },
-    {
-        "id": "ccf3b7d9.dde798",
-        "type": "debug",
-        "z": "27b28616.5fe52a",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": true,
-        "complete": "payload",
-        "x": 590,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "36c42c81.845404",
-        "type": "inject",
-        "z": "27b28616.5fe52a",
-        "name": "this scene",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 220,
-        "y": 560,
-        "wires": [
-            [
-                "790b61a2.ba6f3"
-            ]
-        ]
-    },
-    {
-        "id": "790b61a2.ba6f3",
-        "type": "change",
-        "z": "27b28616.5fe52a",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "$globalContext(\"config\")\t        .game[$globalContext(\"state\").act]\t            .scenes[$globalContext(\"state\").scene]",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 400,
-        "y": 560,
-        "wires": [
-            [
-                "ccf3b7d9.dde798"
-            ]
-        ]
-    },
-    {
-        "id": "21734f56.f1452",
-        "type": "debug",
-        "z": "27b28616.5fe52a",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": true,
-        "complete": "payload",
-        "x": 390,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "57196242.db203c",
-        "type": "inject",
-        "z": "27b28616.5fe52a",
-        "name": "state",
-        "topic": "",
-        "payload": "state",
-        "payloadType": "global",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 230,
-        "y": 140,
-        "wires": [
-            [
-                "21734f56.f1452"
-            ]
-        ]
-    },
-    {
-        "id": "e0d671aa.679b4",
-        "type": "websocket out",
-        "z": "65859b0f.82d1c4",
-        "name": "/rescueeSocket",
-        "server": "",
-        "client": "88e114fd.576a58",
-        "x": 480,
-        "y": 900,
-        "wires": []
-    },
-    {
-        "id": "e59c8205.49bcc",
-        "type": "debug",
-        "z": "27b28616.5fe52a",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": true,
-        "complete": "payload",
-        "x": 390,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "2130f700.986c0a",
-        "type": "inject",
-        "z": "27b28616.5fe52a",
-        "name": "acceptanceCriteria",
-        "topic": "",
-        "payload": "acceptanceCriteria",
-        "payloadType": "global",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 190,
-        "y": 200,
-        "wires": [
-            [
-                "e59c8205.49bcc"
-            ]
-        ]
-    },
-    {
-        "id": "18339b89.941494",
-        "type": "change",
-        "z": "6c036195.e9552",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "acceptanceCriteria",
-                "pt": "global",
-                "to": "$globalContext(\"config\")\t.game[$globalContext(\"state\").act]\t.scenes[$globalContext(\"state\").scene]\t.acceptanceCriteria",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 420,
-        "y": 120,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "ad5696a4.042638",
-        "type": "inject",
-        "z": "6c036195.e9552",
-        "name": "Set Acceptance criteria",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "x": 150,
-        "y": 120,
-        "wires": [
-            [
-                "18339b89.941494"
-            ]
-        ]
-    },
-    {
-        "id": "affe3ecf.673ac",
-        "type": "inject",
-        "z": "6c036195.e9552",
-        "name": "Save responses",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 180,
-        "y": 220,
-        "wires": [
-            [
-                "9f3d2273.82f5f",
-                "d7d29998.7105e8"
-            ]
-        ]
-    },
-    {
-        "id": "3775ffeb.3e96f",
-        "type": "watson-text-to-speech",
-        "z": "6c036195.e9552",
-        "name": "",
-        "lang": "en-GB",
-        "langhidden": "en-GB",
-        "langcustom": "NoCustomisationSetting",
-        "langcustomhidden": "",
-        "voice": "en-GB_KateVoice",
-        "voicehidden": "",
-        "format": "audio/wav",
-        "password": "DetPtzgT6Gz4",
-        "payload-response": false,
-        "default-endpoint": true,
-        "service-endpoint": "https://stream.watsonplatform.net/text-to-speech/api",
-        "x": 620,
-        "y": 220,
-        "wires": [
-            [
-                "a2976eba.f3f6d"
-            ]
-        ]
-    },
-    {
-        "id": "9f3d2273.82f5f",
-        "type": "change",
-        "z": "6c036195.e9552",
-        "name": "successMessage",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "config.successMessage",
-                "tot": "global"
-            },
-            {
-                "t": "set",
-                "p": "message",
-                "pt": "msg",
-                "to": "success",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 390,
-        "y": 180,
-        "wires": [
-            [
-                "3775ffeb.3e96f"
-            ]
-        ]
-    },
-    {
-        "id": "4f84afc1.82b88",
-        "type": "change",
-        "z": "6c036195.e9552",
-        "name": "save successMessage",
-        "rules": [
-            {
-                "t": "set",
-                "p": "message.success",
-                "pt": "global",
-                "to": "speech",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1060,
-        "y": 180,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "d7d29998.7105e8",
-        "type": "change",
-        "z": "6c036195.e9552",
-        "name": "failureMessage",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "config.failureMessage",
-                "tot": "global"
-            },
-            {
-                "t": "set",
-                "p": "message",
-                "pt": "msg",
-                "to": "failure",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
         "x": 380,
-        "y": 260,
+        "y": 200,
         "wires": [
             [
-                "3775ffeb.3e96f"
-            ]
-        ]
-    },
-    {
-        "id": "a2976eba.f3f6d",
-        "type": "switch",
-        "z": "6c036195.e9552",
-        "name": "Message Routing",
-        "property": "message",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "success",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "failure",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 830,
-        "y": 220,
-        "wires": [
-            [
-                "4f84afc1.82b88"
+                "77a4637c.dce72c"
             ],
             [
-                "3f9d22d6.babbae"
+                "6664a3f5.b842bc"
+            ],
+            [
+                "76283e4c.59d42"
+            ],
+            [
+                "5c2291b0.fb766"
             ]
         ],
         "outputLabels": [
-            "success",
-            ""
+            "Start",
+            "Text Message",
+            "Check answers",
+            "State Changed"
         ]
     },
     {
-        "id": "3f9d22d6.babbae",
+        "id": "b3844845.6c6f38",
+        "type": "subflow:5e52503c.a1247",
+        "z": "e8e37342.d04c2",
+        "name": "",
+        "x": 550,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "552b103b.56051",
         "type": "change",
-        "z": "6c036195.e9552",
-        "name": "save failureMessage",
+        "z": "148c3991.b9c716",
+        "name": "Repo Params",
         "rules": [
             {
                 "t": "set",
-                "p": "message.failure",
-                "pt": "global",
-                "to": "speech",
-                "tot": "msg"
+                "p": "repoArgs",
+                "pt": "msg",
+                "to": "{\"user\":\"andrewstanton94\",\"repo\":\"space\",\"branch\":\"master\",\"path\":\"config\",\"file\":\"quickRescue.json\"}",
+                "tot": "json"
             }
         ],
         "action": "",
@@ -908,1018 +657,184 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1060,
-        "y": 260,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "9b127804.9b0578",
-        "type": "debug",
-        "z": "27b28616.5fe52a",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": true,
-        "complete": "payload",
-        "x": 390,
-        "y": 260,
-        "wires": []
-    },
-    {
-        "id": "6b44e6aa.799688",
-        "type": "inject",
-        "z": "27b28616.5fe52a",
-        "name": "messages",
-        "topic": "",
-        "payload": "message",
-        "payloadType": "global",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
         "x": 220,
-        "y": 260,
-        "wires": [
-            [
-                "9b127804.9b0578"
-            ]
-        ]
-    },
-    {
-        "id": "db1f83b9.916a3",
-        "type": "change",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "rules": [
-            {
-                "t": "delete",
-                "p": "_session",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 260,
-        "y": 900,
-        "wires": [
-            [
-                "e0d671aa.679b4",
-                "95129a4b.666b38"
-            ]
-        ]
-    },
-    {
-        "id": "d56a860b.1b7768",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 870,
-        "y": 700,
-        "wires": []
-    },
-    {
-        "id": "e4668b6.216a878",
-        "type": "comment",
-        "z": "65859b0f.82d1c4",
-        "name": "https://stackoverflow.com/questions/41881668/create-binary-payload-in-node-red",
-        "info": "",
-        "x": 320,
-        "y": 800,
-        "wires": []
-    },
-    {
-        "id": "e024eb10.631c58",
-        "type": "function",
-        "z": "65859b0f.82d1c4",
-        "name": "Array to buffer",
-        "func": "return {\n    payload: Buffer.from(msg.payload.voice)\n};",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 680,
-        "y": 660,
-        "wires": [
-            [
-                "d56a860b.1b7768",
-                "bde0ce3b.6d79b"
-            ]
-        ]
-    },
-    {
-        "id": "cdec2610.31b818",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 430,
-        "y": 620,
-        "wires": []
-    },
-    {
-        "id": "bde0ce3b.6d79b",
-        "type": "watson-speech-to-text",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "alternatives": "3",
-        "speakerlabels": false,
-        "smartformatting": false,
-        "lang": "en-GB",
-        "langhidden": "en-GB",
-        "langcustom": "NoCustomisationSetting",
-        "langcustomhidden": "",
-        "band": "NarrowbandModel",
-        "bandhidden": "NarrowbandModel",
-        "password": "qz0oBR5sBdsG",
-        "payload-response": true,
-        "streaming-mode": false,
-        "default-endpoint": true,
-        "service-endpoint": "https://stream.watsonplatform.net/speech-to-text/api",
-        "x": 880,
-        "y": 660,
-        "wires": [
-            [
-                "2df7806f.35df9",
-                "f30260f0.eb22c8",
-                "c6964df9.7e0788"
-            ]
-        ]
-    },
-    {
-        "id": "2df7806f.35df9",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 1070,
-        "y": 720,
-        "wires": []
-    },
-    {
-        "id": "6f3d9192.31f29",
-        "type": "inject",
-        "z": "6c036195.e9552",
-        "name": "Sinus rhythm",
-        "topic": "",
-        "payload": "{\"heartbeat\":\"ePastry\"}",
-        "payloadType": "json",
-        "repeat": "3600",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "10",
-        "x": 180,
-        "y": 400,
-        "wires": [
-            [
-                "d023e64c.e327b8",
-                "1fc81ed1.46c371"
-            ]
-        ]
-    },
-    {
-        "id": "d023e64c.e327b8",
-        "type": "websocket out",
-        "z": "6c036195.e9552",
-        "name": "",
-        "server": "",
-        "client": "88e114fd.576a58",
-        "x": 500,
-        "y": 400,
-        "wires": []
-    },
-    {
-        "id": "48bd06fc.75f208",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload.heartbeat",
-        "x": 700,
-        "y": 800,
-        "wires": []
-    },
-    {
-        "id": "f30260f0.eb22c8",
-        "type": "watson-text-to-speech",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "lang": "en-GB",
-        "langhidden": "en-GB",
-        "langcustom": "NoCustomisationSetting",
-        "langcustomhidden": "",
-        "voice": "en-GB_KateVoice",
-        "voicehidden": "",
-        "format": "audio/wav",
-        "password": "DetPtzgT6Gz4",
-        "payload-response": true,
-        "default-endpoint": true,
-        "service-endpoint": "https://stream.watsonplatform.net/text-to-speech/api",
-        "x": 1100,
-        "y": 600,
-        "wires": [
-            [
-                "3cc70727.ab48c8"
-            ]
-        ]
-    },
-    {
-        "id": "20bfab25.c8c8ac",
-        "type": "change",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\t    \"voice\": payload,\t    \"purpose\": \"intro\"\t}",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1080,
-        "y": 260,
-        "wires": [
-            [
-                "cf0bb098.5a1878",
-                "78e1b7ac.fb17b8"
-            ]
-        ]
-    },
-    {
-        "id": "cf0bb098.5a1878",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1330,
-        "y": 260,
-        "wires": []
-    },
-    {
-        "id": "4763dd23.45641c",
-        "type": "change",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "config.rescueeIntro",
-                "tot": "global"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 680,
-        "y": 260,
-        "wires": [
-            [
-                "bb237031.67d678"
-            ]
-        ]
-    },
-    {
-        "id": "7369b678.1fd95",
-        "type": "inject",
-        "z": "83d5fc1b.eba75",
-        "name": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 100,
         "y": 60,
         "wires": [
             [
-                "b78ec356.1a4418"
+                "bceba480.fc9c78"
             ]
         ]
     },
     {
-        "id": "b78ec356.1a4418",
-        "type": "websocket out",
-        "z": "83d5fc1b.eba75",
-        "name": "/rescuerSocket",
-        "server": "",
-        "client": "27cb6f67.0a5458",
-        "x": 280,
+        "id": "bceba480.fc9c78",
+        "type": "subflow:e6e294e0.c5c278",
+        "z": "148c3991.b9c716",
+        "name": "",
+        "x": 420,
         "y": 60,
-        "wires": []
-    },
-    {
-        "id": "1fc81ed1.46c371",
-        "type": "websocket out",
-        "z": "6c036195.e9552",
-        "name": "",
-        "server": "",
-        "client": "27cb6f67.0a5458",
-        "x": 500,
-        "y": 460,
-        "wires": []
-    },
-    {
-        "id": "9da2452f.9a5f8",
-        "type": "websocket in",
-        "z": "83d5fc1b.eba75",
-        "name": "",
-        "server": "ae6e5e5b.ece13",
-        "client": "",
-        "x": 90,
-        "y": 240,
         "wires": [
             [
-                "ebc44dc7.8885a"
+                "42325447.f405cc"
             ]
         ]
     },
     {
-        "id": "153f5402.6762f4",
-        "type": "debug",
-        "z": "83d5fc1b.eba75",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 530,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "ebc44dc7.8885a",
+        "id": "42325447.f405cc",
         "type": "json",
-        "z": "83d5fc1b.eba75",
+        "z": "148c3991.b9c716",
         "name": "",
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 250,
-        "y": 240,
+        "x": 590,
+        "y": 60,
         "wires": [
             [
-                "25446d48.b7f532"
+                "42c4d35.665222c"
             ]
         ]
     },
     {
-        "id": "9ea2e914.3a89e8",
-        "type": "websocket out",
-        "z": "65859b0f.82d1c4",
-        "name": "/rescuerSocket",
-        "server": "",
-        "client": "27cb6f67.0a5458",
-        "x": 1300,
-        "y": 660,
+        "id": "741fe9fb.939d58",
+        "type": "subflow:5b36cca4.929894",
+        "z": "5e52503c.a1247",
+        "name": "",
+        "x": 1150,
+        "y": 40,
         "wires": []
     },
     {
-        "id": "bb237031.67d678",
-        "type": "watson-text-to-speech",
-        "z": "65859b0f.82d1c4",
+        "id": "f021b3d.640a95",
+        "type": "json",
+        "z": "e8e37342.d04c2",
         "name": "",
-        "lang": "en-GB",
-        "langhidden": "en-GB",
-        "langcustom": "NoCustomisationSetting",
-        "langcustomhidden": "",
-        "voice": "en-GB_KateVoice",
-        "voicehidden": "",
-        "format": "audio/wav",
-        "password": "gBEJxPm6x1R4",
-        "payload-response": true,
-        "default-endpoint": true,
-        "service-endpoint": "https://stream.watsonplatform.net/text-to-speech/api",
-        "x": 880,
-        "y": 260,
-        "wires": [
-            [
-                "20bfab25.c8c8ac"
-            ]
-        ]
-    },
-    {
-        "id": "3cc70727.ab48c8",
-        "type": "change",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\t    \"voice\": payload,\t    \"purpose\": \"Text to speech\"\t}",
-                "tot": "jsonata"
-            }
-        ],
+        "property": "payload",
         "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1300,
-        "y": 600,
+        "pretty": false,
+        "x": 330,
+        "y": 280,
         "wires": [
             [
-                "f11cf6e6.035448",
-                "38aec417.ac90f4"
+                "567b53eb.ee0b1c",
+                "b3844845.6c6f38"
             ]
         ]
     },
     {
-        "id": "25446d48.b7f532",
+        "id": "7375e38c.2f59fc",
+        "type": "subflow:f6f6c865.5c6f48",
+        "z": "148c3991.b9c716",
+        "name": "",
+        "x": 1130,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "12aec7ac.f1f308",
+        "type": "function",
+        "z": "f6f6c865.5c6f48",
+        "name": "Populate Progress Object",
+        "func": "// For each act create an array for each scene\nconst generateResultStructure = (act) => Array(act.scenes.length);\n\nmsg.payload.progress = {\n    act: 0,\n    scene: 0,\n    imgClasses: msg.payload.gameDescription.acts.map(generateResultStructure),\n    selectedClasses: msg.payload.gameDescription.acts.map(generateResultStructure)\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 250,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "53c5c47c.d198cc",
+        "type": "websocket in",
+        "z": "4a5f8456.b9645c",
+        "name": "From Rescuees",
+        "server": "d9b33300.6e82b",
+        "client": "",
+        "x": 120,
+        "y": 180,
+        "wires": [
+            [
+                "291c32bb.a25dee"
+            ]
+        ]
+    },
+    {
+        "id": "ece5413.34be8c",
+        "type": "websocket out",
+        "z": "dfcd7998.88d4b8",
+        "name": "To Rescuee",
+        "server": "",
+        "client": "dfde61ff.4b109",
+        "x": 470,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "9832b1f0.aa084",
         "type": "switch",
-        "z": "83d5fc1b.eba75",
-        "name": "Router",
+        "z": "a8156bb2.565448",
+        "name": "RescueeRouter",
         "property": "payload",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "jsonata_exp",
-                "v": "$exists(payload.textIn)\t",
+                "v": "$exists(payload.speech)",
                 "vt": "jsonata"
             },
             {
                 "t": "jsonata_exp",
-                "v": "$exists(payload.newState)",
+                "v": "$exists(payload.img)",
                 "vt": "jsonata"
             }
         ],
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 390,
-        "y": 240,
-        "wires": [
-            [
-                "153f5402.6762f4",
-                "4e36ce00.4c6554"
-            ],
-            [
-                "b08e8d32.0f6f4"
-            ]
-        ],
-        "outputLabels": [
-            "textIn",
-            ""
-        ]
-    },
-    {
-        "id": "392c9f87.1e4858",
-        "type": "watson-text-to-speech",
-        "z": "83d5fc1b.eba75",
-        "name": "",
-        "lang": "en-GB",
-        "langhidden": "en-GB",
-        "langcustom": "NoCustomisationSetting",
-        "langcustomhidden": "",
-        "voice": "en-GB_KateVoice",
-        "voicehidden": "",
-        "format": "audio/wav",
-        "password": "gBEJxPm6x1R4",
-        "payload-response": true,
-        "default-endpoint": true,
-        "service-endpoint": "https://stream.watsonplatform.net/text-to-speech/api",
-        "x": 760,
-        "y": 180,
-        "wires": [
-            [
-                "834cb78.1aec848",
-                "9a885d62.78957"
-            ]
-        ]
-    },
-    {
-        "id": "834cb78.1aec848",
-        "type": "play audio",
-        "z": "83d5fc1b.eba75",
-        "name": "",
-        "voice": "",
-        "x": 950,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "4e36ce00.4c6554",
-        "type": "change",
-        "z": "83d5fc1b.eba75",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload.textIn",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 560,
-        "y": 180,
-        "wires": [
-            [
-                "392c9f87.1e4858"
-            ]
-        ]
-    },
-    {
-        "id": "c6964df9.7e0788",
-        "type": "change",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\t    \"textOut\": payload\t}",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1100,
-        "y": 660,
-        "wires": [
-            [
-                "9ea2e914.3a89e8"
-            ]
-        ]
-    },
-    {
-        "id": "29645bd4.7eedd4",
-        "type": "websocket out",
-        "z": "83d5fc1b.eba75",
-        "name": "/rescueeSocket",
-        "server": "",
-        "client": "88e114fd.576a58",
-        "x": 1200,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "9a885d62.78957",
-        "type": "change",
-        "z": "83d5fc1b.eba75",
-        "name": "",
-        "rules": [
-            {
-                "t": "delete",
-                "p": "_session",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 980,
-        "y": 180,
-        "wires": [
-            [
-                "29645bd4.7eedd4"
-            ]
-        ]
-    },
-    {
-        "id": "fe3aeae.b560118",
-        "type": "visual-recognition-v3",
-        "z": "cccc2cc9.03f89",
-        "name": "",
-        "apikey": "7fd3981e872c9b4d5021dda61179b8d92a7623af",
-        "image-feature": "classifyImage",
-        "lang": "en",
-        "x": 470,
+        "x": 400,
         "y": 120,
         "wires": [
             [
-                "a80ecfa7.bac6e"
-            ]
-        ]
-    },
-    {
-        "id": "c9feed86.a1a01",
-        "type": "function",
-        "z": "cccc2cc9.03f89",
-        "name": "Array to buffer",
-        "func": "return {\n    payload: Buffer.from(msg.payload.img)\n};",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 260,
-        "y": 120,
-        "wires": [
-            [
-                "fe3aeae.b560118"
-            ]
-        ]
-    },
-    {
-        "id": "95129a4b.666b38",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 450,
-        "y": 960,
-        "wires": []
-    },
-    {
-        "id": "91c02536.6d64c8",
-        "type": "link in",
-        "z": "65859b0f.82d1c4",
-        "name": "ToRescueeSocket",
-        "links": [
-            "851830df.8ce2b",
-            "b62f62fe.7a50d",
-            "ff74dca3.2bb8",
-            "647fe0a9.16614",
-            "78e1b7ac.fb17b8",
-            "f11cf6e6.035448"
-        ],
-        "x": 115,
-        "y": 900,
-        "wires": [
-            [
-                "db1f83b9.916a3"
-            ]
-        ]
-    },
-    {
-        "id": "647fe0a9.16614",
-        "type": "link out",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "links": [
-            "91c02536.6d64c8"
-        ],
-        "x": 935,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "f11cf6e6.035448",
-        "type": "link out",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "links": [
-            "91c02536.6d64c8"
-        ],
-        "x": 1435,
-        "y": 600,
-        "wires": []
-    },
-    {
-        "id": "78e1b7ac.fb17b8",
-        "type": "link out",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "links": [
-            "91c02536.6d64c8"
-        ],
-        "x": 1215,
-        "y": 260,
-        "wires": []
-    },
-    {
-        "id": "e8dba705.8999d8",
-        "type": "subflow:cccc2cc9.03f89",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "x": 740,
-        "y": 420,
-        "wires": [
-            [
-                "b7807ed.d7dd68",
-                "647fe0a9.16614",
-                "74af5cca.945ae4"
-            ]
-        ]
-    },
-    {
-        "id": "38aec417.ac90f4",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1550,
-        "y": 600,
-        "wires": []
-    },
-    {
-        "id": "c639bfb0.b1d8",
-        "type": "switch",
-        "z": "8d7d6a55.ace158",
-        "name": "Validate act",
-        "property": "payload.act",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "lt",
-                "v": "acts",
-                "vt": "msg"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "false",
-        "repair": false,
-        "outputs": 2,
-        "x": 470,
-        "y": 140,
-        "wires": [
-            [
-                "d569ce9a.aaa1c"
-            ],
-            []
-        ],
-        "outputLabels": [
-            "Valid",
-            "Invalid"
-        ]
-    },
-    {
-        "id": "2fe0c6f1.18603a",
-        "type": "inject",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "topic": "",
-        "payload": "{\"act\": 1,\"scene\":0}",
-        "payloadType": "json",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 150,
-        "y": 1180,
-        "wires": [
-            [
-                "215774c.251e18c"
-            ]
-        ]
-    },
-    {
-        "id": "cdc4d53f.f87048",
-        "type": "function",
-        "z": "6c036195.e9552",
-        "name": "Count Acts & scenes",
-        "func": "const f = (acts) => ({ acts: acts.length, scenes: acts.map((act) => act.scenes.length )}),\n    data = f(msg.payload.game);\n\nglobal.set(\"limits\", data);\n\nreturn {\"payload\": data};",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 1000,
-        "y": 40,
-        "wires": [
-            [
-                "e27df36f.c3d61",
-                "ebd3fb2a.5b5dd8"
-            ]
-        ]
-    },
-    {
-        "id": "a7743672.dce418",
-        "type": "debug",
-        "z": "6c036195.e9552",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1410,
-        "y": 40,
-        "wires": []
-    },
-    {
-        "id": "e27df36f.c3d61",
-        "type": "change",
-        "z": "6c036195.e9552",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "limits",
-                "tot": "global"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1220,
-        "y": 40,
-        "wires": [
-            [
-                "a7743672.dce418"
-            ]
-        ]
-    },
-    {
-        "id": "d569ce9a.aaa1c",
-        "type": "switch",
-        "z": "8d7d6a55.ace158",
-        "name": "Validate scene",
-        "property": "payload.scene",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "lt",
-                "v": "scenesThisAct",
-                "vt": "msg"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "false",
-        "repair": false,
-        "outputs": 2,
-        "x": 660,
-        "y": 100,
-        "wires": [
-            [],
-            []
-        ],
-        "outputLabels": [
-            "Valid",
-            "Invalid"
-        ]
-    },
-    {
-        "id": "215774c.251e18c",
-        "type": "change",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "limits",
-                "pt": "msg",
-                "to": "limits",
-                "tot": "global"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 360,
-        "y": 1180,
-        "wires": [
-            [
-                "dc6e73e.34ac89"
-            ]
-        ]
-    },
-    {
-        "id": "c80d91d0.8dd2a",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": true,
-        "complete": "payload",
-        "x": 750,
-        "y": 1300,
-        "wires": []
-    },
-    {
-        "id": "227f53a4.2039ac",
-        "type": "function",
-        "z": "8d7d6a55.ace158",
-        "name": "Extracting limitations",
-        "func": "let {acts, scenes} = msg.limits || global.get(\"limits\");\nmsg.scenes = scenes;\nmsg.acts = acts;\nmsg.scenesThisAct = scenes[msg.payload.act];\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 240,
-        "y": 140,
-        "wires": [
-            [
-                "c639bfb0.b1d8"
-            ]
-        ]
-    },
-    {
-        "id": "66bd7d47.58cca4",
-        "type": "inject",
-        "z": "27b28616.5fe52a",
-        "name": "",
-        "topic": "",
-        "payload": "limits",
-        "payloadType": "global",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 210,
-        "y": 320,
-        "wires": [
-            [
-                "f2ce4f40.e502"
-            ]
-        ]
-    },
-    {
-        "id": "f2ce4f40.e502",
-        "type": "debug",
-        "z": "27b28616.5fe52a",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": true,
-        "complete": "payload",
-        "x": 390,
-        "y": 320,
-        "wires": []
-    },
-    {
-        "id": "dc6e73e.34ac89",
-        "type": "subflow:8d7d6a55.ace158",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "x": 560,
-        "y": 1180,
-        "wires": [
-            [
-                "455c4b38.bb02f4"
+                "9cc313fc.d44e1"
             ],
             [
-                "c80d91d0.8dd2a",
-                "93d10dee.9a81b"
+                "857c9a.dfb45368"
             ]
         ],
         "outputLabels": [
-            "Valid",
-            "Invalid"
+            "Voice",
+            "Image"
         ]
     },
     {
-        "id": "455c4b38.bb02f4",
+        "id": "291c32bb.a25dee",
+        "type": "json",
+        "z": "4a5f8456.b9645c",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 290,
+        "y": 180,
+        "wires": [
+            [
+                "738ba1ea.c13dd",
+                "57aab339.3996cc"
+            ]
+        ]
+    },
+    {
+        "id": "373dccaa.9f9dd4",
         "type": "change",
-        "z": "65859b0f.82d1c4",
-        "name": "Update State",
+        "z": "a8156bb2.565448",
+        "name": "Backup payload",
         "rules": [
             {
                 "t": "set",
-                "p": "state",
-                "pt": "global",
+                "p": "payloadBackup",
+                "pt": "msg",
                 "to": "payload",
                 "tot": "msg"
             }
@@ -1929,866 +844,33 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 750,
-        "y": 1160,
-        "wires": [
-            [
-                "93d10dee.9a81b",
-                "7cec810f.5d1d8"
-            ]
-        ]
-    },
-    {
-        "id": "9e8a8e41.95dad",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1130,
-        "y": 1240,
-        "wires": []
-    },
-    {
-        "id": "93d10dee.9a81b",
-        "type": "change",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "state",
-                "tot": "global"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 940,
-        "y": 1240,
-        "wires": [
-            [
-                "9e8a8e41.95dad"
-            ]
-        ]
-    },
-    {
-        "id": "7cec810f.5d1d8",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 950,
-        "y": 1100,
-        "wires": []
-    },
-    {
-        "id": "ebd3fb2a.5b5dd8",
-        "type": "function",
-        "z": "6c036195.e9552",
-        "name": "Generate empty structure for results",
-        "func": "let limits = global.get(\"limits\");\nlet responses = limits.scenes.map((x) => Array(x));\nlet selections = limits.scenes.map((x) => Array(x));\n\nglobal.set(\"responses\", responses);\nglobal.set(\"selections\", selections);\nreturn {\"payload\": {responses, selections}};",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 1290,
-        "y": 80,
-        "wires": [
-            [
-                "d5c678e5.e0c148"
-            ]
-        ]
-    },
-    {
-        "id": "d5c678e5.e0c148",
-        "type": "debug",
-        "z": "6c036195.e9552",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 1530,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "57bb60ef.06066",
-        "type": "inject",
-        "z": "27b28616.5fe52a",
-        "name": "",
-        "topic": "",
-        "payload": "responses",
-        "payloadType": "global",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
         "x": 200,
-        "y": 380,
-        "wires": [
-            [
-                "756e2fe5.876f7"
-            ]
-        ]
-    },
-    {
-        "id": "756e2fe5.876f7",
-        "type": "debug",
-        "z": "27b28616.5fe52a",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": true,
-        "complete": "payload",
-        "x": 390,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "1721f19a.e38eee",
-        "type": "inject",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 180,
-        "y": 1520,
-        "wires": [
-            [
-                "9870fa11.c23578",
-                "771ef9ab.8ae9b8"
-            ]
-        ]
-    },
-    {
-        "id": "9870fa11.c23578",
-        "type": "change",
-        "z": "65859b0f.82d1c4",
-        "name": "Act & scene info",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\t    \"act\": $globalContext(\"config\").game[\t        $globalContext(\"state\").act\t        ],\t    \t    \"scene\": $globalContext(\"config\").game[\t            $globalContext(\"state\").act\t        ].scenes[\t            $globalContext(\"state\").scene\t        ]\t}",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 360,
-        "y": 1480,
-        "wires": [
-            [
-                "ec89dafa.a89398"
-            ]
-        ]
-    },
-    {
-        "id": "3747359e.0e89aa",
-        "type": "inject",
-        "z": "27b28616.5fe52a",
-        "name": "",
-        "topic": "",
-        "payload": "config",
-        "payloadType": "global",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 210,
-        "y": 80,
-        "wires": [
-            [
-                "4e973fff.e5332"
-            ]
-        ]
-    },
-    {
-        "id": "ec89dafa.a89398",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 550,
-        "y": 1480,
-        "wires": []
-    },
-    {
-        "id": "6a58a6bd.ebf8a8",
-        "type": "comment",
-        "z": "65859b0f.82d1c4",
-        "name": "Preparing the state info for players",
-        "info": "",
-        "x": 230,
-        "y": 1420,
-        "wires": []
-    },
-    {
-        "id": "771ef9ab.8ae9b8",
-        "type": "change",
-        "z": "65859b0f.82d1c4",
-        "name": "Current answers",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "responses",
-                "tot": "global"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 360,
-        "y": 1560,
-        "wires": [
-            [
-                "ce082dae.aec6e"
-            ]
-        ]
-    },
-    {
-        "id": "ce082dae.aec6e",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "x": 550,
-        "y": 1560,
-        "wires": []
-    },
-    {
-        "id": "2f25d6cd.177362",
-        "type": "function",
-        "z": "cccc2cc9.03f89",
-        "name": "Save Image Classes",
-        "func": "const {act, scene} = global.get(\"state\");\nlet responses = global.get(\"responses\");\n\nlet imgClasses = msg.payload.imgClasses\n\nresponses[act][scene] = imgClasses;\n\nglobal.set('responses', responses)\n\nlet payload = {\n    responses,\n    imgClasses\n};\n\nmsg = {payload};\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 900,
         "y": 120,
         "wires": [
-            []
-        ]
-    },
-    {
-        "id": "e21a3ec5.4ab85",
-        "type": "comment",
-        "z": "65859b0f.82d1c4",
-        "name": "This needs to use the state to return the relevant audio",
-        "info": "",
-        "x": 800,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "d631cf3a.2f567",
-        "type": "switch",
-        "z": "2c0bc2aa.065b5e",
-        "name": "All scenes valid?",
-        "property": "allMatches",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "true"
-            },
-            {
-                "t": "false"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 1010,
-        "y": 380,
-        "wires": [
             [
-                "5a434764.658ee8"
-            ],
-            [
-                "7e329810.fbf138"
+                "9832b1f0.aa084"
             ]
-        ],
-        "outputLabels": [
-            "Yes",
-            "No"
         ]
     },
     {
-        "id": "7e329810.fbf138",
+        "id": "9cc313fc.d44e1",
         "type": "change",
-        "z": "2c0bc2aa.065b5e",
-        "name": "Stay",
+        "z": "a8156bb2.565448",
+        "name": "Move Speech",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "",
+                "to": "payload.speech",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "moveTo",
+                "pt": "msg",
+                "to": "transcription",
                 "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1210,
-        "y": 440,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "b7807ed.d7dd68",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 1010,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "a80ecfa7.bac6e",
-        "type": "change",
-        "z": "cccc2cc9.03f89",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\t    \"imgClasses\": result.images.classifiers.classes\t}",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 680,
-        "y": 120,
-        "wires": [
-            [
-                "2f25d6cd.177362"
-            ]
-        ]
-    },
-    {
-        "id": "3744db6a.3d8eb4",
-        "type": "switch",
-        "z": "2c0bc2aa.065b5e",
-        "name": "IsNextScene",
-        "property": "($globalContext(\"state\").scene + 1)\t<\t$count(\t    $globalContext(\"config\")\t        .game[$globalContext(\"state\").act]\t            .scenes\t)",
-        "propertyType": "jsonata",
-        "rules": [
-            {
-                "t": "true"
-            },
-            {
-                "t": "false"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 210,
-        "y": 360,
-        "wires": [
-            [
-                "e01e7757.480708"
-            ],
-            [
-                "82d4d1f5.432bf"
-            ]
-        ],
-        "outputLabels": [
-            "Yes",
-            "No"
-        ]
-    },
-    {
-        "id": "5a434764.658ee8",
-        "type": "switch",
-        "z": "2c0bc2aa.065b5e",
-        "name": "IsNextAct",
-        "property": "($globalContext(\"state\").act + 1)\t<\t\t\t$count(\t    $globalContext(\"config\")\t        .game\t)\t\t",
-        "propertyType": "jsonata",
-        "rules": [
-            {
-                "t": "true"
-            },
-            {
-                "t": "false"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 1220,
-        "y": 340,
-        "wires": [
-            [
-                "79a1647.494fe9c"
-            ],
-            [
-                "9339b688.ef8c28"
-            ]
-        ],
-        "outputLabels": [
-            "Yes",
-            "No"
-        ]
-    },
-    {
-        "id": "e01e7757.480708",
-        "type": "change",
-        "z": "2c0bc2aa.065b5e",
-        "name": "Increment scene",
-        "rules": [
-            {
-                "t": "set",
-                "p": "state.scene",
-                "pt": "global",
-                "to": "$globalContext(\"state\").scene + 1",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 410,
-        "y": 300,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "79a1647.494fe9c",
-        "type": "change",
-        "z": "2c0bc2aa.065b5e",
-        "name": "Increment act",
-        "rules": [
-            {
-                "t": "set",
-                "p": "state",
-                "pt": "global",
-                "to": "{\t    \"act\": $globalContext(\"state\").act + 1,\t    \"scene\": 0\t}",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1400,
-        "y": 300,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "9339b688.ef8c28",
-        "type": "change",
-        "z": "2c0bc2aa.065b5e",
-        "name": "Mark completed",
-        "rules": [
-            {
-                "t": "set",
-                "p": "state.complete",
-                "pt": "global",
-                "to": "true",
-                "tot": "bool"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "state",
-                "tot": "global"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1400,
-        "y": 360,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "74af5cca.945ae4",
-        "type": "subflow:2c0bc2aa.065b5e",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "x": 1150,
-        "y": 420,
-        "wires": [
-            [
-                "2eadaf10.35b29",
-                "ca8b1cf5.2a7b8"
-            ],
-            [
-                "2eadaf10.35b29",
-                "d078009c.08e83"
-            ],
-            [
-                "2eadaf10.35b29",
-                "5f479735.db1b48"
-            ],
-            [
-                "2eadaf10.35b29",
-                "45654319.b11ddc"
-            ]
-        ],
-        "outputLabels": [
-            "Next Scene",
-            "Next Act",
-            "Complete",
-            "Invalid Scene Results"
-        ]
-    },
-    {
-        "id": "2eadaf10.35b29",
-        "type": "change",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.state",
-                "pt": "msg",
-                "to": "state",
-                "tot": "global"
-            },
-            {
-                "t": "delete",
-                "p": "_session",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1320,
-        "y": 480,
-        "wires": [
-            [
-                "bccdd8f6.9e3318",
-                "4e688d7e.8a871c",
-                "1e05cf82.435e2"
-            ]
-        ]
-    },
-    {
-        "id": "bccdd8f6.9e3318",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 1490,
-        "y": 520,
-        "wires": []
-    },
-    {
-        "id": "82d4d1f5.432bf",
-        "type": "change",
-        "z": "2c0bc2aa.065b5e",
-        "name": "Extract actRequires and responses",
-        "rules": [
-            {
-                "t": "set",
-                "p": "actRequires",
-                "pt": "msg",
-                "to": "[$globalContext(\"config\")\t    .game[$globalContext(\"state\").act].scenes.acceptanceCriteria]",
-                "tot": "jsonata"
-            },
-            {
-                "t": "set",
-                "p": "actResponses",
-                "pt": "msg",
-                "to": "$globalContext(\"responses\")[$globalContext(\"state\").act][0]",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 460,
-        "y": 380,
-        "wires": [
-            [
-                "cd2c42f9.4234f",
-                "2a57db18.8e3024"
-            ]
-        ]
-    },
-    {
-        "id": "cd2c42f9.4234f",
-        "type": "function",
-        "z": "2c0bc2aa.065b5e",
-        "name": "Scene matched correctly?",
-        "func": "let {actRequires, actResponses} = msg;\n\nlet scenesMatch = actRequires.map((value, i) => {\n    let sceneResponses = actResponses[i] || [];\n    // Keep class names. Don't want the scores\n    sceneResponses = sceneResponses.map((x) => x.class);\n    return sceneResponses.includes(value);\n});\nlet allMatches = scenesMatch.reduce((acc, value) => acc && value);\n\nmsg.scenesMatch = scenesMatch;\nmsg.allMatches = allMatches;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 750,
-        "y": 380,
-        "wires": [
-            [
-                "d631cf3a.2f567",
-                "891675ce.94b948"
-            ]
-        ]
-    },
-    {
-        "id": "891675ce.94b948",
-        "type": "debug",
-        "z": "2c0bc2aa.065b5e",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 970,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "ca8b1cf5.2a7b8",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 1710,
-        "y": 340,
-        "wires": []
-    },
-    {
-        "id": "d078009c.08e83",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 1710,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "5f479735.db1b48",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 1710,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "45654319.b11ddc",
-        "type": "debug",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 1710,
-        "y": 460,
-        "wires": []
-    },
-    {
-        "id": "2a57db18.8e3024",
-        "type": "debug",
-        "z": "2c0bc2aa.065b5e",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 690,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "d1f656f5.0a5a28",
-        "type": "comment",
-        "z": "65859b0f.82d1c4",
-        "name": "TODO",
-        "info": "",
-        "x": 210,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "c7d8ff26.0dd0a",
-        "type": "comment",
-        "z": "65859b0f.82d1c4",
-        "name": "State broadcast",
-        "info": "Rescuer sets the state || or normal progression\n\nServer broadcasts to rescuees\n\nState to be send back with the images\n\nRescuee Not listening to it's socket",
-        "x": 240,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "e219052.2af2df8",
-        "type": "comment",
-        "z": "65859b0f.82d1c4",
-        "name": "Keywords to webUI",
-        "info": "Websocket connection\nLoop to generate the buttons",
-        "x": 250,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "a8df6835.654848",
-        "type": "comment",
-        "z": "65859b0f.82d1c4",
-        "name": "Use selected keyword",
-        "info": "Send keyword selection with state back to the server\n\nUpdate server logic to use selected keyword",
-        "x": 260,
-        "y": 260,
-        "wires": []
-    },
-    {
-        "id": "52eb1533.14575c",
-        "type": "change",
-        "z": "83d5fc1b.eba75",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "state",
-                "pt": "global",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\t    \"state\": $globalContext(\"state\")\t}",
-                "tot": "jsonata"
-            },
-            {
-                "t": "delete",
-                "p": "_session",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1020,
-        "y": 300,
-        "wires": [
-            [
-                "f03a0d22.eb6a8",
-                "4d5dd04a.857048"
-            ]
-        ]
-    },
-    {
-        "id": "cf2994d9.1706c8",
-        "type": "subflow:8d7d6a55.ace158",
-        "z": "83d5fc1b.eba75",
-        "name": "",
-        "x": 840,
-        "y": 320,
-        "wires": [
-            [
-                "52eb1533.14575c"
-            ],
-            [
-                "5bdd57f1.1bfb98"
-            ]
-        ],
-        "outputLabels": [
-            "Valid",
-            "Invalid"
-        ]
-    },
-    {
-        "id": "b08e8d32.0f6f4",
-        "type": "change",
-        "z": "83d5fc1b.eba75",
-        "name": "",
-        "rules": [
-            {
-                "t": "move",
-                "p": "payload.newState",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
             }
         ],
         "action": "",
@@ -2797,573 +879,99 @@
         "to": "",
         "reg": false,
         "x": 600,
-        "y": 320,
+        "y": 80,
         "wires": [
             [
-                "cf2994d9.1706c8"
+                "6088b9d2.5841e",
+                "75b61d31.c828a4"
             ]
         ]
     },
     {
-        "id": "f03a0d22.eb6a8",
-        "type": "debug",
-        "z": "83d5fc1b.eba75",
+        "id": "f96ab4b.fb7ba48",
+        "type": "visual-recognition-v3",
+        "z": "a8156bb2.565448",
         "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1210,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "5bdd57f1.1bfb98",
-        "type": "debug",
-        "z": "83d5fc1b.eba75",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1010,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "4d5dd04a.857048",
-        "type": "websocket out",
-        "z": "83d5fc1b.eba75",
-        "name": "",
-        "server": "",
-        "client": "88e114fd.576a58",
-        "x": 1340,
-        "y": 300,
-        "wires": []
-    },
-    {
-        "id": "4e688d7e.8a871c",
-        "type": "websocket out",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "server": "",
-        "client": "27cb6f67.0a5458",
-        "x": 1640,
-        "y": 480,
-        "wires": []
-    },
-    {
-        "id": "1e05cf82.435e2",
-        "type": "websocket out",
-        "z": "65859b0f.82d1c4",
-        "name": "",
-        "server": "",
-        "client": "f28f4847.9713f8",
-        "x": 1780,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "c5e2a6f1.4d0918",
-        "type": "websocket in",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "server": "1be72eba.911d11",
-        "client": "",
-        "x": 140,
-        "y": 140,
-        "wires": [
-            [
-                "5ae04df4.797804",
-                "4dac6f35.cc2bb"
-            ]
-        ]
-    },
-    {
-        "id": "5ae04df4.797804",
-        "type": "debug",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 350,
+        "apikey": "__PWRD__",
+        "image-feature": "classifyImage",
+        "lang": "en",
+        "x": 790,
         "y": 200,
-        "wires": []
-    },
-    {
-        "id": "4dac6f35.cc2bb",
-        "type": "json",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 350,
-        "y": 140,
         "wires": [
             [
-                "6e8896cd.e9822",
-                "6c62bee6.f6a43"
+                "e8393dd.ce1f0c"
             ]
         ]
     },
     {
-        "id": "3534b086.42e73",
-        "type": "change",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "data",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload.msg",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 680,
-        "y": 180,
-        "wires": [
-            [
-                "9f69ee77.29d1c"
-            ]
-        ]
-    },
-    {
-        "id": "9f69ee77.29d1c",
-        "type": "sentiment",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "property": "payload",
-        "x": 860,
-        "y": 180,
-        "wires": [
-            [
-                "90c3ba2e.3ccc08"
-            ]
-        ]
-    },
-    {
-        "id": "90c3ba2e.3ccc08",
-        "type": "function",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "func": "return {\n    payload: {\n        msg:msg.data.msg,\n        user:msg.data.user,\n        messageType:msg.data.messageType,\n        timestamp:msg.data.timestamp,\n        sentiment:msg.sentiment.score\n    }\n};",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 1010,
-        "y": 180,
-        "wires": [
-            [
-                "a80f8547.edf648",
-                "c66d7e9c.e9f4e",
-                "b2680919.09a868"
-            ]
-        ]
-    },
-    {
-        "id": "a80f8547.edf648",
-        "type": "websocket out",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "server": "",
-        "client": "f28f4847.9713f8",
-        "x": 1280,
-        "y": 120,
-        "wires": []
-    },
-    {
-        "id": "9871a6d9.14d7f8",
-        "type": "http response",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 950,
-        "y": 520,
-        "wires": []
-    },
-    {
-        "id": "c66d7e9c.e9f4e",
+        "id": "738ba1ea.c13dd",
         "type": "debug",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
+        "z": "4a5f8456.b9645c",
+        "name": "Message from Rescuee",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "payload",
-        "x": 1190,
-        "y": 380,
+        "x": 490,
+        "y": 220,
         "wires": []
     },
     {
-        "id": "379f4c10.add7c4",
-        "type": "http in",
-        "z": "5f3b4b7b.655ba4",
+        "id": "48900843.f082b8",
+        "type": "watson-speech-to-text",
+        "z": "a8156bb2.565448",
         "name": "",
-        "url": "/public/chat3",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 180,
-        "y": 520,
-        "wires": [
-            [
-                "d0986078.fb317"
-            ]
-        ]
-    },
-    {
-        "id": "7fec4c14.1e1b74",
-        "type": "watson-text-to-speech",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
+        "alternatives": 1,
+        "speakerlabels": false,
+        "smartformatting": false,
         "lang": "en-GB",
         "langhidden": "en-GB",
         "langcustom": "NoCustomisationSetting",
         "langcustomhidden": "",
-        "voice": "en-GB_KateVoice",
-        "voicehidden": "",
-        "format": "audio/wav",
-        "password": "gBEJxPm6x1R4",
+        "band": "NarrowbandModel",
+        "bandhidden": "",
+        "password": "LKjWHdqdFBgg",
         "payload-response": true,
+        "streaming-mode": false,
+        "streaming-mute": true,
+        "discard-listening": false,
         "default-endpoint": true,
-        "service-endpoint": "https://stream.watsonplatform.net/text-to-speech/api",
-        "x": 1400,
-        "y": 240,
+        "service-endpoint": "https://stream.watsonplatform.net/speech-to-text/api",
+        "x": 1000,
+        "y": 80,
         "wires": [
             [
-                "bd3ef6a1.5214a8"
+                "3d6d858b.999942"
             ]
         ]
     },
     {
-        "id": "b2680919.09a868",
-        "type": "change",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload.msg",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1200,
-        "y": 260,
+        "id": "9363bc1b.a6e72",
+        "type": "function",
+        "z": "c317b25.fe6aa5",
+        "name": "Make the data accessible",
+        "func": "// Put data that overwrites the payload into the existing structure\n// Using the set payload option makes the code more consistent\n// Fixed location -> variable location NOT Variable -> Variable\nmsg.payloadBackup[msg.moveTo] = msg.payload;\n\n// Removes all other content\n// Functionally equivalent to deleting _session\nreturn {payload: msg.payloadBackup};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 470,
+        "y": 60,
         "wires": [
             [
-                "7fec4c14.1e1b74",
-                "2648c224.6885de"
+                "2d5fed7e.04abd2"
             ]
         ]
     },
     {
-        "id": "2648c224.6885de",
-        "type": "debug",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "x": 1390,
-        "y": 300,
-        "wires": []
-    },
-    {
-        "id": "bd3ef6a1.5214a8",
-        "type": "play audio",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "voice": "",
-        "x": 1590,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "fd9f4c2d.582fa",
-        "type": "change",
-        "z": "5f3b4b7b.655ba4",
-        "name": "Generate repo URL",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://raw.githubusercontent.com/\"\t& payload.user\t& \"/\"\t& payload.repo\t& \"/\"\t& payload.branch\t& \"/\"\t& payload.path\t& \"/\"\t& payload.file\t& \".\"\t& payload.extension",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 590,
-        "y": 560,
-        "wires": [
-            [
-                "4eb2b123.72b7a"
-            ]
-        ]
-    },
-    {
-        "id": "4eb2b123.72b7a",
-        "type": "http request",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "method": "GET",
-        "ret": "txt",
-        "url": "",
-        "tls": "",
-        "x": 790,
-        "y": 560,
-        "wires": [
-            [
-                "dfc59f0b.013b2"
-            ]
-        ]
-    },
-    {
-        "id": "e7ddb77.6f2b748",
-        "type": "change",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"user\":\"AndrewStanton94\",\"repo\":\"space\",\"branch\":\"master\",\"path\":\"web\",\"file\":\"style\",\"extension\":\"css\"}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 380,
-        "y": 560,
-        "wires": [
-            [
-                "fd9f4c2d.582fa"
-            ]
-        ]
-    },
-    {
-        "id": "bd287641.9234b8",
-        "type": "http in",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "url": "/public/style.css",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 170,
-        "y": 560,
-        "wires": [
-            [
-                "e7ddb77.6f2b748"
-            ]
-        ]
-    },
-    {
-        "id": "dfc59f0b.013b2",
-        "type": "http response",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "statusCode": "",
-        "headers": {
-            "content-type": "text/css"
-        },
-        "x": 950,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "610af6f5.247158",
-        "type": "http in",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "url": "/public/source",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 170,
-        "y": 600,
-        "wires": [
-            [
-                "ce40a78d.e8bac8"
-            ]
-        ]
-    },
-    {
-        "id": "d411dc63.88174",
-        "type": "http response",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "statusCode": "",
-        "headers": {
-            "content-type": "text/javascript"
-        },
-        "x": 950,
-        "y": 600,
-        "wires": []
-    },
-    {
-        "id": "ce40a78d.e8bac8",
-        "type": "template",
-        "z": "5f3b4b7b.655ba4",
-        "name": "JS",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "javascript",
-        "syntax": "mustache",
-        "template": "// Open a websocket\nvar publishSocket = new WebSocket(\"wss://{{req.headers.host}}/public/messagereceive\");\nvar listenSocket = new WebSocket(\"wss://{{req.headers.host}}/public/messagepublish\");\n\nlistenSocket.onmessage = function(event) {\n    // When receiving a message append a div child to #messages\n    data = JSON.parse(event.data);\n    console.log(data);\n    let imgClasses;\n    if(data.imgClasses){\n        imgClasses = data.imgClasses;\n        imgClasses.sort((a, b) => b.score - a.score);\n        imgClasses = imgClasses.slice(0,6);\n        let classesContainer = document.getElementById('objectUIbodyLeft');\n        classesContainer.innerHTML = \"\";\n        \n        let generateSelector = ({'class': className}, i) => {\n            let em = crel('div', {'class':'imgClass'},\n                crel('label', className),\n                crel('input', {\n                    'type': 'radio',\n                    'data-selectedText': className,\n                })\n            );\n            classesContainer.appendChild(em);\n        };\n        imgClasses.forEach(generateSelector);\n    }\n    \n    if(data.state){\n        sessionStorage.setItem('state', JSON.stringify(data.state));\n    }\n\n    if (data.actInfo) {\n        const haikuButtons = document.getElementById('haikuButtons');\n        let {actInfo} = data;\n        haikuButtons.innerHTML = \"\";\n        console.log(actInfo);\n        sessionStorage.setItem('actInfo', JSON.stringify(actInfo));\n        actInfo.scenes.forEach((item, i) => {\n            console.log(item);\n            console.log(item.acceptanceCriteria);\n            haikuButtons.appendChild(crel('input', {\n                'type': 'button',\n                'value': `${item.acceptanceCriteria} - ${i + 1}`,\n                'title': item.description,\n                'data-selectedScene': i\n            }));\n        });\n    }\n    \n    switch(data.messageType){\n        case 0:\n            $(\"#messages\").append(\"<div class='msg sentiment\" + data.sentiment + \"' >\" + data.user + \" - \" + data.msg + \"</div>\");\n            if ($(\"#messages\").children().length > 10) {\n                $(\"#messages :first-child\").remove();\n            }\n        break;\n        \n        case 1:\n            $(\"#messages\").append(\"<div class='msg server'>\" + data.user + \" - \" + \"Reading Haiku #1 to team\" + \"</div>\");\n        break;\n        \n        case 2:\n            $(\"#messages\").append(\"<div class='msg server'>\" + data.user + \" - \" + \"Reading Haiku #2 to team\" + \"</div>\");\n        break;\n        \n        case 3:\n            $(\"#messages\").append(\"<div class='msg server'>\" + data.user + \" - \" + \"Reading Haiku #3 to team\" + \"</div>\");\n        break;\n        \n        case 4:\n            $(\"#messages\").append(\"<div class='msg server'>\" + data.user + \" - \" + \"Camera data received\" + \"</div>\");\n        break;\n    }\n};\n\nlistenSocket.onclose = function(event) {\n    $(\"#messages\").append(\"<div class='msg server'>Disconnected from server.</div>\");\n};\n\nlistenSocket.onopen = function(event) {\n    $(\"#messages\").append(\"<div class='msg server'>LS Connected to server.</div>\");\n    publishSocket.send(JSON.stringify({'start': true}));\n};\n\nlet timeStamp = () => {\n    const d = new Date();\n    return `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;\n};\n\nfunction sendText(event) {\n    // Only if return key pressed\n    if (event.keyCode == 13) {\n        // Construct object containing the data the server needs.\n        var data = {\n            msg: $(\"#textbox\").val(),\n            user: \"Rescuer\",\n            messageType: 0,\n            timestamp: timeStamp()\n        };\n        // Send the msg object as a JSON-formatted string.\n        console.log(data);\n        publishSocket.send(JSON.stringify(data));\n        // Blank the text input element\n        $(\"#textbox\").val(\"\");\n    }\n}\n\nfunction activateHaiku1() {\n    var data = {\n        msg: \"Moths fly late at night. Shining darker than the sky. Imperfect couple.\",\n        user: \"System\",\n        messageType: 1,\n        timestamp: timeStamp()\n    };\n    publishSocket.send(JSON.stringify(data));\n}\n\nfunction activateHaiku2() {\n    var data = {\n        msg: \"Waves of the ocean. Parallel to a trio. The pebbles below.\",\n        user: \"System\",\n        messageType: 2,\n        timestamp: timeStamp()\n    };\n    publishSocket.send(JSON.stringify(data));\n}\n\nfunction activateHaiku3() {\n    var data = {\n        msg: \"Red koi of a stream. Pushing against the current. Never going blunt.\",\n        user: \"System\",\n        messageType: 3,\n        timestamp: timeStamp()\n    };\n    publishSocket.send(JSON.stringify(data));\n}\n\ndocument.getElementById('objectUIbodyLeft').addEventListener('input', (e) => {\n    console.log(e);\n    let msg = {\n        'state': JSON.parse(sessionStorage.getItem('state')),\n        'choice': e.target.getAttribute('data-selectedText'),\n    };\n    console.log(msg);\n    publishSocket.send(JSON.stringify(msg));\n});\n\ndocument.getElementById('haikuButtons').addEventListener('click', (e) => {\n    let selectedButton = e.target;\n    let state = JSON.parse(sessionStorage.getItem('state'));\n    console.log(selectedButton);\n    let newScene = parseInt(selectedButton.getAttribute('data-selectedScene'));\n    state.scene = newScene;\n    publishSocket.send(JSON.stringify({state}));\n    \n});",
-        "output": "str",
-        "x": 350,
-        "y": 600,
-        "wires": [
-            [
-                "d411dc63.88174"
-            ]
-        ]
-    },
-    {
-        "id": "cf8db465.382ab8",
-        "type": "change",
-        "z": "5f3b4b7b.655ba4",
-        "name": "Generate repo URL",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://raw.githubusercontent.com/\"\t& payload.user\t& \"/\"\t& payload.repo\t& \"/\"\t& payload.branch\t& \"/\"\t& payload.path\t& \"/\"\t& payload.file\t& \".\"\t& payload.extension",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 590,
-        "y": 520,
-        "wires": [
-            [
-                "dc592217.02a43"
-            ]
-        ]
-    },
-    {
-        "id": "dc592217.02a43",
-        "type": "http request",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "method": "GET",
-        "ret": "txt",
-        "url": "",
-        "tls": "",
-        "x": 790,
-        "y": 520,
-        "wires": [
-            [
-                "9871a6d9.14d7f8"
-            ]
-        ]
-    },
-    {
-        "id": "d0986078.fb317",
-        "type": "change",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"user\":\"AndrewStanton94\",\"repo\":\"space\",\"branch\":\"master\",\"path\":\"web\",\"file\":\"rescuerInterface\",\"extension\":\"html\"}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 380,
-        "y": 520,
-        "wires": [
-            [
-                "cf8db465.382ab8"
-            ]
-        ]
-    },
-    {
-        "id": "6e8896cd.e9822",
-        "type": "debug",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 490,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "6c62bee6.f6a43",
+        "id": "4916a862.255488",
         "type": "switch",
-        "z": "5f3b4b7b.655ba4",
-        "name": "Router",
-        "property": "payload",
+        "z": "c317b25.fe6aa5",
+        "name": "Need to restore data",
+        "property": "moveTo",
         "propertyType": "msg",
         "rules": [
             {
-                "t": "jsonata_exp",
-                "v": "$exists(payload.start)\t",
-                "vt": "jsonata"
-            },
-            {
-                "t": "jsonata_exp",
-                "v": "$exists(payload.choice)\t",
-                "vt": "jsonata"
-            },
-            {
-                "t": "jsonata_exp",
-                "v": "$exists(payload.state)\t",
-                "vt": "jsonata"
+                "t": "nnull"
             },
             {
                 "t": "else"
@@ -3371,182 +979,26 @@
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 4,
-        "x": 490,
-        "y": 140,
+        "outputs": 2,
+        "x": 220,
+        "y": 100,
         "wires": [
             [
-                "83c451db.037e4"
+                "9363bc1b.a6e72"
             ],
             [
-                "f9d178ad.8dd56"
-            ],
-            [
-                "d54a8500.cabb6"
-            ],
-            [
-                "3534b086.42e73"
+                "9612cbf8.2e7bc8"
             ]
         ],
         "outputLabels": [
-            "Start",
-            "Choice",
-            "State",
-            ""
+            "Data restoration needed",
+            "Simple case"
         ]
     },
     {
-        "id": "f46f92e2.9ec1c8",
-        "type": "inject",
-        "z": "27b28616.5fe52a",
-        "name": "",
-        "topic": "",
-        "payload": "selections",
-        "payloadType": "global",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 200,
-        "y": 440,
-        "wires": [
-            [
-                "f7d27c75.0b52d8"
-            ]
-        ]
-    },
-    {
-        "id": "f7d27c75.0b52d8",
-        "type": "debug",
-        "z": "27b28616.5fe52a",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": true,
-        "complete": "payload",
-        "x": 390,
-        "y": 440,
-        "wires": []
-    },
-    {
-        "id": "f9d178ad.8dd56",
-        "type": "function",
-        "z": "5f3b4b7b.655ba4",
-        "name": "Save Choice",
-        "func": "let selections = global.get(\"selections\");\n\nlet choice = msg.payload.choice;\nlet {act, scene} = msg.payload.state;\n\nselections[act][scene] = choice;\n\nglobal.set('selections', selections)\n\nlet payload = {\n    selections,\n    choice\n};\n\nmsg = {payload};\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 670,
-        "y": 100,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "beb08a40.756dd8",
-        "type": "inject",
-        "z": "5f3b4b7b.655ba4",
-        "name": "this act",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 210,
-        "y": 420,
-        "wires": [
-            [
-                "a9ada3fd.4fbd48"
-            ]
-        ]
-    },
-    {
-        "id": "a9ada3fd.4fbd48",
+        "id": "9612cbf8.2e7bc8",
         "type": "change",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\t    \"actInfo\": $globalContext(\"config\")\t        .game[$globalContext(\"state\").act]\t}",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 380,
-        "y": 420,
-        "wires": [
-            [
-                "82a7f622.642598"
-            ]
-        ]
-    },
-    {
-        "id": "82a7f622.642598",
-        "type": "websocket out",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "server": "",
-        "client": "f28f4847.9713f8",
-        "x": 620,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "83c451db.037e4",
-        "type": "change",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\t   \"actInfo\": $globalContext(\"config\")\t                .game[$globalContext(\"state\").act],\t    \t    \"state\": $globalContext(\"state\")\t}",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 680,
-        "y": 60,
-        "wires": [
-            [
-                "c66bfe39.12d23",
-                "6383f0ab.d46ce"
-            ]
-        ]
-    },
-    {
-        "id": "c66bfe39.12d23",
-        "type": "debug",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 850,
-        "y": 20,
-        "wires": []
-    },
-    {
-        "id": "6383f0ab.d46ce",
-        "type": "change",
-        "z": "5f3b4b7b.655ba4",
+        "z": "c317b25.fe6aa5",
         "name": "",
         "rules": [
             {
@@ -3560,80 +1012,107 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 900,
-        "y": 60,
+        "x": 460,
+        "y": 140,
         "wires": [
             [
-                "a80f8547.edf648"
+                "2d5fed7e.04abd2"
             ]
         ]
     },
     {
-        "id": "fc27ff85.2be3b",
-        "type": "subflow:8d7d6a55.ace158",
-        "z": "5f3b4b7b.655ba4",
+        "id": "57aab339.3996cc",
+        "type": "subflow:a8156bb2.565448",
+        "z": "4a5f8456.b9645c",
         "name": "",
-        "x": 900,
-        "y": 140,
+        "x": 510,
+        "y": 180,
         "wires": [
             [
-                "a7da4ffe.8f2728"
+                "9c899a90.843af8",
+                "dad46e0.cdadd9"
             ],
-            []
-        ]
-    },
-    {
-        "id": "d54a8500.cabb6",
-        "type": "change",
-        "z": "5f3b4b7b.655ba4",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload.state",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 680,
-        "y": 140,
-        "wires": [
             [
-                "fc27ff85.2be3b",
-                "589451aa.b74d9"
+                "9c899a90.843af8",
+                "854ff5b.a50b708"
             ]
+        ],
+        "outputLabels": [
+            "Speech To Text",
+            "Image To Image Classes"
         ]
     },
     {
-        "id": "589451aa.b74d9",
-        "type": "debug",
-        "z": "5f3b4b7b.655ba4",
+        "id": "9c899a90.843af8",
+        "type": "subflow:5b36cca4.929894",
+        "z": "4a5f8456.b9645c",
         "name": "",
+        "x": 890,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "dad46e0.cdadd9",
+        "type": "debug",
+        "z": "4a5f8456.b9645c",
+        "name": "Speech To Text",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": true,
-        "complete": "true",
-        "x": 880,
-        "y": 280,
+        "complete": "payload",
+        "x": 740,
+        "y": 140,
         "wires": []
     },
     {
-        "id": "a7da4ffe.8f2728",
-        "type": "change",
-        "z": "5f3b4b7b.655ba4",
+        "id": "854ff5b.a50b708",
+        "type": "debug",
+        "z": "4a5f8456.b9645c",
+        "name": "Img to Classes",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 740,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "e91f9532.bd3578",
+        "type": "watson-text-to-speech",
+        "z": "6f3a8a65.85c414",
         "name": "",
+        "lang": "en-GB",
+        "langhidden": "en-GB",
+        "langcustom": "NoCustomisationSetting",
+        "langcustomhidden": "",
+        "voice": "en-GB_KateVoice",
+        "voicehidden": "",
+        "format": "audio/wav",
+        "password": "gBEJxPm6x1R4",
+        "payload-response": true,
+        "default-endpoint": true,
+        "service-endpoint": "https://stream.watsonplatform.net/text-to-speech/api",
+        "x": 300,
+        "y": 140,
+        "wires": [
+            [
+                "e404deec.5fceb"
+            ]
+        ]
+    },
+    {
+        "id": "771f583b.1f4a38",
+        "type": "change",
+        "z": "5e52503c.a1247",
+        "name": "Backup payload",
         "rules": [
             {
                 "t": "set",
-                "p": "state",
-                "pt": "global",
+                "p": "payloadBackup",
+                "pt": "msg",
                 "to": "payload",
                 "tot": "msg"
             }
@@ -3643,10 +1122,878 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1160,
-        "y": 40,
+        "x": 180,
+        "y": 200,
+        "wires": [
+            [
+                "eac1e558.cb4e18"
+            ]
+        ]
+    },
+    {
+        "id": "6664a3f5.b842bc",
+        "type": "change",
+        "z": "5e52503c.a1247",
+        "name": "Move Text",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.message.msg",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 200,
+        "wires": [
+            [
+                "303e1dda.1bf472"
+            ]
+        ]
+    },
+    {
+        "id": "5a1a99f3.7c5818",
+        "type": "subflow:c317b25.fe6aa5",
+        "z": "5b36cca4.929894",
+        "name": "",
+        "x": 230,
+        "y": 100,
+        "wires": [
+            [
+                "d65c21ca.e21a",
+                "4eb7bb16.ffc7a4"
+            ]
+        ]
+    },
+    {
+        "id": "e404deec.5fceb",
+        "type": "change",
+        "z": "6f3a8a65.85c414",
+        "name": "moveTo = speech",
+        "rules": [
+            {
+                "t": "set",
+                "p": "moveTo",
+                "pt": "msg",
+                "to": "speech",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 140,
+        "wires": [
+            [
+                "21469e96.977e82",
+                "8821b125.aed82"
+            ]
+        ]
+    },
+    {
+        "id": "21469e96.977e82",
+        "type": "subflow:dfcd7998.88d4b8",
+        "z": "6f3a8a65.85c414",
+        "name": "",
+        "x": 730,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "8821b125.aed82",
+        "type": "debug",
+        "z": "6f3a8a65.85c414",
+        "name": "post textToSpeech",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 730,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "d50f5fb.c49a9a",
+        "type": "debug",
+        "z": "5e52503c.a1247",
+        "name": "Rescuer Intro",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 1140,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "77a4637c.dce72c",
+        "type": "subflow:148c3991.b9c716",
+        "z": "5e52503c.a1247",
+        "name": "",
+        "x": 685,
+        "y": 80,
+        "wires": [
+            [
+                "85f2a875.40dbe8"
+            ]
+        ]
+    },
+    {
+        "id": "857c9a.dfb45368",
+        "type": "function",
+        "z": "a8156bb2.565448",
+        "name": "Extract Img",
+        "func": "msg.payload = Buffer.from(msg.payload.img);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 200,
+        "wires": [
+            [
+                "f96ab4b.fb7ba48"
+            ]
+        ]
+    },
+    {
+        "id": "7e6cb876.154998",
+        "type": "join",
+        "z": "1982db49.863535",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 550,
+        "y": 160,
+        "wires": [
+            [
+                "a3464495.ba0408"
+            ]
+        ]
+    },
+    {
+        "id": "cd45a1a0.bae1e",
+        "type": "inject",
+        "z": "1982db49.863535",
+        "name": "",
+        "topic": "",
+        "payload": "{\"payload\":\"fdjksalflaksjdkl\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 110,
+        "y": 140,
+        "wires": [
+            [
+                "49b1b538.6059fc"
+            ]
+        ]
+    },
+    {
+        "id": "a3464495.ba0408",
+        "type": "debug",
+        "z": "1982db49.863535",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 690,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "521fab87.3a2514",
+        "type": "debug",
+        "z": "1982db49.863535",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 450,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "6162b475.bcf9cc",
+        "type": "inject",
+        "z": "1982db49.863535",
+        "name": "",
+        "topic": "",
+        "payload": "{\"payload\":\"fklkllkklkljkljlk\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 110,
+        "y": 180,
+        "wires": [
+            [
+                "973c1993.a2af78"
+            ]
+        ]
+    },
+    {
+        "id": "973c1993.a2af78",
+        "type": "change",
+        "z": "1982db49.863535",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "blunder",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 270,
+        "y": 180,
+        "wires": [
+            [
+                "7e6cb876.154998",
+                "36be3003.4c473"
+            ]
+        ]
+    },
+    {
+        "id": "49b1b538.6059fc",
+        "type": "change",
+        "z": "1982db49.863535",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "goof",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 270,
+        "y": 140,
+        "wires": [
+            [
+                "7e6cb876.154998",
+                "521fab87.3a2514"
+            ]
+        ]
+    },
+    {
+        "id": "36be3003.4c473",
+        "type": "debug",
+        "z": "1982db49.863535",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 450,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "42c4d35.665222c",
+        "type": "change",
+        "z": "148c3991.b9c716",
+        "name": "payload -> payload.gameDescription",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.gameDescription",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 830,
+        "y": 60,
+        "wires": [
+            [
+                "7375e38c.2f59fc",
+                "1a6c917d.dd318f"
+            ]
+        ]
+    },
+    {
+        "id": "64a6e0bd.61077",
+        "type": "subflow:c317b25.fe6aa5",
+        "z": "dfcd7998.88d4b8",
+        "name": "",
+        "x": 250,
+        "y": 60,
+        "wires": [
+            [
+                "ece5413.34be8c"
+            ]
+        ]
+    },
+    {
+        "id": "e8393dd.ce1f0c",
+        "type": "change",
+        "z": "a8156bb2.565448",
+        "name": "Send imgClasses",
+        "rules": [
+            {
+                "t": "set",
+                "p": "imgClasses",
+                "pt": "msg",
+                "to": "result.images.classifiers.classes",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payloadBackp",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.imgClasses",
+                "pt": "msg",
+                "to": "imgClasses",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1010,
+        "y": 200,
         "wires": [
             []
         ]
+    },
+    {
+        "id": "2d5fed7e.04abd2",
+        "type": "json",
+        "z": "c317b25.fe6aa5",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 670,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1a6c917d.dd318f",
+        "type": "debug",
+        "z": "148c3991.b9c716",
+        "name": "gameDescription",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1110,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "76283e4c.59d42",
+        "type": "function",
+        "z": "5e52503c.a1247",
+        "name": "Extract Classes",
+        "func": "let {\n    act,\n    selectedClasses\n} = msg.payload.progress;\n\nlet selectedClassesForAct = selectedClasses[act];\nlet expectedClassesForAct = msg.payload.gameDescription.acts[act].scenes.map(scene => scene.acceptanceCriteria);\n\nmsg.selectedClassesForAct = selectedClassesForAct;\nmsg.expectedClassesForAct = expectedClassesForAct;\nmsg.currentAct = act;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 380,
+        "wires": [
+            [
+                "6725e0d8.056ef",
+                "f5b2cd41.3a3e5"
+            ]
+        ]
+    },
+    {
+        "id": "6725e0d8.056ef",
+        "type": "debug",
+        "z": "5e52503c.a1247",
+        "name": "Extracted Classes",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 810,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "f5b2cd41.3a3e5",
+        "type": "function",
+        "z": "5e52503c.a1247",
+        "name": "Validate Responses",
+        "func": "let {\n    selectedClassesForAct: selected,\n    expectedClassesForAct: expected,\n    currentAct\n} = msg;\n\nlet result;\n\nif (selected.length !== expected.length || selected.includes(null)){\n    result = \"Incomplete\";\n}\nelse {\n    let matches = selected.map((sceneSelected, i) => sceneSelected === expected[i])   // Check each scene\n        .reduce((acc, current) => acc && current);  // Do they all match\n        \n    if (matches){\n        let numberOfActs = msg.payload.gameDescription.acts.length;\n        if ((currentAct + 1) < numberOfActs) {\n            result = \"Progression\";\n        }\n        else {\n            result = \"Complete\"\n        }\n    }\n    else {\n        result = \"Don't match\"\n    }\n}\n\nmsg.result = result;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 380,
+        "wires": [
+            [
+                "1a856c4a.4a1704",
+                "96027b81.c24be8"
+            ]
+        ]
+    },
+    {
+        "id": "1a856c4a.4a1704",
+        "type": "debug",
+        "z": "5e52503c.a1247",
+        "name": "Answers match",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1040,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "96027b81.c24be8",
+        "type": "switch",
+        "z": "5e52503c.a1247",
+        "name": "Validation Router",
+        "property": "result",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Incomplete",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Progression",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Don't match",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Complete",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 1030,
+        "y": 380,
+        "wires": [
+            [],
+            [
+                "63ed0a82.a83f04"
+            ],
+            [
+                "a73c3f58.4df63"
+            ],
+            [
+                "7dc8c4c6.9da18c"
+            ]
+        ],
+        "outputLabels": [
+            "Not all scenes have an answer",
+            "Move to next scene",
+            "Not all scenes match",
+            "Game complete"
+        ]
+    },
+    {
+        "id": "a73c3f58.4df63",
+        "type": "change",
+        "z": "5e52503c.a1247",
+        "name": "Wrong Answers",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payloadBackup.gameDescription.failureMessage",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1240,
+        "y": 380,
+        "wires": [
+            [
+                "317d5f.4cf112a2"
+            ]
+        ]
+    },
+    {
+        "id": "63ed0a82.a83f04",
+        "type": "change",
+        "z": "5e52503c.a1247",
+        "name": "Progress",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payloadBackup.gameDescription.successMessage",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1220,
+        "y": 340,
+        "wires": [
+            [
+                "21b434a.1f449cc",
+                "317d5f.4cf112a2"
+            ]
+        ]
+    },
+    {
+        "id": "7dc8c4c6.9da18c",
+        "type": "change",
+        "z": "5e52503c.a1247",
+        "name": "Finished",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "You have finished",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1220,
+        "y": 420,
+        "wires": [
+            [
+                "317d5f.4cf112a2"
+            ]
+        ]
+    },
+    {
+        "id": "303e1dda.1bf472",
+        "type": "subflow:6f3a8a65.85c414",
+        "z": "5e52503c.a1247",
+        "name": "",
+        "x": 820,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "4c788300.90976c",
+        "type": "debug",
+        "z": "6f3a8a65.85c414",
+        "name": "pre textToSpeech",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 310,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "21b434a.1f449cc",
+        "type": "function",
+        "z": "5e52503c.a1247",
+        "name": "New Act",
+        "func": "let progress = msg.payloadBackup.progress;\nlet gameDescription = msg.payloadBackup.gameDescription\n\nprogress.act = progress.act + 1;\nprogress.scene = 0;\n\nmsg.payload = {progress, gameDescription};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1380,
+        "y": 320,
+        "wires": [
+            [
+                "733f9b0e.1552c4"
+            ]
+        ]
+    },
+    {
+        "id": "317d5f.4cf112a2",
+        "type": "subflow:6f3a8a65.85c414",
+        "z": "5e52503c.a1247",
+        "x": 1600,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "3d6d858b.999942",
+        "type": "sentiment",
+        "z": "a8156bb2.565448",
+        "name": "",
+        "property": "payload",
+        "x": 1180,
+        "y": 80,
+        "wires": [
+            [
+                "ae2600bd.413f3"
+            ]
+        ]
+    },
+    {
+        "id": "ae2600bd.413f3",
+        "type": "change",
+        "z": "a8156bb2.565448",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t       \"message\": payload,\t       \"sentiment\": sentiment\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1360,
+        "y": 80,
+        "wires": [
+            [
+                "db7ad591.ca99f"
+            ]
+        ]
+    },
+    {
+        "id": "db7ad591.ca99f",
+        "type": "debug",
+        "z": "a8156bb2.565448",
+        "name": "Sentiment transcription",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1580,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "6088b9d2.5841e",
+        "type": "function",
+        "z": "a8156bb2.565448",
+        "name": "Array to buffer",
+        "func": "msg.payload = Buffer.from(msg.payload);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 800,
+        "y": 80,
+        "wires": [
+            [
+                "48900843.f082b8"
+            ]
+        ]
+    },
+    {
+        "id": "75b61d31.c828a4",
+        "type": "debug",
+        "z": "a8156bb2.565448",
+        "name": "Speech",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 780,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "85f2a875.40dbe8",
+        "type": "change",
+        "z": "5e52503c.a1247",
+        "name": "gameIntro",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.transcription",
+                "pt": "msg",
+                "to": "{\t    \"sentiment\": {\t        \"score\": 0\t    },\t    \"message\" : payload.gameDescription.gameIntro\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 960,
+        "y": 80,
+        "wires": [
+            [
+                "741fe9fb.939d58",
+                "d50f5fb.c49a9a",
+                "50593536.d3f96c"
+            ]
+        ]
+    },
+    {
+        "id": "50593536.d3f96c",
+        "type": "change",
+        "z": "5e52503c.a1247",
+        "name": "prepare voiceover",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.transcription.message",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1150,
+        "y": 120,
+        "wires": [
+            [
+                "4a4492a4.3440ec"
+            ]
+        ]
+    },
+    {
+        "id": "4a4492a4.3440ec",
+        "type": "subflow:6f3a8a65.85c414",
+        "z": "5e52503c.a1247",
+        "name": "",
+        "x": 1400,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "5c2291b0.fb766",
+        "type": "function",
+        "z": "5e52503c.a1247",
+        "name": "Extract sceneIntro",
+        "func": "let {progress, gameDescription} = msg.payload;\nlet {act, scene: currentScene} = progress;\nlet sceneIntro = gameDescription.acts[act].scenes[currentScene].sceneIntro;\n\nmsg.payload = sceneIntro;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 540,
+        "wires": [
+            [
+                "8159997e.e7a478",
+                "57956389.1af694"
+            ]
+        ]
+    },
+    {
+        "id": "8159997e.e7a478",
+        "type": "subflow:6f3a8a65.85c414",
+        "z": "5e52503c.a1247",
+        "name": "",
+        "x": 860,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "57956389.1af694",
+        "type": "debug",
+        "z": "5e52503c.a1247",
+        "name": "Scene intro",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 810,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "733f9b0e.1552c4",
+        "type": "subflow:5b36cca4.929894",
+        "z": "5e52503c.a1247",
+        "name": "",
+        "x": 1570,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "4eb7bb16.ffc7a4",
+        "type": "debug",
+        "z": "5b36cca4.929894",
+        "name": "To Rescuer",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 450,
+        "y": 140,
+        "wires": []
     }
 ]
