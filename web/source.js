@@ -31,7 +31,7 @@ const generateHaikuButtons = ({progress, gameDescription}) => {
         // Display scene selectors for the current act
         haikuButtons.innerHTML = "";
         choiceSelectors.innerHTML = "";     // Erasing for start of acts
-        state.innerText = `Act: ${act} Scene: ${currentScene}`;
+        state.innerText = `Act: ${act}`;
         actInfo.scenes.forEach((scene, i) => {
             console.log(scene);
             haikuButtons.appendChild(crel('input', {
@@ -45,20 +45,9 @@ const generateHaikuButtons = ({progress, gameDescription}) => {
 
 // Produce selectors for the image classes from Watson
 const generateClassSelectors = ({progress}) => {
-    if (progress){
-        let {act, scene: currentScene, imgClasses} = progress;
-        imgClasses = imgClasses[act][currentScene];
-        console.log(act, currentScene, imgClasses);
-        if (!imgClasses){
-            return;
-        }
+    // [scenes] -> class elem
+    let processScene = (imgClasses) => {
         console.log(imgClasses);
-        // Get the 6 most likely Image classes
-        imgClasses.sort((a, b) => b.score - a.score);
-        imgClasses = imgClasses.slice(0,6);
-
-        choiceSelectors.innerHTML = "";
-
         // Each Image class gets a labeled radio box
         let generateImageClassSelector = ({'class': className}) => {
             let choice = crel('div', {'class':'imgClass'},
@@ -69,9 +58,32 @@ const generateClassSelectors = ({progress}) => {
                     'data-selectedText': className,
                 })
             );
-            choiceSelectors.appendChild(choice);
+            sceneContainer.appendChild(choice);
         };
+
+        // Get the 3 most likely Image classes
+        imgClasses.sort((a, b) => b.score - a.score);
+        imgClasses = imgClasses.slice(0,3);
         imgClasses.forEach(generateImageClassSelector);
+    };
+    // act -> [scenes]
+    let processAct = (sceneClasses, i) => {
+        console.log('sceneClasses', sceneClasses, i);
+        let sceneContainer = crel('section', {'class': 'sceneContainer'});
+        choiceSelectors.appendChild(sceneContainer);
+
+        sceneClasses.forEach(processScene);
+    };
+
+    if (progress){
+        let {act, imgClasses} = progress;
+        let scenesInAct = imgClasses[act];
+        console.log(act, scenesInAct);
+        if (!scenesInAct){
+            return;
+        }
+        choiceSelectors.innerHTML = '';
+        scenesInAct.forEach(processAct);
     }
 };
 
