@@ -9,14 +9,19 @@
 			"actIntro": "This is the first act",
 			"scenes": [
 				{
-					"sceneIntro": "Purring affection. Both loved and feared through time. Nocturnal Hunter.",
+					"sceneIntro": "Scarring the landscape. The tool of art and science. Powered by the hand.",
 					"watsonUsed": "image",
-					"acceptanceCriteria": "cat"
+					"acceptanceCriteria": "pen"
 				},
 				{
-					"sceneIntro": "Steaming cylinder. Wakefullness resides within. Warmth and Energy",
+					"sceneIntro": "Avatar of chance. Maybe, success and profit. Risk of losing all.",
 					"watsonUsed": "image",
-					"acceptanceCriteria": "cup"
+					"acceptanceCriteria": "dice"
+				},
+				{
+					"sceneIntro": "Twinkling in the night. Sparking on your own finger. Fetches a high price",
+					"watsonUsed": "image",
+					"acceptanceCriteria": "jewel"
 				}
 			]
 		},
