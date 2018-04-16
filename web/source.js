@@ -50,7 +50,10 @@ const generateClassSelectors = ({progress}) => {
         if (sceneClasses === null) {
             return;
         }
-        let sceneContainer = crel('section', {'class': 'sceneContainer'});
+        let sceneContainer = crel('section',
+            {'class': 'sceneContainer'},
+            crel('h1', `Scene: ${i}`)
+        );
         choiceSelectors.appendChild(sceneContainer);
 
         // Get the 3 most likely Image classes
