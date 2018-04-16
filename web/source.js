@@ -69,7 +69,7 @@ const generateClassSelectors = ({progress}) => {
         // Get the 3 most likely Image classes
         sceneClasses.sort((a, b) => b.score - a.score);
         sceneClasses = sceneClasses.slice(0,3);
-        sceneClasses.forEach(generateClassSelectors);
+        sceneClasses.forEach(generateImageClassSelector);
     };
 
     if (progress){
