@@ -45,19 +45,6 @@ const generateHaikuButtons = ({progress, gameDescription}) => {
 
 // Produce selectors for the image classes from Watson
 const generateClassSelectors = ({progress}) => {
-    // Each Image class gets a labeled radio box
-    let generateImageClassSelector = ({'class': className}) => {
-        let choice = crel('div', {'class':'imgClass'},
-            crel('label', className),
-            crel('input', {
-                'type': 'radio',
-                'name': 'imgClassOption',
-                'data-selectedText': className,
-            })
-        );
-        sceneContainer.appendChild(choice);
-    };
-
     let processScene = (sceneClasses, i) => {
         console.log('sceneClasses', sceneClasses, i);
         if (sceneClasses === null) {
@@ -69,7 +56,18 @@ const generateClassSelectors = ({progress}) => {
         // Get the 3 most likely Image classes
         sceneClasses.sort((a, b) => b.score - a.score);
         sceneClasses = sceneClasses.slice(0,3);
-        sceneClasses.forEach(generateImageClassSelector);
+        // Each Image class gets a labeled radio box
+        sceneClasses.forEach(({'class': className}) => {
+            let choice = crel('div', {'class':'imgClass'},
+                crel('label', className),
+                crel('input', {
+                    'type': 'radio',
+                    'name': 'imgClassOption',
+                    'data-selectedText': className,
+                })
+            );
+            sceneContainer.appendChild(choice);
+        });
     };
 
     if (progress){
