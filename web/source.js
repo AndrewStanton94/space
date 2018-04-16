@@ -60,10 +60,6 @@ const generateClassSelectors = ({progress}) => {
             );
             sceneContainer.appendChild(choice);
         };
-
-        // Get the 3 most likely Image classes
-        imgClasses.sort((a, b) => b.score - a.score);
-        imgClasses = imgClasses.slice(0,3);
         imgClasses.forEach(generateImageClassSelector);
     };
     // act -> [scenes]
@@ -72,6 +68,9 @@ const generateClassSelectors = ({progress}) => {
         let sceneContainer = crel('section', {'class': 'sceneContainer'});
         choiceSelectors.appendChild(sceneContainer);
 
+        // Get the 3 most likely Image classes
+        sceneClasses.sort((a, b) => b.score - a.score);
+        sceneClasses = imgClasses.slice(0,3);
         sceneClasses.forEach(processScene);
     };
 
