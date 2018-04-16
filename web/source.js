@@ -50,9 +50,11 @@ const generateClassSelectors = ({progress}) => {
         if (sceneClasses === null) {
             return;
         }
-        let sceneContainer = crel('section',
-            {'class': 'sceneContainer'},
-            crel('h1', `Scene: ${i}`)
+        let sceneContainer = crel('section',  {
+                'class': 'sceneContainer',
+                'data-selectedScene': i
+            },
+            crel('h1', `Scene: ${i + 1}`)
         );
         choiceSelectors.appendChild(sceneContainer);
 
@@ -113,7 +115,11 @@ const drawMessage = ({message, from = '', sentiment = ''}, additionalClass = '')
 choiceSelectors.addEventListener('change', (e) => {
 	console.log(e);
 	let selectedClass = e.target.getAttribute('data-selectedText');
-	let {act, scene} = data.progress;
+	let {act} = data.progress;
+
+    let container = e.target.parentElement.parentElement;
+    let scene = container.getAttribute('data-selectedScene') | data.progress.scene;
+    console.log('container', container, 'scene', scene);
 
 	data.progress.selectedClasses[act][scene] = selectedClass;
     drawMessage({message: `Selected Property: ${selectedClass}`, from: 'Properties'}, 'server');
