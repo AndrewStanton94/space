@@ -60,6 +60,9 @@ const generateClassSelectors = ({progress}) => {
 
     let processScene = (sceneClasses, i) => {
         console.log('sceneClasses', sceneClasses, i);
+        if (sceneClasses === null) {
+            return;
+        }
         let sceneContainer = crel('section', {'class': 'sceneContainer'});
         choiceSelectors.appendChild(sceneContainer);
 
