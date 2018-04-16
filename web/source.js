@@ -115,7 +115,7 @@ const drawMessage = ({message, from = '', sentiment = ''}, additionalClass = '')
 choiceSelectors.addEventListener('change', (e) => {
 	console.log(e);
 	let selectedClass = e.target.getAttribute('data-selectedText');
-	let {act} = data.progress;
+	let {act} = data.progress || cachedData.progress || console.error('No progress object');;
 
     let container = e.target.parentElement.parentElement;
     let scene = container.getAttribute('data-selectedScene') | data.progress.scene;
@@ -132,6 +132,7 @@ haikuButtons.addEventListener('click', (e) => {
 	let selectedButton = e.target;
 	console.log(selectedButton);
 	let newScene = parseInt(selectedButton.getAttribute('data-selectedScene'));
+    data.progress = data.progress || cachedData.progress || console.error('No progress object');
 	data.progress.scene = newScene;
     data.stateChanged = true;
     drawMessage({message: `Selected scene: ${newScene + 1}`, from: 'Haiku'}, 'server');
