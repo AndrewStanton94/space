@@ -45,33 +45,28 @@ const generateHaikuButtons = ({progress, gameDescription}) => {
 
 // Produce selectors for the image classes from Watson
 const generateClassSelectors = ({progress}) => {
-    // [scenes] -> class elem
-    let processScene = (imgClasses) => {
-        console.log(imgClasses);
-        // Each Image class gets a labeled radio box
-        let generateImageClassSelector = ({'class': className}) => {
-            let choice = crel('div', {'class':'imgClass'},
-                crel('label', className),
-                crel('input', {
-                    'type': 'radio',
-                    'name': 'imgClassOption',
-                    'data-selectedText': className,
-                })
-            );
-            sceneContainer.appendChild(choice);
-        };
-        imgClasses.forEach(generateImageClassSelector);
+    // Each Image class gets a labeled radio box
+    let generateImageClassSelector = ({'class': className}) => {
+        let choice = crel('div', {'class':'imgClass'},
+            crel('label', className),
+            crel('input', {
+                'type': 'radio',
+                'name': 'imgClassOption',
+                'data-selectedText': className,
+            })
+        );
+        sceneContainer.appendChild(choice);
     };
-    // act -> [scenes]
-    let processAct = (sceneClasses, i) => {
+
+    let processScene = (sceneClasses, i) => {
         console.log('sceneClasses', sceneClasses, i);
         let sceneContainer = crel('section', {'class': 'sceneContainer'});
         choiceSelectors.appendChild(sceneContainer);
 
         // Get the 3 most likely Image classes
         sceneClasses.sort((a, b) => b.score - a.score);
-        sceneClasses = imgClasses.slice(0,3);
-        sceneClasses.forEach(processScene);
+        sceneClasses = sceneClasses.slice(0,3);
+        sceneClasses.forEach(generateClassSelectors);
     };
 
     if (progress){
@@ -82,7 +77,7 @@ const generateClassSelectors = ({progress}) => {
             return;
         }
         choiceSelectors.innerHTML = '';
-        scenesInAct.forEach(processAct);
+        scenesInAct.forEach(processScene);
     }
 };
 
